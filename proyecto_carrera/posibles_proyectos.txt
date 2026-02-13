@@ -1,0 +1,33 @@
+< gemini > 
+2. Gestión de Inventario Inteligente mediante "Smart Shelves" (Peso y Carga)
+Ideal para PyMEs con almacenes de materia prima de alto valor o tornillería pequeña donde el conteo manual es un infierno.
+
+El Proyecto: Estantes con celdas de carga (sensores de peso) conectadas a nodos ESP32. El sistema sabe exactamente cuántas piezas quedan por el peso total y descuenta del inventario en tiempo real.
+
+Valor para la Empresa: Reabastecimiento automático. Cuando el peso baja de un umbral, el sistema envía una alerta o dispara una orden de compra vía API.
+
+Stack Técnico: C (ESP-IDF) con uso intensivo del ADC y filtros digitales (Kalman o Promedio Móvil) para evitar ruido en el peso + MQTT + Base de Datos Relacional (PostgreSQL).
+
+KIMI
+
+5. 🚗 Detector de Placas y Control de Acceso Automatizado para Estacionamientos Privados y Residenciales
+
+Problema: Los guardias de seguridad en fraccionamientos y oficinas pierden tiempo abriendo portones, no saben quién entró/salió ni cuándo, y los residentes se quejan de esperar en la 
+
+lluvia. Los sistemas comerciales de control de placas (HID, AMAG) cuestan cientos de miles.
+
+Stack técnico:
+-Hardware: ESP32-CAM con visión artificial (OpenALPR o modelo propio ligero) en entrada/salida, barrera vehicular controlada por relé, botón de ayuda intercom
+
+-Edge: Raspberry Pi 4 procesando placas localmente (baja latencia, no depende de internet), comparando contra base de datos de residentes/visitantes autorizados
+
+-Cloud: Registro de todas las entradas/salidas con foto de placa y timestamp, lista negra de placas (vigilancia), estadísticas de horarios pico
+-Web: Portal para administrador de fraccionamiento: alta/baja de residentes, visitas programadas (genera QR temporal), reporte de "placas sospechosas que han pasado 3+ veces sin ser residentes"
+
+-App para residente: Abre portón desde celular, registra visita anticipada (placa queda autorizada temporalmente)
+
+-Quién paga: Administradores de fraccionamientos residenciales, oficinas con estacionamiento privado, hospitales (control de entrada de ambulancias/visitas), centros comerciales (estacionamiento de empleados), universidades.
+
+
+
+
