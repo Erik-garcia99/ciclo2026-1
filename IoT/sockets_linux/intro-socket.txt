@@ -1,0 +1,19 @@
+
+
+-> socket programming 
+
+un socket es un punto de conexion que puedes nombrar y direccionar dentro de la red.
+
+la programacion de sockets nos muestra como se usa las APIS de sockets para establecer comunicacion entre enlaces remotos y procesos locales
+
+un proceso que usa sockets puede residir dentro del mismo o en diferentes sistemas o diferenes redes
+
+
+los sockets habilidatan el intercambio de informacion entre procesos en la misma maquina o a traves de la red. distribuye el trabajo a la mayor eficicencia de las maquinas, y esto facilita el acceso a la informacion centralizada. 
+
+los sockets se manejan sobre el estantar TCP/IP. los sockets soportan multiples medio de trasporte y protoclos. la funciones del sistema de sokcet y funciones de sockets de red son seguros.  
+
+
+
+A
+

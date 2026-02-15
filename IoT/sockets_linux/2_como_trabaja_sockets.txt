@@ -1,0 +1,19 @@
+
+--> como trabajan los sockets 
+
+los sockets son usados comunmente para la intereacion entre cliente-servidor. una configuracion titpica en lugares de servidores siendo maquinas estas, como clientes otras maquinas, donde los clientes pueden conectarse a estas, extraer infromacion y despues desconcectarse. 
+
+un socket es un flujo de eventos. en un modelo de conexion oriendtado a cliente-servidor. el proceso del socker en el servidor espera a que el cliente haga una peticion.
+
+para que el cliente pueda hacer esto, primero en servidor deberia de establecer una sireccion en donde el cliente pueda encontrarlos. cunado esta se haya establecido el servidor espera por que el cliente realice una peticion por el servicio. el cliente puede extraer la infromacion por medio de un socket. el servidor responde a su peticion envando una copoa de la informacion devuelta al cliente. 
+
+el tipo de sockets que el ESP estara soportanto es del BSD (Berkeley socket disribution) 
+
+
+en la paguina 4 podemos ver un flujo tiipico de un evento de socket orientado a la conecion. 
+
+1 - la API crea el socket < socket() > y un endpoint para la comunicacion y regresa un socket descriptor que representa ese endpoint (punto de acceso) 
+
+2 -cunado la aplicacion tiene un socket descriptor (este es un archivo que contiene toda la informacion de un archivo, tamanio, fecha de creacion, un ID, etc..)  <<
+
+3 - funcion < listen() >  de la API indica un  

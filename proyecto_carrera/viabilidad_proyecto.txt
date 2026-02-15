@@ -1,0 +1,14 @@
+
+metodologia de analisis y disenio a utilizar:
+
+la metodologia que se acomoda de mejor manera al proyecto es la "metodologia de prototipado evolutivo" dado a la incorporacion de software y hardware
+
+fases: 
+- analisis de 
+
+
+
+
+
+
+

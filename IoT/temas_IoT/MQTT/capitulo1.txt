@@ -1,0 +1,36 @@
+
+MQTT es un protocolo liviano originalmente diseniado para la comunicacion en redes redusidad con banda de ancha redusicda y 
+bajos recurso computacionales. desarrollado con simplicidad y escabilidad en la mentea,MQTT es particularmente ideal para aplicaciones IoT    
+
+este sistema consta de 3 entidades suscriptor MQTT / broker MQTT / publicador MQTT 
+
+MQTT usa un formato de mensaje binario para la comunicacion entre cleinte y servidores (broker) esto contrasta con otros protoclos que unsan formatos de texto,semejante a HTTP o SMTP
+
+
+el nibble mas significativo controla el tipo de paquete de MQTT y el nibble menos significativo, es para banderas especificas de cada control de tipo de maquite de MQTT 
+
+podemos verlo mejor en la paguina numero 4. 
+
+el formato binario usado por MQTT esta diseniado para reducir el tamanio de los mensajes e incrementar la eficienda de la comunicacion. por usar un formato binario, el protocolo puede minimizar la cantidad de datos necesarios para trasmisitr y reducir el poder de procesamiento requerido para interpretar el mensaje.
+
+MQTT es ideal para el uso de banda ancha bajo o poco poder de procesamineto. semejante a dispositivos IoT con recursos limitados. 
+
+otro importante aspecto del protoclo MQTT es que es extremadamente facil de implementar del lado del cliente. facil de usar   
+
+a
+A
+
+
+
+
+
+,
+
+a
+c
+A
+ 
+
+
+
+
