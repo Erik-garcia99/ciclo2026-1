@@ -16,4 +16,33 @@ en la paguina 4 podemos ver un flujo tiipico de un evento de socket orientado a 
 
 2 -cunado la aplicacion tiene un socket descriptor (este es un archivo que contiene toda la informacion de un archivo, tamanio, fecha de creacion, un ID, etc..)  <<
 
-3 - funcion < listen() >  de la API indica un  
+3 - funcion < listen() >  de la API indica una disposicion a aceptar la solicitus de conexion del cliente. la funcion listen() de la API es emitido despues que un socket sea asigando con la funcion socket() de la API y bind(), la API liste() debe ser asginado antes que la API accept() sea asignado. 
+
+4- la aplicacionde cliente puede usar la API connect() con un socket en vivo para establecer una conexion con el servidor 
+
+5- del lado del servidor se usa la API accept() para aceptar la peticion de conexion del lado del cliente. el servidor deberia de asignar el bind() <enlace> y el API listen() con exito antes que el API accept() sea aceptado. 
+
+6- cunado la conexion este establecida entre el socket en linea (entre el cliente-servidor) se puede usar cualquier API del socker de trasferencia de datos, los clientes y los servidores tiene muchas APIS de trasferencia de datos, las API que podemos escoger podrian ser < send() >, < recv() >, < read() >, < write() >,  otros 
+
+7- cunado el servidor o el cliente quiere terminar el procesos, se pueden usar la API close().
+
+
+inforacion: PG5 
+
+-socket() -> creacion del API socket 
+
+-listen() -> invitacion de peticion entrante 
+
+- accept() -> espera por la respuesta de la conexion y crea la API de conexion  
+
+- send() -> API que envia informacion 
+
+-> recv() -> API que recibe datos 
+
+- close() -> cierra el archivo o el API del socket descriptor 
+
+
+
+
+
+

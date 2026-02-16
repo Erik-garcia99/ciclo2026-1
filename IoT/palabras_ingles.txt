@@ -9,11 +9,11 @@ palabras ingles repetidas
 
 -- must : deber, tener que / necesidad 
 
--- bind : fastidio/ molestia / encuadernar / obligar
+-- bind : enlazar
  
 -- willingness: willing : complaciente / de gran voluntad / dispuesto / entusiasta 
 
--- issued : 
+-- issued : emitido 
 
 --suited : satifaser
 
@@ -23,4 +23,6 @@ palabras ingles repetidas
 
 -- amount : cantidad
 
+
+-- wich : cuales 
  

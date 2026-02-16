@@ -1,0 +1,29 @@
+
+los socket comprarten caracterisitcas similares
+
+- un sokcer es representado por un entero. ese entero esta almacendado un socket descritor
+
+-un socket existe el tiempo en donde el proceso mantiene abierto el enlace. 
+
+-se puede nombrar un socket y usarlo para la comunicacion con otros sockets en un dominio de comunicaciones 
+
+-el socket realiza la cominicacion cunado el servidor acepta la conexion con ellos,o cunado se este extraendo mensajes de ellos.
+
+
+la conexion con sockets puede darde orientado a la conexion o sin conexion. la comunicacion orintado a la conexion implica establecer una conexion y un dialogo entre los porgramas suscritos.
+el server que esta dadndo el servicio establece la disponibildad del socket eso habilida que las solicitudes puedan ser aceptadas. opcionalmente el servidor puede asginar nombres a los servicios que este otroga, dando una mayor trasparencia a este proceso de cliente-servidor. el cliente que se quire conectar al servidor debe de solictar el servicio del programa, esto se puede hacer con su nombre o atributos, algo muy siminlar a lo que pasa con los numeros telefonicos. 
+
+esa conexion se esara aciva el tiempo necesario que el cliente requiera de los servicios del servidor 
+
+- comunicacion sin conexion implica a que no estabece una conexion. sobre la cual se pueda hacer un dialogo o una transferencia de datos. 
+
+
+
+
+
+
+
+
+
+
+
