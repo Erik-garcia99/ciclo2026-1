@@ -1,33 +1,11 @@
-< gemini > 
-2. Gestión de Inventario Inteligente mediante "Smart Shelves" (Peso y Carga)
-Ideal para PyMEs con almacenes de materia prima de alto valor o tornillería pequeña donde el conteo manual es un infierno.
-
-El Proyecto: Estantes con celdas de carga (sensores de peso) conectadas a nodos ESP32. El sistema sabe exactamente cuántas piezas quedan por el peso total y descuenta del inventario en tiempo real.
-
-Valor para la Empresa: Reabastecimiento automático. Cuando el peso baja de un umbral, el sistema envía una alerta o dispara una orden de compra vía API.
-
-Stack Técnico: C (ESP-IDF) con uso intensivo del ADC y filtros digitales (Kalman o Promedio Móvil) para evitar ruido en el peso + MQTT + Base de Datos Relacional (PostgreSQL).
-
-KIMI
-
-5. 🚗 Detector de Placas y Control de Acceso Automatizado para Estacionamientos Privados y Residenciales
-
-Problema: Los guardias de seguridad en fraccionamientos y oficinas pierden tiempo abriendo portones, no saben quién entró/salió ni cuándo, y los residentes se quejan de esperar en la 
-
-lluvia. Los sistemas comerciales de control de placas (HID, AMAG) cuestan cientos de miles.
-
-Stack técnico:
--Hardware: ESP32-CAM con visión artificial (OpenALPR o modelo propio ligero) en entrada/salida, barrera vehicular controlada por relé, botón de ayuda intercom
-
--Edge: Raspberry Pi 4 procesando placas localmente (baja latencia, no depende de internet), comparando contra base de datos de residentes/visitantes autorizados
-
--Cloud: Registro de todas las entradas/salidas con foto de placa y timestamp, lista negra de placas (vigilancia), estadísticas de horarios pico
--Web: Portal para administrador de fraccionamiento: alta/baja de residentes, visitas programadas (genera QR temporal), reporte de "placas sospechosas que han pasado 3+ veces sin ser residentes"
-
--App para residente: Abre portón desde celular, registra visita anticipada (placa queda autorizada temporalmente)
-
--Quién paga: Administradores de fraccionamientos residenciales, oficinas con estacionamiento privado, hospitales (control de entrada de ambulancias/visitas), centros comerciales (estacionamiento de empleados), universidades.
+Los objetivos estratégicos y los comerciales son fundamentales para el éxito de cualquier organización, pero cumplen roles muy distintos que se complementan entre sí. Por un lado, los objetivos estratégicos funcionan como declaraciones amplias de dirección o pequeñas declaraciones de visión que responden a la pregunta de hacia dónde quiere ir la empresa. Su propósito principal es servir como un puente que conecta la gran visión general con el plan de acción que se ejecutará en el año. Por otro lado, los objetivos comerciales son metas mucho más específicas y medibles que la empresa se propone alcanzar en un periodo de tiempo determinado, abarcando logros concretos como obtener ganancias, aumentar la participación de mercado, cumplir con las expectativas de los accionistas o mejorar la eficiencia.
+La principal diferencia radica en su nivel de amplitud y especificidad. Mientras que el objetivo estratégico te da el panorama general y traza el rumbo direccional que debe seguir el negocio, el objetivo comercial define el resultado exacto y tangible que necesitas alcanzar para hacer realidad esa gran estrategia. En la práctica, establecer estos objetivos comerciales de forma clara no solo asegura que la empresa se mantenga enfocada, sino que también resulta vital para motivar a los empleados al proporcionarles un sentido de dirección claro para su trabajo.
 
 
+////////////////////////////////
 
 
+Nosotros, el equipo #4, llegamos a la conclusión de que los objetivos estratégicos y los objetivos comerciales son piezas complementarias pero con funciones muy distintas dentro de la planificación de una empresa.
+Por un lado, determinamos que los objetivos estratégicos son declaraciones amplias de dirección. Su propósito es servir como un "puente" que conecta la gran visión de la organización con las acciones o metas que se van a ejecutar cada año. En esencia, funcionan como pequeñas declaraciones de visión que responden a la pregunta fundamental de "hacia dónde" se dirige la empresa.
+Por otro lado, analizamos que los objetivos comerciales (o empresariales) son las metas específicas que la compañía se propone alcanzar dentro de un periodo de tiempo determinado. A diferencia de la estrategia general, estos buscan resultados concretos, como obtener ganancias, aumentar la participación de mercado o mejorar la eficiencia. Al ser claros y medibles, concluimos que son vitales para mantener a la empresa enfocada y para motivar a los empleados al brindarles un sentido de dirección claro en su trabajo.
+Como resumen de nuestra discusión, la diferencia principal radica en su amplitud y especificidad: el objetivo estratégico nos da el marco general y el rumbo (el "dónde vamos"), mientras que el objetivo comercial representa los resultados exactos, medibles y con límite de tiempo que debemos cumplir y monitorear paso a paso para hacer realidad esa gran estrategia.

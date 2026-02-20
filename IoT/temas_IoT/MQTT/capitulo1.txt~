@@ -22,7 +22,7 @@ otro importante aspecto del protoclo MQTT es que es extremadamente facil de impl
 1- liguero y eficieinte: MQTT minimiza los recursos computaciones y de banda
 ancha de la red, requerido por los clientes que extrar informacion 
 
-2- comunicacion bidireccional
+2- comunicacion bidireccional: 
 
 
 
