@@ -15,8 +15,7 @@ el server que esta dadndo el servicio establece la disponibildad del socket eso 
 
 esa conexion se esara aciva el tiempo necesario que el cliente requiera de los servicios del servidor 
 
-- comunicacion sin conexion implica a que no estabece una conexion. sobre la cual se pueda hacer un dialogo o una transferencia de datos. 
-
+- comunicacion sin conexion implica a que no estabece una conexion. sobre la cual se pueda hacer un dialogo o una transferencia de datos. en lugar, el programa de servidor designa un nombre que identifica donde llegara a el. 
 
 
 

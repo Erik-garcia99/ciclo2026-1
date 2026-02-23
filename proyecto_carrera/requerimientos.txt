@@ -1,0 +1,40 @@
+-> el sistema debe de realizar inventario de manera automatica, al estar constantemente monitoreando la mercancia, constantemente detecta los cambios y stock actual 
+
+-> el sistema debe de ser capaz de adpatarse al rublo del negocio 
+
+-> el sistema debe se capaz de detectar stock bajo y si esta habilitado el pedido automatico, cargar pedido a la fecha mas pronto para que no haya stock bajo 
+
+-> si el sistema de autostock no esta activado manda una alerta de que esta bajo como mensaje de aplicacion.
+
+-> el sistema podria configurarse en cunado porcentaje o kilos serian conisderado stock bajo 
+
+-> el sistema mediante algoritmos detectar periodos especiales, con un aprendizaje puede decir estas fechas de anio se venden mas estas cosas, o se tiende a deperdiciar algo entonces el sistema esta mas atento a esos productos y listo para dar alerta 
+
+-> el sistema puede comparar lo vendido con lo que que hya en realizar y lo que ha salido y podra detectar que hay una discrepancia entonces ocurrio un robo de producto 
+
+-> el sistema puede detectar que producto se mueve menos y puede dar sujerencias de como poder vender esos articulos con algoritmos que pueden buscar en la red y dar la informacion mas dirugible para el usuario que puede ser una persona no tan relacionado a la tecnologia 
+
+
+-> el sistema mostrara por medio de graficas un analisis del estado del negocio, esto mas relacionado con los estantes y tenttivamente con lo que se ha vendido para detectar patrones y dar sugerencias 
+
+-> el sistema debe evitar el sobre stoock con el aprendijae del negocio mediante algoritmos de machine learning 
+
+-> si se tienen estantes en otro local mediante un dashboard puede ver lo que scede en a otra sucursal
+
+-> el sistema deberia ser capaz de conectarse con putos de ventas ya usados (seria ideal pero no se que tan viable seria, las APIS o credencales de las que ya se cuentran)
+
+-> 
+
+
+
+
+-> si es posible, un agente de IA que pueda ayudar a organizar el negocio, aun no esoy seguro como en que podria ayudar, pero seria buena implemtnacion, pero eso lo dejamos al ultimo, no es prioridad porque no estoy seguro de poder implementarlo
+
+
+
+
+
+
+
+
+

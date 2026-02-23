@@ -160,7 +160,7 @@ static void wifi_event_handler(void *args, esp_event_base_t event_base, int32_t 
 
 void get_time(char *JSON){
 
-    //peticion a la PAPI que me de el JSON con la infromacion de la hora en tijuana 
+    //peticion a la API que me de el JSON con la infromacion de la hora en tijuana 
     esp_http_client_config_t config = {
         .url = "https://time.now/developer/api/timezone/America/Tijuana",
         .method = HTTP_METHOD_GET,
