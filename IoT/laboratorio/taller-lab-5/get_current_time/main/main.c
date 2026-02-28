@@ -175,7 +175,6 @@ static void wifi_event_handler(void *args, esp_event_base_t event_base, int32_t 
 
 // necesario la certificacion porqeu es un metodo HTTPS por lo que maniana le intentamos a ver que onda. 
 char *get_time(void) {
-
     esp_http_client_config_t config = {
         .url = "http://worldclockapi.com/api/json/pst/now",
         .method = HTTP_METHOD_GET,

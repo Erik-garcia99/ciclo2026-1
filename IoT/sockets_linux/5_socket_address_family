@@ -1,0 +1,17 @@
+
+
+el parametro de address family en la API socket() determinael formato de la estrucutra dela direccion que sera usado por las APIs socket 
+
+
+el protocolode address family la provee la red de trasnportacion de las aplicacion de los datos para una aplicacion a otra, 
+
+
+
+---->>> AF_INET address family <<<<--------
+
+esta familia de direcciones proporciona comunicacion entre procesos enque pueden correr en el mismo sistema o en otro sistema diferente. 
+
+direccionar para AF_INET sockets  
+
+
+

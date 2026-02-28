@@ -34,6 +34,6 @@ palabras ingles repetidas
 
 -- although : aunque
 
+-- might: poder - fuerza
 
-
- 
+-- avoid - evitar  

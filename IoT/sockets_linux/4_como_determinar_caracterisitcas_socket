@@ -1,0 +1,77 @@
+
+cunado la aplicacion crea sockets con la API < socket() >, la mayoria de los sockets se especifican con los sigueintes parametros: 
+
+--> la direccion de familia del socket determina el formato de la estrucutra de direcion para el socket. 
+
+-->el tipo de socket determina la forma de comunicacion del sockets 
+
+--> el protocolo del socket deterina que potocolos son soportados para ese uso de sockets
+
+
+esos parametros o caracterisitcas definene la aplicacion del socket y como interpretarse con otras aplicaciones de socket. dependiendo de la direccion de familia del socket, se tienen diferentes opciones para el tipo de socket y protocolo. 
+
+en la pagina 6 se pueden ver una tabla con la direccion de familia, el tipo de socket y el protocolo soportado: 
+
+------>>>> SOCKET ADDRESS STRUCUTRE <<<<--------
+
+los sockets usan una estructura llamada < sockaddr > que pasa y recibe direcciones. esta estrucutra no requiere la API socket para reconocer el fromato de direccionamineto. 
+
+actualmente, el sistema operativo IBM i soporta < Berkeley Software Distribution (BSD) > 4.3 y X/Open Single Unix Specification (UNIX 98). la base de IBM i usa la estrucutra de la API BSD 3.4 y sintaxis, igual se puede usar UNIX 98. cada socket address strucuture para BSD 4.3 tiene sus equivalentes en la estrucutrua UNIX 98. 
+
+en la PG 7 se pueden ver esas estrcutras 
+
+	estrucutra BSD 4.3                          BSD 4.4 / UNIX 98
+---------------------------------------------------------------------------------------
+	struct sockaddr{                       /      struct sockaddr{
+                                               /           uint8_t  sa_len;
+		u_short	sa_family;             /           sa_family_t sa_family;
+		char sa_data[14];              /           char sa_data[4];
+	};                                     /      };
+                                               /
+                                               /
+	struct sockaddr_storage{               /       struct sockaddr_storage{
+                                               /      
+		sa_family_t ss_family;         /           uint8_t ss_len;
+		char _ss_pad1[_SS_PAD1SIZE];   /           ss_family ss_family;
+		char* _ss_aling;               /           char _ss_pad1[_SS_PAD1SIZE];
+		char _ss_pad2[_SS_PAD2SIZE];   /           char* _ss_aling
+	};                                     /           char _ss_pad2[_SS_PAD2SIZE];
+                                               /       };
+                                               /
+----------------------------------------------------------------------------------------
+
+definiciones de campos de la estrucutrua:
+
+
+--> sa_len : este campo contiene el manaio de la direcion para las especificaciones de UNIX 98, este campo no es necesario usarse siempre, este campo es ingnorado en la direcciones de entrada 
+
+--> sa_family:  este campo deine la direccion de la familia, este valor es especificado por la direccion de familia cunado se es llamado a la API < socket() >
+
+--> sa_data: este campo contiene 14 bytes que son sada para mantener reservador la direccion de si mismo. 
+
+los 14 bytes es un placehoder, esta direccion puede exceder esa longitud, la estrucutrua es generio porqueno define el formato de la direccion. el formto de la direccion es definido por el ipo de trasnporte, para el que se crea n socker. cada uno de los proveedores de transpote define exactamente el formatoespecifico de requeriminetos de direccionmainero similar a laestrucutra de direccion. el trasnporte es identificado por el valor del parametro protocolo en la API socket()
+
+
+--> sockaddr_storage: este campo declara el almacenmainto para cualquier famiy address. esta estrucutrua es lo suficientemente graande y alineado para cualquier estrucutrua especifica del protocolo.  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

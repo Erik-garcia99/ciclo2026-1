@@ -1,0 +1,20 @@
+
+
+
+--->>> socket type <<<-----
+
+el segundo parametro que requoere socket cunado se le es llamdo, el tipo de socket proviene del tipo de 
+identificacion y caracterisiticas de la conexion establecida para la transportacion de datos de un maquina 
+o procediente de otra 
+
+el sistema soporta los sigueintes tipos de sockets 
+
+
+--> stram (SOCK_STRAM)
+
+este tipo de socket esta orientadaa a la conexion, estableciendo una conexion de punto-a-punto 
+usando < bind(), listen(), accept(), y connect() APIs > SOCK_STRAM envia datos sin error o duplicados, y recibe la 
+informacion en el orden enviad. SOCK_STREM contruye el flujo de control evitanto exceso de datos.
+
+
+
