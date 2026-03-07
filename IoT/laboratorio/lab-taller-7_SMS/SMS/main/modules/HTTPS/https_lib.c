@@ -36,8 +36,6 @@
 #define MAX_HTTP_RECV_BUFFER    1024
 #define MAX_HTTP_OUTPUT_BUFFER  2048
 
-//---------------------
-//esto se va 
 
 //-------------------------------
 static const char *TAG  = "HTTP_CLIENT Handler";
