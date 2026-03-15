@@ -1,0 +1,11 @@
+--> la IP/PUERTO - TOPIC seria ingresado por medio de UART al ESP
+
+ingresar la IP por medio de una cola 
+
+-> unatarea que monitoree un btn que indique queq ueiore cambiar de IP e interrupta todo y se prepare para inicar con la nueva IP/ puerto o topico 
+
+
+
+
+
+ 

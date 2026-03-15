@@ -11,6 +11,7 @@
   "clangd.arguments": [
     "--background-index",
     "--query-driver=**",
-    "--compile-commands-dir=c:\\Users\\erikG\\OneDrive\\Documents\\ciclo2026-1\\IoT\\laboratorio\\lab-taller-9_MQTT\\build"
-  ]
+    "--compile-commands-dir=c:\\Users\\erikG\\OneDrive\\Documents\\ciclo2026-1\\IoT\\laboratorio\\lab_taller-9_MQTT\\localhost\\MQTT_CLIENT\\build"
+  ],
+  "idf.portWin": "COM3"
 }
