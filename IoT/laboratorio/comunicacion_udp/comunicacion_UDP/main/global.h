@@ -23,6 +23,16 @@ extern QueueHandle_t flow_data_queue;
 
 
 
+//estrucutra parametros para tarea de UART
+
+typedef struct{
+    int NUM_UART;
+}task_uart_params_t;
+
+
+extern task_uart_params_t global_uart;
+
+
 
 
 #endif

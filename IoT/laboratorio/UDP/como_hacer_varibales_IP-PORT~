@@ -4,5 +4,11 @@ ingresar la IP por medio de una cola
 
 -> unatarea que monitoree un btn que indique queq ueiore cambiar de IP e interrupta todo y se prepare para inicar con la nueva IP/ puerto o topico 
 
-
 --> primero debo de relizar la tarea y el codigo con UART para poder escribir en cualquier otro archivo .c  
+
+
+--->!! ahora el probelma que estamos teniendo es en como el programa va a saber si se trata del wifi o de la direccion ip/puerto el que debe de cambiar?
+
+----> SOLUCION : lo haremos por medio de comandos, sera creo mas facil y estara mas claro para un usuario a que se quiere hacer referencia 
+
+

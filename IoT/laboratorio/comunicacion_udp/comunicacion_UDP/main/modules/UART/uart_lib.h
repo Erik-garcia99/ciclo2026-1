@@ -22,7 +22,7 @@
  * @brief cola en donde se ingresaran los datos de UART
  *  
 */
-QueueHandle_t uart_event;
+extern QueueHandle_t uart_event;
 
 //varibales 
 
@@ -49,7 +49,11 @@ QueueHandle_t uart_event;
 
 esp_err_t uart_init(uart_port_t sel_uart, int uart_baudrate, uart_word_length_t uart_data_length, uart_parity_t uart_parity, uart_stop_bits_t stop_bits, int RX, int TX);
 
-
+/**
+ * 
+ * @brief se encargara de realizar la comunicacion con UART y mandar la informacion a una cola en el archivo que lo necesita, actuara como una especio de demonio 
+ * 
+*/
 
 void task_uart(void *params);
 

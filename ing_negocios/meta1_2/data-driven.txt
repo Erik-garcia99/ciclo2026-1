@@ -1,0 +1,274 @@
+-------caracterisitcas: 
+ 
+1- Cinépolis migro sus operaciones desde servidores tradicionales en morelia hacia Amazon web services (AWS). esta migración se dio obligada dado a la pandemia para poder mantenerse a la vanguardia, así como el gran crecimiento que estuvo manteniendo tuvo que migrar a servicios de AWS, esto ayudo a habilitar su crecimiento a 19 países. de esta implementación surgió Cinepolis Klic, creo una oficina para la transformación digital de datos, 
+
+->arquitectura de software y mejorar la experiencia de usuario. el uso de la nube de AWS permitió actualizar el sistema de inventario para adaptarse al modelo de e-commerce.
+
+Se utilizan las capacidades de Machine Learning de AWS para enriquecer el servicio de streaming con el análisis del tráfico a las salas físicas mediante un lago de datos, para entender qué películas fueron las más populares en su lanzamiento; también se utiliza para ofrecer promociones, modelos de lealtad y la venta de alimentos y boletos en kioscos.
+
+
+--toma de decisiones basada en analitica: 
+2- la toma de decisiones con la ayuda de herramientas de anlisita ha sido clave para la mejora continua en cinepolis, basandose en las preferencias de los usuarios y los objetivos comerciales. 
+-> en analizar los habitor de compra de los usuarios por medios digitales pueden ayudan a cinepolis a conocer las prefencias de ciertos productos por zona geograficas, como fue el despliegue de funciones digiales primero en espana donde la prenetracion de la interaccion digital es cerca del 90% a diferencia del mexicano con un 40%. en un mercado se puden obtener resultados para calcular que puede funcionar en otro territorio.
+
+
+ 
+-- programa de lealtad como moter de captura y uso de datos: 
+-> el conocer mas sobre sus clientes permite personalizar las expericneicas, a traves del "Progressive Profiling" capturan datos para obtener insights que permitan enviar la oferta adecuada a la persona adecuada en el momento adecuado. la necesidad de digitalizacion haria que la identidad se covirtiera en un elemento central de la expericnia de usuario, la sguridad y la escalabilidad,  al crear un programa de fidelizacion moderno en Auth0 implicó simplificar el proceso de inscripción y aprovechar los datos de identidad de formas innovadoras. los nuevos usuarios se pueden registrar desde cualquier dispositivo inteligente. 
+el uso de MFA ha sido de gran ayuda al recopilar numeros de telefono, correos electronicos, con algunos datos adicionales, son datos limpios y fibales que el equipo ha podido aprovehcar para ofrecer expericeicna especificas y personalizadas, esto ha permitido un crecimiento de 1.3 millones de nuevos socios en solo 3 meses lo que fue un aumenteo del 300% en nuevlos clientes leales netos en comparacion del proceso fisico. 
+
+
+
+--Precios dinámicos basados en datos del cliente
+
+-> cinepolis implemento precios dinamicos en su dulceria donde los precios varian para cada miembro del club cinepolis, los presios se manjeran de manera distinta para cada miembro de club cinepolis, la personalizacion de la experiencia del cine. 
+De forma más amplia, Cinépolis maneja precios según la oferta y el contexto: dependiendo de la zona, la ciudad y el complejo, cobran distintos precios, considerando el poder adquisitivo local y la calidad de servicio ofrecida
+
+
+---  ¿Cómo se asegura de basar sus decisiones en datos? 
+
+- infrestrucutra centralizada: 
+
+1 - el primer fue la decision de concentrar todos los datos unificados, lo cual fue la migracion hacia servidores de AWS en donde ahora los datos en venta de boletos, consumo de dulceria, comportamiento en la app, kioscos y redes sociales estan en un solo repositorio.
+
+-> Cinépolis seleccionó soluciones de negocio que le ayudaron a eliminar silos de información y que, gracias a sus capacidades analíticas, permiten una mayor integración, presentación y análisis de los datos para entender el comportamiento de los clientes, con el objetivo de identificar oportunidades ocultas y así tomar las mejores decisiones. 
+
+- club cinepolis como fuente primaria de datos de cliente. 
+
+2- el digitalizar la membresia se convirtio en la principal instrumento para capturar dato para la empresa, este permite crear mejoras experiencia de usuario y entender mejor a sus miembros para mejorar continua. una hallazgo que impulso la transformacion digital fue que mas del 40% de los asistentes habian extraviado o dejado de utilizar su tarjeta club cinepilis. 
+
+-> como la trasformacion se dio mediante una APP movil, por lo que siempre se tendra a la mano esa membresia, la falta de esa informacion representaba un grave problema ya que es la fuente principal de infromacion sobre visitas, peliculas vistas, consumos, establecimientos visitados, sin estoa la cinepolis priede capacidad de decision. 
+
+un socio activo que hace uso de sus beneficios representa un valor para la emprea de hacta el 20% frente a uno no socio. 
+
+
+-- Business Intelligence integrado en la operación diaria
+
+3- cinepolis utiliza los datos en sus proceso operativos del dia a dia, la empresa tiene la capcidad de definir escenarios, gráficas de Business Intelligence ad hoc, planes de acción específicos y un sistema de comunicación directa entre el personal operativo y el grupo corporativo, donde la inteligencia de negocios es parte de la conversación cotidiana.
+
+-> un ejemplo de como los datos impulsan decisiones operativas es en analisi de sentimientos en redes sociales. se utilizan metodoligas de analisis de conversion digital para extraer insights relevantes: el 36% de los cinéfilos genera conversación sobre productos promocionales en estrenos, el 33% expresa preferencia por Cinépolis sobre sus competidores, y el 36% manifiesta emoción por promociones específicas.
+
+Cinépolis ha definido cuatro arquetipos de clientes — Gru (32% de visitantes, busca complacer a sus acompañantes), Dory (25%, busca experiencias en grupo), Avatar (27%, usa el cine como escapatoria) y Tony Stark (16% de visitantes pero 48% del Club Cinépolis, el gran fanático del cine). Esta segmentación permite diseñar comunicaciones, beneficios y estrategias personalizadas para cada perfil.
+ 
+
+-- Machine Learning y analítica predictiva para anticipar decisiones
+
+4- cinepolis utiliza modelos predciitivas e inteligencia artificial para antificpar el futuro en multiples frentes del negocio. utiliza las capacidades de Machine Learning de AWS para analizar el tráfico a las salas físicas mediante un lago de datos, para entender qué películas fueron las más populares en su lanzamiento, así como para ofrecer promociones, modelos de lealtad y la venta de alimentos y boletos en kioscos.
+un ejemplo puede ser la anticipacion de que productos compraran los clientes segun la region. cinepolis analiza las preferencia de consumo en dulcería por zona geográfica y genera modelos predictivos de demanda que le permiten garantizar el abastecimiento correcto de insumos en cada sucursal.
+
+
+
+
+------------  ¿Qué tipo de datos recolecta y cómo los utiliza para tomar decisiones?
+
+cinepolis recoplecta datos de multiples fuentes y de distintas categorias.
+
+1 - el primer gran bloque son los datos transaccionales y de comportamiento de compra que se capturan en cada interacción del cliente con la empresa: compra de boletos en taquilla, app, sitio web o kioscos, consumo en dulcería, películas vistas, horarios elegidos, tipo de sala preferida (IMAX, 4DX, VIP, tradicional) y frecuencia de visita. 
+
+-> cada operacion realizada queda registrada en el permifil de socio contabilizando incluso las visitas por dia para conocer los patrones de asistencia. este tipo de datos le permiten a la empresa saber que peliculas llenan mas las salas en ciertos horarios, qué productos se venden más por zona geográfica, y cuáles son los complejos con mayor rentabilidad. a traves de la centralizacion de datos cinepolis tiene acceso a los datos en tiempo real, garantizando que tanto los gerentes corporativos como los de cada complejo puedan gestionar sus operaciones con información actualizada
+
+
+2- el segundo bloque de datos proviene de vlub cinepolis y el perfin digital del socio. en 2022 cinepolis transformó su programa de lealtad a un modelo digital con el objetivo explícito de asegurar datos verificados del socio, ya que el registro físico en punto de venta no permitía validar correos ni teléfonos, y vincular el programa a los customer journeys en canales digitales para fortalecer la comunicación personalizada a través de correo, WhatsApp y notificaciones
+
+-> gracias a este cambio Cinépolis conoce con certeza quién es cada cliente, qué le gusta ver, con qué frecuencia asiste, cuánto gasta y qué tipo de beneficios activa. Estos datos permiten una segmentación muy precisa: Cinépolis ha definido cuatro arquetipos de clientes —Gru, Dory, Avatar y Tony Stark— basados en motivaciones y comportamientos cinematográficos, y utiliza esta segmentación para diseñar estrategias y comunicaciones diferenciadas para cada perfil.
+
+3- el tercer bloque corresponde a datos digitale sy de redes sociales que Cinépolis usa tanto para entender el comportamiento online de sus usuarios como para medir su posicionamiento de marca. cinepolis monitorea el trafico a su sitio web, lo que le premite conococer que el 82.3% de sus internautas accede desde dispositivo móvil, que YouTube genera el 32.31% del tráfico desde redes sociales, seguido de Facebook con 29.01% y WhatsApp con 19.21%
+
+-> adicionalmente realiza analisis de sentimientos en redes sociales, Cinépolis identificó que el 36% de los cinéfilos conversan sobre productos promocionales en estrenos, el 33% expresa preferencia por la marca sobre sus competidores, y el 36% manifiesta emoción por promociones específicas. 
+
+estos datos se transforman en decisiones sobre que producto lanzar que peliculas priorizar en la comunicación y cómo gestionar la reputación en cada mercado. 
+
+
+-------------------------------------------------------------------------------------
+
+Analicen los objetivos estratégicos y comerciales de la organización. ¿Cómo se han declarado estos objetivos? ¿Cómo la organización asegura que estos objetivos son claros y específicos?
+
+
+--- como se han delcarado los objetivos estrategicos y comerciales de CINEPOLIS 
+
+--declaracion de objetivos: 
+
+cinepolis declara sus objetivos como parse de su filosofia corporativa, esta es la base con la cual se deprenden todas sus estrategias comerciales, 
+
+Misión oficial: "Ser la mejor opción de entretenimiento, fortaleciendo nuestro liderazgo en la industria cinematográfica a nivel internacional, ofreciendo diversión, innovación y servicio estelar.
+
+la declaracion define el sectos (cine) el nivel de ambicion (liderazgo), el alcance geográfico (internacional) y los atributos diferenciadores (diversión, innovación, servicio).  
+
+
+2 - objetivos estrategicos: 
+
+A- Expansión geográfica internacional
+Cinépolis pasó de ser una pequeña cadena en México a ser la compañía cinematográfica más grande de América Latina y la tercera en el mundo.
+ 
+la expancion no siempre fue organzia, como un ejemplo, para entrar a chile tuvo de adquirir la canena Hoyts, la razon fue estrategica, entrar por adquisición a un mercado con cierta madurez en la industria cinematográfica resulta más eficiente que arrancar desde cero. 
+
+la diversificacion geografica Tambien tiene un objetivo financiero explicito, operar en econocmicas diferentes reduce la dependecnia de las productoras de Hollywood, como lo es indica con su industria local Bollywood, 
+
+B- innovacion en formatos de sala como ventaja competivia: 
+
+Cinepolis desarrollo multiples unidades de negocios especializadas como lo son: cinepolis VIP,  Cinépolis IMAX, salas 4DX,  Sala de Arte,  Sala Junior, juntos a estas se integran otras unidades de dulceria como: cinecafé, Coffee Tree, helados Spyral, Baguis y sushi y bar.
+
+la segmentacion es una estrategia de captura de valor, cada formato cobra un precio diferente y apunta a un segmento socioeconómico distinto, lo que amplía la base de clientes y protege los ingresos ante variaciones en la demanda.
+
+C- Objetivo de transformación del modelo de ingresos
+
+Uno de los objetivos comerciales más relevantes que distingue a Cinépolis es la reorientación de la estructura de ingresos hacia la dulcería y la gastronomía. en temporadas altas la venta de cominda tiende a representar hasta aun 60% de las ganacias totales de un cine. 
+
+aunque un ingreso significativo proviene de la venta de boletos,los márgenes reales están en las palomitas, nachos, refrescos y en la publicidad.
+
+D - Objetivo de penetración digital y omnicanalidad
+
+en 2022 el modelo de lealtad de cinepolis migro de ser presencial, lo que requeria ir a un establecimientos y llenar datos que no se podrian verificar y tendia a errores y datos falsos a un modelo digital con el objetivo de reducir esos datos erroneos, El lanzamiento fue considerado un éxito: en nueve meses el programa alcanzó su máximo histórico de socios activos.
+
+E -  Estrategia de precios diferenciados por mercado
+
+no todos los cinepolis cobran el mismo precio, dependiendo de la región, ciudad y estado. Esta estrategia considera dos variables: la capacidad adquisitiva del mercado local y la calidad del servicio ofrecido en cada sala.
+
+F -  Diversificación de contenido más allá del cine
+
+Cinépolis introdujo la transmisión en sala de eventos especiales como conciertos, ópera, partidos de fútbol y peleas de box. Esta táctica genera nuevas fuentes de ingresos sin necesidad de entrar a nuevos mercados geográficos, aprovechando la infraestructura existente. 
+
+G - objetivos específicos por país
+
+en el anio 2025 cinepolis centro sus esfuerzo de creciemintos en chile con la apertura de entre dos y tres nuevas salas anuales. En Perú, inauguró recientemente una nueva sala en Lima con una inversión de aproximadamente 7 millones de dólares. En Colombia, la prioridad es optimizar las sedes actuales más que abrir nuevas. 
+
+
+--------------------------------------------------------------
+------3 CÓMO ASEGURA QUE LOS OBJETIVOS SON CLAROS Y ESPECÍFICOS
+
+--Balanced Scorecard (BSC): se adopto esta herramienta para tradcucir la mission y vision en indicadores medibales. esta herramienta permeate construir un para construir un mapa estratégico con relaciones causales entre objetivos, de modo que cada área sabe qué resultado debe producir y cómo se conecta con la estrategia global.
+
+--Segmentación de marcas con objetivos de mercado distintos: las distintos tipos de salan son unidades con segmentos objetivos, estructuras de precio y propuestas de valor diferenciadas.
+
+--Política de inversión cuantificada: La empresa reinvierte un porcentaje definido de sus ganancias para financiar la expansión, lo que convierte el crecimiento en un objetivo con métrica financiera
+
+--Adaptación local como requisito operativo: cunado se enfretan nuevos mercados la "tropicalizacion" es un principio explícito de operación, si un negocio parace infalibre en una regiosn, la empresa invierte tiempo en conocer al nuevo público.  
+
+--Net Promoter Score (NPS) y métricas de satisfacción: Cinépolis utiliza indicadores como el NPS para medir la lealtad del cliente y la percepción de calidad, lo que convierte el objetivo de "servicio estelar" en un número medible y comparable entre periodos y mercados.
+
+-------------------------------------------------------------------------------------------
+PREGUNTA 3 :
+
+
+
+Expliquen cómo la organización ha llevado a cabo su transformación digital. ¿Qué tecnologías IT ha implementado? ¿Cómo estas tecnologías han sido fundamentales para alcanzar los objetivos declarados?
+
+---
+
+# CINÉPOLIS: Transformación Digital, Tecnologías IT y su Relación con los Objetivos Estratégicos
+
+---
+
+## 1. CONTEXTO: POR QUÉ SE DIO LA TRANSFORMACIÓN DIGITAL
+
+La transformación digital de Cinépolis no fue un proceso planificado de una sola vez, sino una respuesta incremental a tres presiones concretas: la saturación del mercado físico de cine, el cambio en los hábitos de consumo de entretenimiento (acelerado por la pandemia de 2020), y la competencia de plataformas de streaming como Netflix y Disney+.
+
+La adaptación a nuevas tecnologías no es una opción para Cinépolis, sino una necesidad estratégica. El streaming, los servicios digitales y la digitalización del contenido son oportunidades para reconectar con audiencias que hoy valoran la accesibilidad, la diversidad y la personalización. Esta transformación redefine el concepto de éxito en el cine, donde los ingresos de taquilla son solo una parte de un ecosistema más amplio de interacción con el público.
+
+Desde el inicio de la crisis sanitaria, Cinépolis impulsó una transformación en dos pilares fundamentales: la digitalización de los negocios y el cambio hacia salas de menor tamaño más eficientes. Paralelamente, la empresa volcó su atención hacia los canales digitales para la venta de sus productos de dulcería, que representan una de las entradas de ingresos más importantes.
+
+Salvador Olvera, Director de Tecnologías de la Información de Cinépolis, declaró que la empresa realiza una inversión promedio del 7% del total de los ingresos recurrentes anuales para mantener el liderazgo tecnológico. La implementación de innovaciones tiene que ser muy acertada, y Cinépolis ha sido cuidadoso de ser líder en lugar de simplemente estar con "lo último".
+
+---
+
+## 2. TECNOLOGÍAS IT IMPLEMENTADAS
+
+### A. Infraestructura cloud con Amazon Web Services (AWS)
+
+Esta es la tecnología de base sobre la que descansa gran parte del ecosistema digital de Cinépolis. La empresa es uno de los clientes corporativos más importantes de AWS en México.
+
+Cinépolis figura entre las organizaciones mexicanas líderes que ejecutan cargas de trabajo críticas sobre la infraestructura de AWS, junto con empresas como Aeroméxico, Banco Santander México y Kavak.
+
+El Director de Cinépolis KLIC declaró que contar con Edge Locations de AWS en México acelera la entrega del servicio de streaming de manera más segura, y que la escalabilidad que proporciona permite servir tanto video como se necesite y manejar picos inesperados de demanda con facilidad. La seguridad y fiabilidad de la infraestructura global de AWS es fundamental para cumplir con la promesa a sus clientes.
+
+Los servicios de AWS utilizados específicamente incluyen Amazon S3 para almacenamiento de contenido, Amazon CloudFront como red de distribución de contenido (CDN), AWS Shield y AWS WAF para protección contra ataques DDoS y amenazas web, y AWS Global Accelerator para optimizar el enrutamiento de tráfico global.
+
+### B. Plataforma de streaming: Cinépolis KLIC
+
+KLIC es el producto digital más visible de la transformación de Cinépolis. Es una plataforma de video bajo demanda (TVOD, transactional video-on-demand) que complementa el negocio físico.
+
+Cinépolis KLIC utiliza Elemental Cloud para procesar el contenido de origen proveniente de los estudios. Este contenido es almacenado en Amazon S3 y entregado de forma segura mediante la red de distribución de contenido Amazon CloudFront a la amplia gama de dispositivos conectados disponibles en el mercado mexicano. Las soluciones de video de Elemental transcodifican el contenido para entrega con múltiples protocolos y DRM, lo que puede escalar fácilmente en la nube conforme Cinépolis continúa su expansión.
+
+Cinépolis KLIC tiene disponible su servicio en múltiples plataformas: Android, iOS, LG, consolas PlayStation, decodificadores ROKU, dispositivos Samsung Smart TV y Sony Bravia. La plataforma ofrece un formato de suscripción mensual para canales especiales como Fox Sports y HBO, además de la opción de renta por película con un costo que va desde los 20 hasta los 199 pesos, de modo que el usuario solo paga por lo que quiere ver.
+
+La estrategia comercial detrás de KLIC es relevante: la empresa usa su posición de liderazgo en cines de lujo para promover su servicio OTT, ofreciendo promociones creativas como rentas de películas gratuitas desde Cinépolis KLIC a los asistentes a los cines. El servicio ofrece contenidos distintos a los de las salas, lo que hace que ambos negocios sean complementarios y no canibalicen.
+
+### C. Ecosistema digital de puntos de contacto: app, web, kioscos y call center
+
+La digitalización de la interacción cliente-Cinépolis resultó en un ecosistema digital que ha eliminado las largas filas en taquilla y dulcería. La empresa reporta que un porcentaje significativo de las ventas de boletos se realiza a través de sus canales digitales, y que las ventas de alimentos también migran hacia los canales digitales.
+
+El Call Center de Cinépolis puede recibir en un día un promedio de cinco mil llamadas para compra de membresías, boletos o aclaraciones, cifra que puede elevarse hasta 15 mil llamadas diarias cuando hay un estreno importante. Para gestionar este volumen, la empresa se apoya en aliados tecnológicos como Ho1a, que provee infraestructura de telefonía para eficientar los procesos de atención. Para Juan Carlos Lozano, director de sistemas en Cinépolis, la tecnología juega un papel preponderante en cada una de las operaciones que realiza la empresa no solo en México sino a nivel internacional.
+
+El servicio CineTicket para la venta de boletos está disponible a través del sitio web, las aplicaciones oficiales para Android e iOS, taquillas automáticas y kioskos ubicados en los cines, y cualquier otro canal de compra participante. Esta omnicanalidad es el resultado de más de una década de inversiones en infraestructura digital.
+
+### D. Transformación del programa de lealtad: Club Cinépolis digital
+
+Este caso es uno de los más documentados de la transformación digital de la empresa porque ilustra un cambio estructural, no solo tecnológico.
+
+Hasta 2022, el programa Club Cinépolis operaba en forma análoga: cualquier usuario podía acceder a una tarjeta física del programa registrando sus datos directamente en el Centro de Atención a Clientes y pagando 59 pesos por la tarjeta. Con la reducción de visitas durante la pandemia, la empresa realizó un estudio de los socios del programa que reveló que más de el 40% de los asistentes habían extraviado o dejado de utilizar su Tarjeta Club Cinépolis.
+
+En 2022 Cinépolis transformó su programa de lealtad y cambió a un modelo completamente digital por dos razones concretas: eliminar la barrera de adquisición que antes solo se podía hacer en el punto de venta, y asegurar datos verificados del socio, ya que el registro presencial no permitía verificar la información del cliente. El lanzamiento fue un gran éxito: en nueve meses el programa alcanzó su máximo histórico de socios activos.
+
+Este cambio también incluyó el análisis de comportamiento y el aprovechamiento de la base de datos para impactar a los clientes que no asistían tan frecuentemente. Para los asociados se propuso el cambio a un esquema de trabajo en la nube para interconectarse con todas las herramientas de la marca como parte de una evolución.
+
+### E. Chatbot e Inteligencia Artificial Conversacional
+
+Cinépolis y Gus Chat se unieron para dotar a la cadena cinematográfica de su primer chatbot, capaz de resolver consultas sobre horarios, preventas, películas, asientos y precios. El chatbot es responsable de atender el 91% de las solicitudes de los usuarios.
+
+Resolver el 91% de las consultas de forma automatizada significa que la empresa pudo redirigir a su fuerza humana de atención al cliente hacia casos complejos o de mayor valor, reduciendo costos operativos sin deteriorar la experiencia del usuario.
+
+### F. IoT e Inteligencia Artificial aplicados a operaciones internas: el caso de las palomiteras
+
+Este es el caso más reciente y técnicamente específico de la transformación digital interna de Cinépolis, y es relevante porque aplica tecnología avanzada a un activo aparentemente simple.
+
+Cinépolis inició una transformación tecnológica en sus operaciones con la implementación de un sistema basado en Internet de las Cosas (IoT) e Inteligencia Artificial para monitorear sus máquinas de palomitas. El proyecto fue desarrollado en colaboración con XalDigital y respaldado por la infraestructura de Amazon Web Services. Actualmente en funcionamiento en 25 sucursales, el sistema permite medir temperatura, consumo eléctrico y ciclos de cocción de cada máquina. Esta información se centraliza en un panel de control que ofrece visibilidad por sucursal y por equipo, generando alertas automáticas y análisis de productividad.
+
+El objetivo es implementar mantenimiento predictivo, evitando fallos críticos como sobrecalentamientos y permitiendo una programación más eficiente. El sistema permite programar revisiones basadas en el número de cocciones, identificar irregularidades y tomar decisiones rápidas para asegurar que las palomitas estén siempre disponibles. El proyecto continuará expandiéndose a más sucursales mientras el agente de IA sigue aprendiendo y perfeccionando sus capacidades predictivas.
+
+La razón por la que este proyecto es estratégicamente importante está directamente conectada al modelo de ingresos: como se señaló en la pregunta anterior, la dulcería puede representar hasta el 50–60% de los ingresos reales de una sala. Garantizar la disponibilidad continua del producto más vendido mediante mantenimiento predictivo tiene impacto directo en los márgenes.
+
+### G. Inteligencia Artificial Generativa en Marketing
+
+Cinépolis utilizó Inteligencia Artificial generativa para producir anuncios publicitarios que se proyectan antes de cada función en sus salas. Un ejemplo fue un comercial en el que un grupo de espectadores huye de un pulpo gigantesco mientras comen palomitas a bordo de un vehículo que se transforma en un elefante en medio de la sabana. El uso de IA generativa en publicidad generó debate público sobre el desplazamiento de creativos humanos en México.
+
+---
+
+## 3. CÓMO ESTAS TECNOLOGÍAS SE CONECTAN CON LOS OBJETIVOS ESTRATÉGICOS DECLARADOS
+
+| Objetivo estratégico | Tecnología IT que lo sustenta | Resultado documentado |
+|---|---|---|
+| Expansión internacional | AWS global, KLIC como canal sin fronteras físicas | Presencia en 17 países con infraestructura digital centralizada |
+| Aumentar ingresos por dulcería | IoT + IA en palomiteras, venta móvil de dulcería | Disponibilidad garantizada; venta digital de alimentos creciente |
+| Fidelización del cliente | Club Cinépolis digital, base de datos centralizada | Máximo histórico de socios activos en 9 meses tras digitalización |
+| Reducción de costos operativos | Chatbot (91% de consultas resueltas), mantenimiento predictivo | Liberación de recursos humanos hacia tareas de mayor valor |
+| Competir contra el streaming | Plataforma KLIC sobre AWS con escalabilidad automática | Crecimiento seis veces proyectado de 2015 a 2016 en sus primeros años; complementariedad con el negocio físico |
+| Omnicanalidad | App móvil, web, kioscos, call center, Facebook | 20% de boletos vendidos digitalmente como piso, con meta de 35% |
+
+Como resultado de más de 25 años de evolución digital, la empresa define, idea, desarrolla e itera soluciones en diversas plataformas basándose en las preferencias de los usuarios y los objetivos de negocio. El ecosistema digital ha eliminado las largas filas en taquilla y dulcería, permitiendo a los clientes disfrutar de sus películas sin preocupaciones.
+
+Un punto importante sobre la filosofía tecnológica de Cinépolis: la empresa hace una distinción entre ser líder tecnológico y perseguir indiscriminadamente "lo último". La implementación de innovaciones tiene que ser muy acertada, y Cinépolis ha sido muy cuidadoso de ser líder en lugar de estar simplemente con la última moda. Esto implica una cuadratura económica: hay un costo a esto, y el criterio de adopción es que la tecnología sirva para mantener el liderazgo, no para demostrarlo.
+
+---
+
+## FUENTES CONSULTADAS
+
+1. Transformación digital de Cinépolis – LinkedIn Pulse (Medina, 2023): https://es.linkedin.com/pulse/la-transformaci%C3%B3n-digital-de-cin%C3%A9polis-caso-%C3%A9xito-en-m%C3%A9xico-medina
+2. Cómo ha adaptado Cinépolis su transformación digital – Aithor: https://aithor.com/essay-examples/como-ha-adaptado-cinepolis-su-transformacion-digital
+3. Cinépolis: innovación en la experiencia omnicanal – CIC / ITESM: https://cic.itesm.mx/DocumentosPrincipalAlumno/76c938b2-5eb0-9242-e8e3-fd81b4cfa205.pdf
+4. Cinépolis KLIC y AWS Edge Locations en México – Diario TI: https://diarioti.com/mexico-amazon-web-services-anuncia-nuevas-edge-locations-en-mexico/114158
+5. Cinépolis KLIC usa Elemental Cloud de AWS – Streaming Media: https://www.streamingmedia.com/PressRelease/Cin%C3%A9polis-Uses-Elemental-Cloud-from-AWS-for-Fast-Growing-OTT-Service_41885.aspx
+6. AWS abre Región México – clientes como Cinépolis: https://aws.amazon.com/blogs/aws/now-open-aws-mexico-central-region/
+7. Cinépolis y Ho1a – infraestructura telefónica y multicanal – Contact Forum: https://contactforum.com.mx/noticias/cinepolis-continua-su-crecimiento-internacional-con-aliados-tecnologicos-como-ho1a/
+8. Cinépolis implementa IoT e IA en palomiteras con XalDigital y AWS – Polux Web: https://poluxweb.com/Polux3/index.php/cine/novedades/64015-cinepolis-integra-ia-e-iot-en-sus-palomiteras-para-mejorar-la-experiencia-del-cine
+9. Primer chatbot de Cinépolis con Gus Chat – AI Talks: https://aitalks.es/llega-el-primer-chatbot-de-cinepolis/
+10. Ecosistema digital Cinépolis – IA Interactive: https://www.ia.com.mx/clientes/cinepolis/
+11. Cinépolis usa IA generativa en publicidad – SensaCine: https://www.sensacine.com.mx/noticias/noticia-1000164000/
+12. La apuesta de Cinépolis para reconectar con audiencias digitales – Merca2.0: https://www.merca20.com/la-apuesta-de-cinepolis-para-reconectar-con-audiencias-a-traves-del-contenido-digital/
+13. Transformación de la industria de cines – Expansión: https://expansion.mx/empresas/2021/08/10/cines-transformacion-industria-recuperacion
+
+
+
+
+
+
+

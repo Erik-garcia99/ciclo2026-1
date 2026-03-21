@@ -1,0 +1,4 @@
+la terminacion sera con un \r indicando que el caracter ascii se termino 
+
+junto con el NACK adjuntar un numero indicniando el tipo de error por ejemplo
+

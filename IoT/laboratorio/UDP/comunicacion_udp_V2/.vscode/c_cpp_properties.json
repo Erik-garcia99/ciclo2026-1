@@ -8,8 +8,7 @@
             ],
             "includePath": [
                 "${workspaceFolder}/**",
-                "C:/Espressif/frameworks/esp-idf-v5.5.2/components/freertos/FreeRTOS-Kernel-SMP/include",
-                "C:/Espressif/frameworks/esp-idf-v5.5.2/components/freertos/config/include/freertos"
+                "C:/Espressif/frameworks/esp-idf-v5.5.2/components/esp_driver_uart/include"
             ],
             "browse": {
                 "path": [

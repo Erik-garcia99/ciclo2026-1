@@ -16,13 +16,14 @@
 
 
 #include"wifi_lib.h"
-#include"global.h"
+
 
 static void wifi_event_handler(void *args, esp_event_base_t event_base,int32_t event_id, void *event_data);
 
 static int s_retry_num=0;
-static EventGroupHandle_t s_wifi_event_group; //este evento indica que se pudo o no conectar a una red WIFI
+static EventGroupHandle_t s_wifi_event_group;
 static const char *TAG="wifi_lib";
+
 
 
 void wifi_init_sta(void){
@@ -48,12 +49,6 @@ void wifi_init_sta(void){
 
     //esta es la estrucutura donde esta infromacion basica de nuestro internet
     wifi_config_t wifi_config ={
-        /**
-         * la estrucutra .sta de la union, contiene un campo ssid_len que indican el tamanio de la cadena del SSID
-         * pero no hay una para el pasword
-         *  
-         * 
-        */
         .sta = {
             .ssid = ESP_WIFI_SSID,
             .password = ESP_WIFI_PASS,
@@ -72,17 +67,11 @@ void wifi_init_sta(void){
 
     EventBits_t bits = xEventGroupWaitBits(s_wifi_event_group, WIFI_CONNECTED_BIT | WIFI_FAIL_BIT, pdFALSE, pdFALSE, portMAX_DELAY);
 
-
-    //aqui tal vez deberiamos de cambiar la condifcion por un while-do para que intente hasta que se coectte o que el usuario ingrese que no quiere mas conectarse. 
-
     if(bits & WIFI_CONNECTED_BIT){
         ESP_LOGI(TAG, "WIFI conectado con exito!");
     }
     else{
-
         ESP_LOGE(TAG, "Fallo la conexion WIFI!!");
-        // ESP_LOGi(TAG, "conectar a nueva red WIFI");
-        
     }
 
 }
@@ -102,8 +91,6 @@ static void wifi_event_handler(void *args, esp_event_base_t event_base, int32_t 
             ESP_LOGW(TAG,"reitentando conexion de WIFI.. (intento: %d/ de: %d)", s_retry_num, ESP_MAX_RETRY);
         }
         else{
-             
-
             xEventGroupSetBits(s_wifi_event_group, WIFI_FAIL_BIT);
             ESP_LOGE(TAG, "No se pudo conectar al WIFI");
         }

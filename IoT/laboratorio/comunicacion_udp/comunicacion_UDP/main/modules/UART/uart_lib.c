@@ -1,6 +1,11 @@
 
+#include<freertos/FreeRTOS.h>
+#include<freertos/queue.h>
+#include<freertos/task.h>
+
 //drivers
 #include<driver/uart.h>
+
 
 //LOG ERROR
 #include<esp_log.h>
@@ -8,6 +13,7 @@
 
 //propias
 #include<uart_lib.h>
+#include<global.h>
 
 
 
@@ -65,7 +71,48 @@ esp_err_t uart_init(uart_port_t sel_uart, int uart_baudrate, uart_word_length_t 
 }
 
 
+// necesaitmao relaizar la tarea de UART, esta tarea solo escuchara al UART 0 que es el que se estara comunicnado con la PC 
+//esta funcion solo es para cinado se recibe los datos desde UART, para escribir solo es cosa de usar uart_write_bytes(); 
+void task_uart(void *params){
 
 
+    task_uart_params_t *current_uart = (task_uart_params_t*)params; //params contiene las varibales que ha pasado.
 
+    uart_event_t event;
+    uint8_t *buffer =(uint8_t*)malloc(BUFFER); //el buffer de donde leera la infroacion que ingrese por UART 
+    //la cola en donde lo vamos a enviar se supone que se encuentra iniciada en el archivo global.h 
+    //uint8_t input[BUFFER];
+    //uint8_t index_input=0; 
+
+    while(1){
+        if(xQueueReceive(uart_event, (void*)&event, portMAX_DELAY)){
+
+            switch(event.type){
+                
+                case UART_DATA:{
+
+                    int len = uart_read_bytes(current_uart->NUM_UART, buffer, event.size, portMAX_DELAY);
+                    buffer[len]='\0';
+                    ESP_LOGI(TAG, "infor: %s", buffer);
+
+                }break;
+
+                case UART_BUFFER_FULL:{
+                    uart_flush(MAIN_UART);
+                    xQueueReset(uart_event);
+                }break;
+
+                case UART_FIFO_OVF:{
+                    uart_flush(MAIN_UART);
+                    xQueueReset(uart_event);
+                }break;
+
+                default:{
+                    ESP_LOGE(TAG, "other type of event from UART %d", event.type);
+                }break;
+            }
+
+        }
+    }
+}
 
