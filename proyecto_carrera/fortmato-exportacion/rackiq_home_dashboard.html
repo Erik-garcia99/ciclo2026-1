@@ -1,0 +1,465 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Inter',sans-serif}
+.wrap{display:flex;flex-direction:column;gap:20px;padding:8px 0}
+.row{display:grid;gap:14px}
+.r4{grid-template-columns:repeat(4,1fr)}
+.r3{grid-template-columns:repeat(3,1fr)}
+.rl{font-size:11px;font-weight:500;color:var(--color-text-secondary);margin-bottom:5px;padding-left:2px}
+.phone{background:#567c8d;border-radius:22px;overflow:hidden;width:100%;aspect-ratio:9/17;display:flex;flex-direction:column;font-size:11px}
+.hdr{background:#f5efeb;padding:7px 10px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.bon{background:#61f392;color:#1a5c30;font-size:9px;font-weight:700;padding:2px 7px;border-radius:20px}
+.dd{border:1px solid #ccc;border-radius:6px;padding:3px 7px;display:flex;justify-content:space-between;align-items:center;font-size:9px;color:#333;background:#fff}
+.cnt{flex:1;overflow:hidden;display:flex;flex-direction:column;gap:5px;padding:4px 8px 5px}
+.nav{background:#f5efeb;padding:5px 0 3px;display:flex;justify-content:space-around;flex-shrink:0}
+.ni{display:flex;flex-direction:column;align-items:center;gap:1px;font-size:8px;color:#888}
+.ni.a{color:#2f4156;font-weight:700}
+.nind{width:24px;height:3px;background:#2f4156;border-radius:2px;margin-bottom:1px}
+.nico{font-size:12px}
+.card{background:#f5efeb;border-radius:9px;padding:7px 9px;flex-shrink:0}
+.ct{font-size:10px;font-weight:700;color:#2f4156;margin-bottom:4px}
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;flex-shrink:0}
+.kpi{background:#f5efeb;border-radius:8px;padding:6px 8px}
+.kv{font-size:15px;font-weight:700;color:#2f4156}
+.kl{font-size:8px;color:#888;margin-top:1px}
+.bar-bg{background:#ddd;border-radius:3px;height:6px;width:100%}
+.bar-f{height:6px;border-radius:3px}
+.pr{display:flex;align-items:center;gap:6px;background:#fff;border-radius:7px;padding:5px 7px;margin-bottom:3px;flex-shrink:0}
+.pr-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.pr-info{flex:1}
+.pr-name{font-size:10px;font-weight:700;color:#2f4156}
+.pr-sub{font-size:8px;color:#888}
+.pr-pct{font-size:10px;font-weight:700;width:30px;text-align:right}
+.suc-card{border-radius:8px;padding:7px 9px;flex-shrink:0}
+.suc-ok{background:#e6f4ea;border-left:3px solid #2f9e44;border-radius:0 8px 8px 0}
+.suc-warn{background:#fff3e0;border-left:3px solid #ff8c00;border-radius:0 8px 8px 0}
+.suc-crit{background:#ffe5e5;border-left:3px solid #e53935;border-radius:0 8px 8px 0}
+.suc-name{font-size:10px;font-weight:700}
+.suc-sub{font-size:9px;color:#555;margin-top:1px}
+.suc-row{display:flex;justify-content:space-between;align-items:center}
+.tag{display:inline-block;font-size:8px;font-weight:700;padding:1px 6px;border-radius:10px}
+.tag-r{background:#ffe5e5;color:#b00020}
+.tag-g{background:#e6f4ea;color:#2f7d32}
+.tag-o{background:#fff3e0;color:#e65100}
+.tag-b{background:#e3f2fd;color:#1565c0}
+.sb{border:none;border-radius:5px;padding:3px 7px;font-size:9px;font-weight:700;cursor:pointer}
+.sb-dark{background:#2f4156;color:#fff}
+.sb-light{background:#c8d9e6;color:#2f4156}
+.mini-bar-row{display:flex;align-items:center;gap:5px;margin-bottom:3px}
+.mbl{font-size:9px;color:#f5efeb;width:55px;flex-shrink:0}
+.mbb{flex:1;background:#3d5a70;border-radius:3px;height:7px}
+.mbf{height:7px;border-radius:3px}
+.mbv{font-size:9px;font-weight:700;color:#f5efeb;width:36px;text-align:right;flex-shrink:0}
+.ds{display:flex;justify-content:space-between;font-size:9px;padding:3px 0;border-bottom:1px solid #e5e5e5}
+.ds:last-child{border:none}
+.dl{color:#888}
+.dv{font-weight:700;color:#2f4156}
+</style>
+
+<div class="wrap">
+
+<!-- FILA 1: Home variants -->
+<div>
+  <div class="rl">home — dashboard principal (todas las variantes)</div>
+  <div class="row r4">
+
+    <!-- HOME: una sola sucursal -->
+    <div>
+      <p style="font-size:10px;color:var(--color-text-secondary);text-align:center;margin-bottom:5px">home — 1 sucursal</p>
+      <div class="phone">
+        <div class="hdr">
+          <div class="dd" style="width:105px"><span>Suc. Central</span><span>▾</span></div>
+          <div class="bon">Online</div>
+          <div style="width:20px;height:20px;background:#ccc;border-radius:50%"></div>
+        </div>
+        <!-- valor stock hero -->
+        <div style="background:#2f4156;padding:10px 10px 8px;flex-shrink:0">
+          <div style="font-size:9px;color:#c8d9e6;margin-bottom:2px">Valor total del inventario</div>
+          <div style="font-size:26px;font-weight:700;color:#f5efeb">$48,320</div>
+          <div style="display:flex;gap:8px;margin-top:4px">
+            <div style="text-align:center;flex:1;background:#3d5a70;border-radius:6px;padding:4px">
+              <div style="font-size:12px;font-weight:700;color:#61f392">6</div>
+              <div style="font-size:8px;color:#c8d9e6">estantes</div>
+            </div>
+            <div style="text-align:center;flex:1;background:#3d5a70;border-radius:6px;padding:4px">
+              <div style="font-size:12px;font-weight:700;color:#f5efeb">24</div>
+              <div style="font-size:8px;color:#c8d9e6">productos</div>
+            </div>
+            <div style="text-align:center;flex:1;background:#3d5a70;border-radius:6px;padding:4px">
+              <div style="font-size:12px;font-weight:700;color:#ff8c00">3</div>
+              <div style="font-size:8px;color:#c8d9e6">alertas</div>
+            </div>
+            <div style="text-align:center;flex:1;background:#3d5a70;border-radius:6px;padding:4px">
+              <div style="font-size:12px;font-weight:700;color:#f7c948">2</div>
+              <div style="font-size:8px;color:#c8d9e6">bajo stock</div>
+            </div>
+          </div>
+        </div>
+        <div class="cnt">
+          <!-- kpis dia -->
+          <div class="kpi-grid">
+            <div class="kpi"><div class="kv" style="color:#2f9e44">$1,450</div><div class="kl">ventas hoy</div></div>
+            <div class="kpi"><div class="kv" style="color:#e53935">$240</div><div class="kl">mermas hoy</div></div>
+          </div>
+          <!-- estado estantes -->
+          <div style="font-size:9px;color:#c8d9e6;font-weight:600">Estado de estantes</div>
+          <div class="pr">
+            <div class="pr-dot" style="background:#2f9e44"></div>
+            <div class="pr-info"><div class="pr-name">Bebidas</div><div class="pr-sub">Est.2 · 78%</div></div>
+            <div style="width:50px"><div class="bar-bg"><div class="bar-f" style="width:78%;background:#2f9e44"></div></div></div>
+            <div class="pr-pct" style="color:#2f9e44">78%</div>
+          </div>
+          <div class="pr">
+            <div class="pr-dot" style="background:#f7c948"></div>
+            <div class="pr-info"><div class="pr-name">Enlatados</div><div class="pr-sub">Est.1 · 35%</div></div>
+            <div style="width:50px"><div class="bar-bg"><div class="bar-f" style="width:35%;background:#f7c948"></div></div></div>
+            <div class="pr-pct" style="color:#f7c948">35%</div>
+          </div>
+          <div class="pr">
+            <div class="pr-dot" style="background:#e53935"></div>
+            <div class="pr-info"><div class="pr-name">Lacteos</div><div class="pr-sub">Est.5 · 12% ⚠</div></div>
+            <div style="width:50px"><div class="bar-bg"><div class="bar-f" style="width:12%;background:#e53935"></div></div></div>
+            <div class="pr-pct" style="color:#e53935">12%</div>
+          </div>
+          <button style="background:#c8d9e6;color:#2f4156;border:none;border-radius:7px;padding:5px;font-size:9px;font-weight:700;width:100%">Ver todos los estantes →</button>
+        </div>
+        <div class="nav">
+          <div class="ni a"><div class="nind"></div><span class="nico">🏠</span><span>inicio</span></div>
+          <div class="ni"><span class="nico">📦</span><span>inventario</span></div>
+          <div class="ni"><span class="nico">🔔</span><span>alertas</span></div>
+          <div class="ni"><span class="nico">💡</span><span>suger.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOME: multi-sucursal -->
+    <div>
+      <p style="font-size:10px;color:var(--color-text-secondary);text-align:center;margin-bottom:5px">home — multi-sucursal (U03)</p>
+      <div class="phone">
+        <div class="hdr">
+          <div class="dd" style="width:105px"><span>Todas las suc.</span><span>▾</span></div>
+          <div class="bon">Online</div>
+          <div style="width:20px;height:20px;background:#ccc;border-radius:50%"></div>
+        </div>
+        <div style="background:#2f4156;padding:10px 10px 8px;flex-shrink:0">
+          <div style="font-size:9px;color:#c8d9e6;margin-bottom:2px">Inventario total — 3 sucursales</div>
+          <div style="font-size:24px;font-weight:700;color:#f5efeb">$134,780</div>
+          <div style="display:flex;gap:6px;margin-top:4px">
+            <div style="flex:1;background:#3d5a70;border-radius:6px;padding:4px;text-align:center">
+              <div style="font-size:11px;font-weight:700;color:#f5efeb">18</div>
+              <div style="font-size:7px;color:#c8d9e6">estantes</div>
+            </div>
+            <div style="flex:1;background:#3d5a70;border-radius:6px;padding:4px;text-align:center">
+              <div style="font-size:11px;font-weight:700;color:#f5efeb">72</div>
+              <div style="font-size:7px;color:#c8d9e6">productos</div>
+            </div>
+            <div style="flex:1;background:#3d5a70;border-radius:6px;padding:4px;text-align:center">
+              <div style="font-size:11px;font-weight:700;color:#e53935">5</div>
+              <div style="font-size:7px;color:#c8d9e6">alertas</div>
+            </div>
+            <div style="flex:1;background:#3d5a70;border-radius:6px;padding:4px;text-align:center">
+              <div style="font-size:11px;font-weight:700;color:#61f392">$3,920</div>
+              <div style="font-size:7px;color:#c8d9e6">ventas hoy</div>
+            </div>
+          </div>
+        </div>
+        <div class="cnt">
+          <div style="font-size:9px;color:#c8d9e6;font-weight:600">Sucursales</div>
+          <div class="suc-card suc-crit">
+            <div class="suc-row">
+              <div><div class="suc-name" style="color:#b00020">Suc. Centro</div><div class="suc-sub">6 est. · $48,320 · 2 alertas criticas</div></div>
+              <button class="sb sb-dark" style="font-size:8px">Ver</button>
+            </div>
+            <div style="margin-top:4px"><div class="bar-bg"><div class="bar-f" style="width:62%;background:#e53935"></div></div><div style="font-size:8px;color:#e53935;margin-top:1px">Stock promedio: 62%</div></div>
+          </div>
+          <div class="suc-card suc-warn">
+            <div class="suc-row">
+              <div><div class="suc-name" style="color:#e65100">Suc. Norte</div><div class="suc-sub">6 est. · $52,100 · 3 advertencias</div></div>
+              <button class="sb sb-dark" style="font-size:8px">Ver</button>
+            </div>
+            <div style="margin-top:4px"><div class="bar-bg"><div class="bar-f" style="width:74%;background:#ff8c00"></div></div><div style="font-size:8px;color:#ff8c00;margin-top:1px">Stock promedio: 74%</div></div>
+          </div>
+          <div class="suc-card suc-ok">
+            <div class="suc-row">
+              <div><div class="suc-name" style="color:#2f7d32">Suc. Sur</div><div class="suc-sub">6 est. · $34,360 · Sin alertas</div></div>
+              <button class="sb sb-dark" style="font-size:8px">Ver</button>
+            </div>
+            <div style="margin-top:4px"><div class="bar-bg"><div class="bar-f" style="width:88%;background:#2f9e44"></div></div><div style="font-size:8px;color:#2f9e44;margin-top:1px">Stock promedio: 88%</div></div>
+          </div>
+        </div>
+        <div class="nav">
+          <div class="ni a"><div class="nind"></div><span class="nico">🏠</span><span>inicio</span></div>
+          <div class="ni"><span class="nico">📦</span><span>inventario</span></div>
+          <div class="ni"><span class="nico">🔔</span><span>alertas</span></div>
+          <div class="ni"><span class="nico">💡</span><span>suger.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOME: inventario completo drill-down -->
+    <div>
+      <p style="font-size:10px;color:var(--color-text-secondary);text-align:center;margin-bottom:5px">inventario completo — drill down</p>
+      <div class="phone">
+        <div class="hdr">
+          <div class="dd" style="width:105px"><span>Suc. Central</span><span>▾</span></div>
+          <div class="bon">Online</div>
+          <div style="width:20px;height:20px;background:#ccc;border-radius:50%"></div>
+        </div>
+        <div style="background:#2f4156;padding:7px 10px;flex-shrink:0;display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div style="font-size:9px;color:#c8d9e6">Inventario activo</div>
+            <div style="font-size:13px;font-weight:700;color:#f5efeb">24 productos · 6 estantes</div>
+          </div>
+          <div style="background:#3d5a70;border-radius:6px;padding:4px 8px;font-size:9px;color:#f5efeb">🔍 Buscar</div>
+        </div>
+        <!-- filtros -->
+        <div style="padding:4px 8px;flex-shrink:0;display:flex;gap:3px">
+          <div style="border:1px solid #c8d9e6;border-radius:20px;padding:2px 7px;font-size:9px;color:#f5efeb;background:#3d5a70">Todos</div>
+          <div style="border:1px solid #c8d9e6;border-radius:20px;padding:2px 7px;font-size:9px;color:#c8d9e6">Critico</div>
+          <div style="border:1px solid #c8d9e6;border-radius:20px;padding:2px 7px;font-size:9px;color:#c8d9e6">Bajo</div>
+          <div style="border:1px solid #c8d9e6;border-radius:20px;padding:2px 7px;font-size:9px;color:#c8d9e6">Optimo</div>
+        </div>
+        <div class="cnt" style="padding-top:2px">
+          <!-- estante 1 expandido -->
+          <div style="background:#f5efeb;border-radius:9px;padding:6px 8px;flex-shrink:0">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+              <div style="font-size:10px;font-weight:700;color:#2f4156">Estante 1 — Enlatados</div>
+              <span class="tag tag-o">35% prom.</span>
+            </div>
+            <div class="ds"><span class="dl">Chiles enlatados</span><div style="display:flex;align-items:center;gap:4px"><div style="width:40px;height:5px;background:#ddd;border-radius:3px"><div style="width:85%;height:5px;background:#2f9e44;border-radius:3px"></div></div><span class="dv" style="font-size:9px">85%</span></div></div>
+            <div class="ds"><span class="dl">Elotes enlatados</span><div style="display:flex;align-items:center;gap:4px"><div style="width:40px;height:5px;background:#ddd;border-radius:3px"><div style="width:28%;height:5px;background:#f7c948;border-radius:3px"></div></div><span class="dv" style="font-size:9px;color:#f7c948">28%</span></div></div>
+            <div class="ds"><span class="dl">Frijoles negros</span><div style="display:flex;align-items:center;gap:4px"><div style="width:40px;height:5px;background:#ddd;border-radius:3px"><div style="width:10%;height:5px;background:#e53935;border-radius:3px"></div></div><span class="dv" style="font-size:9px;color:#e53935">10% ⚠</span></div></div>
+          </div>
+          <!-- estante 2 colapsado -->
+          <div style="background:#f5efeb;border-radius:9px;padding:6px 8px;flex-shrink:0;display:flex;justify-content:space-between;align-items:center">
+            <div><div style="font-size:10px;font-weight:700;color:#2f4156">Estante 2 — Bebidas</div><div style="font-size:8px;color:#888;margin-top:1px">4 productos · prom. 78%</div></div>
+            <div style="display:flex;align-items:center;gap:5px">
+              <div style="width:50px;height:6px;background:#ddd;border-radius:3px"><div style="width:78%;height:6px;background:#2f9e44;border-radius:3px"></div></div>
+              <span style="font-size:9px;font-weight:700;color:#2f9e44">▾</span>
+            </div>
+          </div>
+          <!-- estante 3 colapsado -->
+          <div style="background:#f5efeb;border-radius:9px;padding:6px 8px;flex-shrink:0;display:flex;justify-content:space-between;align-items:center">
+            <div><div style="font-size:10px;font-weight:700;color:#2f4156">Estante 3 — Dulces</div><div style="font-size:8px;color:#888;margin-top:1px">3 productos · prom. 91%</div></div>
+            <div style="display:flex;align-items:center;gap:5px">
+              <div style="width:50px;height:6px;background:#ddd;border-radius:3px"><div style="width:91%;height:6px;background:#2f9e44;border-radius:3px"></div></div>
+              <span style="font-size:9px;font-weight:700;color:#2f9e44">▾</span>
+            </div>
+          </div>
+          <div style="background:#ffe5e5;border-radius:9px;padding:6px 8px;flex-shrink:0;display:flex;justify-content:space-between;align-items:center">
+            <div><div style="font-size:10px;font-weight:700;color:#b00020">Estante 5 — Lacteos ⚠</div><div style="font-size:8px;color:#e53935;margin-top:1px">Stock critico · 12%</div></div>
+            <button class="sb sb-dark" style="font-size:8px;background:#e53935">Pedir</button>
+          </div>
+        </div>
+        <div class="nav">
+          <div class="ni a"><div class="nind"></div><span class="nico">🏠</span><span>inicio</span></div>
+          <div class="ni"><span class="nico">📦</span><span>inventario</span></div>
+          <div class="ni"><span class="nico">🔔</span><span>alertas</span></div>
+          <div class="ni"><span class="nico">💡</span><span>suger.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOME: detalle producto desde home -->
+    <div>
+      <p style="font-size:10px;color:var(--color-text-secondary);text-align:center;margin-bottom:5px">detalle producto — desde home</p>
+      <div class="phone">
+        <div class="hdr">
+          <div class="dd" style="width:105px"><span>Suc. Central</span><span>▾</span></div>
+          <div class="bon">Online</div>
+          <div style="width:20px;height:20px;background:#ccc;border-radius:50%"></div>
+        </div>
+        <div style="background:#2f4156;padding:8px 10px;flex-shrink:0">
+          <div style="font-size:9px;color:#c8d9e6;display:flex;align-items:center;gap:4px"><span style="color:#c8d9e6">←</span> Estante 1 — Enlatados</div>
+          <div style="font-size:14px;font-weight:700;color:#f5efeb;margin-top:2px">Chiles La Costena 400g</div>
+          <div style="display:flex;align-items:center;gap:6px;margin-top:5px">
+            <div style="flex:1;background:#3d5a70;border-radius:5px;height:10px"><div style="width:85%;background:#61f392;border-radius:5px;height:10px"></div></div>
+            <span style="font-size:13px;font-weight:700;color:#61f392">85%</span>
+          </div>
+          <div style="font-size:8px;color:#c8d9e6;margin-top:2px">4.25 kg de 5.00 kg · ~10 latas aprox.</div>
+        </div>
+        <div class="cnt">
+          <!-- stats del producto -->
+          <div class="kpi-grid">
+            <div class="kpi"><div class="kv">$3,200</div><div class="kl">valor actual</div></div>
+            <div class="kpi"><div class="kv" style="color:#2f9e44">18 un.</div><div class="kl">vendidas hoy</div></div>
+          </div>
+          <div class="card">
+            <div class="ct">Historial — 7 dias</div>
+            <div style="background:#2f4156;border-radius:7px;padding:7px 8px">
+              <div class="mini-bar-row"><span class="mbl">Lun</span><div class="mbb"><div class="mbf" style="width:70%;background:#61f392"></div></div><span class="mbv">12 un</span></div>
+              <div class="mini-bar-row"><span class="mbl">Mar</span><div class="mbb"><div class="mbf" style="width:55%;background:#61f392"></div></div><span class="mbv">9 un</span></div>
+              <div class="mini-bar-row"><span class="mbl">Mie</span><div class="mbb"><div class="mbf" style="width:85%;background:#61f392"></div></div><span class="mbv">15 un</span></div>
+              <div class="mini-bar-row"><span class="mbl">Jue</span><div class="mbb"><div class="mbf" style="width:60%;background:#f7c948"></div></div><span class="mbv">10 un</span></div>
+              <div class="mini-bar-row"><span class="mbl">Hoy</span><div class="mbb"><div class="mbf" style="width:100%;background:#61f392"></div></div><span class="mbv">18 un</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="ct">Info del producto</div>
+            <div class="ds"><span class="dl">Proveedor</span><span class="dv">Herdez S.A.</span></div>
+            <div class="ds"><span class="dl">Peso unitario</span><span class="dv">400 g / lata</span></div>
+            <div class="ds"><span class="dl">Umbral bajo</span><span class="dv">30%</span></div>
+            <div class="ds"><span class="dl">Ultimo surtido</span><span class="dv">hace 3 dias</span></div>
+          </div>
+          <div style="display:flex;gap:4px">
+            <button style="flex:1;background:#2f4156;color:#fff;border:none;border-radius:7px;padding:6px;font-size:9px;font-weight:700">Editar</button>
+            <button style="flex:1;background:#c8d9e6;color:#2f4156;border:none;border-radius:7px;padding:6px;font-size:9px;font-weight:700">Surtir</button>
+            <button style="flex:1;background:#f5efeb;color:#888;border:none;border-radius:7px;padding:6px;font-size:9px">Calibrar</button>
+          </div>
+        </div>
+        <div class="nav">
+          <div class="ni a"><div class="nind"></div><span class="nico">🏠</span><span>inicio</span></div>
+          <div class="ni"><span class="nico">📦</span><span>inventario</span></div>
+          <div class="ni"><span class="nico">🔔</span><span>alertas</span></div>
+          <div class="ni"><span class="nico">💡</span><span>suger.</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FILA 2: Estados especiales -->
+<div>
+  <div class="rl">estados especiales del dashboard</div>
+  <div class="row r3">
+
+    <!-- Offline mode -->
+    <div>
+      <p style="font-size:10px;color:var(--color-text-secondary);text-align:center;margin-bottom:5px">modo offline (R01)</p>
+      <div class="phone">
+        <div class="hdr">
+          <div class="dd" style="width:105px"><span>Suc. Central</span><span>▾</span></div>
+          <div style="background:#f7c948;color:#856404;font-size:9px;font-weight:700;padding:2px 7px;border-radius:20px">Sin internet</div>
+          <div style="width:20px;height:20px;background:#ccc;border-radius:50%"></div>
+        </div>
+        <div style="background:#856404;padding:7px 10px;flex-shrink:0">
+          <div style="font-size:9px;font-weight:700;color:#fff;margin-bottom:1px">Modo sin conexion activo</div>
+          <div style="font-size:8px;color:#ffe082;line-height:1.4">Los sensores siguen funcionando localmente. Los datos se sincronizaran cuando vuelva internet.</div>
+        </div>
+        <div style="background:#2f4156;padding:8px 10px;flex-shrink:0">
+          <div style="font-size:9px;color:#c8d9e6">Ultimo dato sincronizado</div>
+          <div style="font-size:13px;font-weight:700;color:#f5efeb">$48,320 · hace 14 min</div>
+          <div style="font-size:8px;color:#f7c948;margin-top:2px">87 eventos pendientes de subir</div>
+        </div>
+        <div class="cnt">
+          <div style="font-size:9px;color:#c8d9e6;font-weight:600">Estantes — datos locales</div>
+          <div class="pr"><div class="pr-dot" style="background:#61f392"></div><div class="pr-info"><div class="pr-name">Bebidas</div><div class="pr-sub" style="color:#61f392">sensor activo · local</div></div><div style="width:50px"><div class="bar-bg"><div class="bar-f" style="width:78%;background:#2f9e44"></div></div></div><div class="pr-pct" style="color:#2f9e44">78%</div></div>
+          <div class="pr"><div class="pr-dot" style="background:#61f392"></div><div class="pr-info"><div class="pr-name">Enlatados</div><div class="pr-sub" style="color:#61f392">sensor activo · local</div></div><div style="width:50px"><div class="bar-bg"><div class="bar-f" style="width:35%;background:#f7c948"></div></div></div><div class="pr-pct" style="color:#f7c948">35%</div></div>
+          <div class="pr"><div class="pr-dot" style="background:#aaa"></div><div class="pr-info"><div class="pr-name">Nodo B — offline</div><div class="pr-sub" style="color:#ff8c00">sin datos locales</div></div><span class="tag tag-o">sin datos</span></div>
+          <div style="background:#fff3e0;border-radius:8px;padding:6px 9px;flex-shrink:0">
+            <div style="font-size:9px;font-weight:700;color:#e65100">La nube no recibe datos</div>
+            <div style="font-size:8px;color:#555;margin-top:1px">Raspberry Pi guarda todo localmente (SQLite). Al reconectar subirá todo automaticamente.</div>
+          </div>
+        </div>
+        <div class="nav">
+          <div class="ni a"><div class="nind"></div><span class="nico">🏠</span><span>inicio</span></div>
+          <div class="ni"><span class="nico">📦</span><span>inventario</span></div>
+          <div class="ni"><span class="nico">🔔</span><span>alertas</span></div>
+          <div class="ni"><span class="nico">💡</span><span>suger.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sincronizando al reconectar -->
+    <div>
+      <p style="font-size:10px;color:var(--color-text-secondary);text-align:center;margin-bottom:5px">sincronizando al reconectar (R04)</p>
+      <div class="phone">
+        <div class="hdr">
+          <div class="dd" style="width:105px"><span>Suc. Central</span><span>▾</span></div>
+          <div style="background:#61f392;color:#1a5c30;font-size:9px;font-weight:700;padding:2px 7px;border-radius:20px">Reconectando...</div>
+          <div style="width:20px;height:20px;background:#ccc;border-radius:50%"></div>
+        </div>
+        <div style="background:#1a5c30;padding:7px 10px;flex-shrink:0">
+          <div style="font-size:9px;font-weight:700;color:#61f392;margin-bottom:2px">Sincronizando con la nube</div>
+          <div style="background:#3d5a70;border-radius:4px;height:8px;margin-bottom:2px"><div style="width:68%;background:#61f392;border-radius:4px;height:8px"></div></div>
+          <div style="font-size:8px;color:#c8d9e6">59 de 87 eventos subidos · no cierres la app</div>
+        </div>
+        <div style="background:#2f4156;padding:7px 10px;flex-shrink:0">
+          <div style="font-size:9px;color:#c8d9e6">Inventario actualizado</div>
+          <div style="font-size:13px;font-weight:700;color:#f5efeb">$48,320 · actualizando...</div>
+        </div>
+        <div class="cnt">
+          <div style="font-size:9px;color:#c8d9e6;font-weight:600">Log de sincronizacion</div>
+          <div style="background:#f5efeb;border-radius:8px;padding:6px 8px;flex-shrink:0">
+            <div style="font-size:9px;display:flex;flex-direction:column;gap:3px">
+              <div style="display:flex;gap:5px;align-items:center"><span style="color:#2f9e44;font-size:10px">✓</span><span style="color:#555">Retiros de Bebidas subidos (32 eventos)</span></div>
+              <div style="display:flex;gap:5px;align-items:center"><span style="color:#2f9e44;font-size:10px">✓</span><span style="color:#555">Retiros de Enlatados subidos (21 eventos)</span></div>
+              <div style="display:flex;gap:5px;align-items:center"><span style="color:#f7c948;font-size:10px">⟳</span><span style="color:#888">Subiendo alertas (6 eventos)...</span></div>
+              <div style="display:flex;gap:5px;align-items:center"><span style="color:#ccc;font-size:10px">○</span><span style="color:#aaa">Reportes pendientes (28 eventos)</span></div>
+            </div>
+          </div>
+          <div style="background:#e6f4ea;border-radius:8px;padding:6px 9px;flex-shrink:0">
+            <div style="font-size:9px;font-weight:700;color:#2f7d32">Integridad de datos garantizada</div>
+            <div style="font-size:8px;color:#555;margin-top:1px">Ningun evento se perdera. El patron Store & Forward asegura que todo llega a la nube.</div>
+          </div>
+        </div>
+        <div class="nav">
+          <div class="ni a"><div class="nind"></div><span class="nico">🏠</span><span>inicio</span></div>
+          <div class="ni"><span class="nico">📦</span><span>inventario</span></div>
+          <div class="ni"><span class="nico">🔔</span><span>alertas</span></div>
+          <div class="ni"><span class="nico">💡</span><span>suger.</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Home con alertas criticas activas -->
+    <div>
+      <p style="font-size:10px;color:var(--color-text-secondary);text-align:center;margin-bottom:5px">home — con alertas criticas activas</p>
+      <div class="phone">
+        <div class="hdr">
+          <div class="dd" style="width:105px"><span>Suc. Central</span><span>▾</span></div>
+          <div class="bon">Online</div>
+          <div style="width:20px;height:20px;background:#ccc;border-radius:50%"></div>
+        </div>
+        <!-- banner critico -->
+        <div style="background:#e53935;padding:7px 10px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between">
+          <div>
+            <div style="font-size:9px;font-weight:700;color:#fff">2 alertas criticas activas</div>
+            <div style="font-size:8px;color:#ffcdd2">Requieren tu atencion ahora</div>
+          </div>
+          <button style="background:#fff;color:#e53935;border:none;border-radius:6px;padding:3px 8px;font-size:9px;font-weight:700">Ver</button>
+        </div>
+        <div style="background:#2f4156;padding:7px 10px;flex-shrink:0">
+          <div style="font-size:9px;color:#c8d9e6">Valor total del inventario</div>
+          <div style="font-size:22px;font-weight:700;color:#f5efeb">$48,320</div>
+          <div style="display:flex;gap:5px;margin-top:3px">
+            <div style="flex:1;background:#3d5a70;border-radius:5px;padding:3px;text-align:center"><div style="font-size:10px;font-weight:700;color:#e53935">2</div><div style="font-size:7px;color:#c8d9e6">criticas</div></div>
+            <div style="flex:1;background:#3d5a70;border-radius:5px;padding:3px;text-align:center"><div style="font-size:10px;font-weight:700;color:#f7c948">2</div><div style="font-size:7px;color:#c8d9e6">bajo stock</div></div>
+            <div style="flex:1;background:#3d5a70;border-radius:5px;padding:3px;text-align:center"><div style="font-size:10px;font-weight:700;color:#61f392">4</div><div style="font-size:7px;color:#c8d9e6">optimos</div></div>
+          </div>
+        </div>
+        <div class="cnt">
+          <!-- acciones rapidas -->
+          <div style="font-size:9px;color:#c8d9e6;font-weight:600">Acciones rapidas</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;flex-shrink:0">
+            <div style="background:#ffe5e5;border-radius:8px;padding:7px 8px;text-align:center">
+              <div style="font-size:11px;margin-bottom:2px">🚨</div>
+              <div style="font-size:9px;font-weight:700;color:#b00020">Robo hormiga</div>
+              <div style="font-size:8px;color:#555;margin-top:1px">Est. 4 · hace 5 min</div>
+              <button style="background:#e53935;color:#fff;border:none;border-radius:5px;padding:2px 6px;font-size:8px;font-weight:700;margin-top:3px;width:100%">Atender</button>
+            </div>
+            <div style="background:#ffe5e5;border-radius:8px;padding:7px 8px;text-align:center">
+              <div style="font-size:11px;margin-bottom:2px">📡</div>
+              <div style="font-size:9px;font-weight:700;color:#b00020">Nodo B offline</div>
+              <div style="font-size:8px;color:#555;margin-top:1px">3 estantes ciegos</div>
+              <button style="background:#e53935;color:#fff;border:none;border-radius:5px;padding:2px 6px;font-size:8px;font-weight:700;margin-top:3px;width:100%">Revisar</button>
+            </div>
+          </div>
+          <div style="font-size:9px;color:#c8d9e6;font-weight:600">Estado estantes (disponibles)</div>
+          <div class="pr"><div class="pr-dot" style="background:#2f9e44"></div><div class="pr-info"><div class="pr-name">Bebidas</div><div class="pr-sub">Est.2</div></div><div style="width:50px"><div class="bar-bg"><div class="bar-f" style="width:78%;background:#2f9e44"></div></div></div><div class="pr-pct" style="color:#2f9e44">78%</div></div>
+          <div class="pr"><div class="pr-dot" style="background:#e53935"></div><div class="pr-info"><div class="pr-name">Lacteos ⚠</div><div class="pr-sub">Est.5 · critico</div></div><div style="width:50px"><div class="bar-bg"><div class="bar-f" style="width:12%;background:#e53935"></div></div></div><div class="pr-pct" style="color:#e53935">12%</div></div>
+        </div>
+        <div class="nav">
+          <div class="ni a"><div class="nind"></div><span class="nico">🏠</span><span>inicio</span></div>
+          <div class="ni"><span class="nico">📦</span><span>inventario</span></div>
+          <div class="ni"><span class="nico">🔔</span><span>alertas</span></div>
+          <div class="ni"><span class="nico">💡</span><span>suger.</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</div>
