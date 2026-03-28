@@ -14,10 +14,12 @@
 //libreias propoas 
 #include "mqtt_lib.h"
 
-static const char *TAG = "MQTT";
+static const char *TAG = "MQTT LIB";
 
 
 extern esp_mqtt_client_handle_t client;
+
+// int led_state = 0;
 
 //manerjador de eventos para MQTT 
 void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event_id, void *event_data){
@@ -35,13 +37,14 @@ void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event
             
 
             //por medio de un evento indicamos que se conecto 
-
+            esp_mqtt_client_subscribe(client, TOPIC_ACT, 0);
+            ESP_LOGI(TAG, "Subscribed to topic %s", TOPIC_ACT);
 
         }break;
 
         case MQTT_EVENT_SUBSCRIBED: {
             ESP_LOGI(TAG, "MQTT_EVENT_SUBSCRIBED msg_id=%d", event->msg_id);
-        }
+        }break;
 
         case MQTT_EVENT_DISCONNECTED:{
             ESP_LOGI(TAG, "MQTT_EVENT_DISCONNECTED");
@@ -58,11 +61,34 @@ void mqtt_event_handler(void *handler_args, esp_event_base_t base, int32_t event
             char topic[128] = {0};
             char data[256]  = {0};
 
+            /**
+             * el led va a tener 2 maneras de prenderse o apagarse mediante un boton y mediante la publicaciones desde NODE-RED
+             * 
+             * en este caso estamos capturando la manera de la publicacion de NODE-RED
+             * 
+             * 
+             */
+
+
             snprintf(topic, sizeof(topic), "%.*s", event->topic_len, event->topic);
             snprintf(data,  sizeof(data),  "%.*s", event->data_len,  event->data);
 
+
             ESP_LOGI(TAG, "Topic : %s", topic);
             ESP_LOGI(TAG, "Data  : %s", data);
+
+            uint16_t length = event->topic_len + event->data_len;
+            char *msg = malloc(length + 2);  // +1 para ':' y +1 para '\0'
+            if (!msg) {
+                ESP_LOGE(TAG, "No memory for msg");
+                return;
+            }
+            snprintf(msg, length + 2, "%s:%s", topic, data);
+
+            //vamos a mandar por medio de la cola 
+            xQueueSend(flow_data,&msg, portMAX_DELAY);
+
+
 
         }break;
 
@@ -88,7 +114,7 @@ void mqtt_start(void){
     };
     
     //inicamos el cliente ESP apra poder subscribirse o publicar. 
-    esp_mqtt_client_handle_t client = esp_mqtt_client_init(&mqtt_cfg);
+    client = esp_mqtt_client_init(&mqtt_cfg);
     esp_mqtt_client_register_event(client, ESP_EVENT_ANY_ID, mqtt_event_handler, NULL);
     esp_mqtt_client_start(client);
 

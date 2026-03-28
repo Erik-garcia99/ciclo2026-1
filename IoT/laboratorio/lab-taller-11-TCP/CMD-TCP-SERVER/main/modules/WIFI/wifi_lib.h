@@ -1,0 +1,71 @@
+#ifndef WIFI_H
+#define WIFI_H
+
+#include <freertos/FreeRTOS.h>
+#include <freertos/event_groups.h>
+#include <esp_event.h>
+#include<esp_err.h>
+
+//macros
+#define ESP_MAX_RETRY 5 //intentara conectarse 5 veces antes de arrojar un error de conexion
+
+//bits
+#define WIFI_CONNECTED_BIT BIT0
+#define WIFI_FAIL_BIT BIT1
+
+//variables globales para red 
+/**
+ * 
+ * 
+ * 
+*/
+extern char *ESP_SSID_WIFI;
+extern char *ESP_PSWD_WIFI;
+
+
+extern int ENT_NETWORK;
+
+//creo que lo ideal seria una cola que traiga
+
+/**
+ * ahora la cosa estara en como se ingresan las credencilaes para la conexion de WIFI?
+ *  esto solo sera visto por lo que tenga que ver con WIFI. 
+ * 
+ * por lo que debe de ser una varibale, que al inicio la definiremos como el WIFI de la casa, 
+ * 
+ * !!!IMPORTANT 
+ * 
+ * como conectarnos desde la red de UABC, deberiamos de desarrollar la forma de poner conectarnos una red de empresa, se puede pero el ESP primero va atratar de conectarse a la 
+ * red que el ya conoce, al no lograrlo tendra la opcion de elegir nueva red o la de empresa < primero vamos a hacer una red nomral con su SSID y pasword > 
+ * 
+ * 
+ * 
+ * 
+*/
+
+
+
+//prototipos
+void wifi_init_sta(void);
+
+/**
+ * @brief estblecera las credeniclaes de la red, en el cao que se requiera realizar de nuevo  
+ * 
+ * @param SSID un apuntador al nombre de la red 
+ * @param PSDW un apuntador a la contrasenia de la red
+ * 
+ * @return ESP_OK indica que se pudo realizar el cambio de credenciales 
+ * @return ESP_FAIL no se pudo estabelcer la credenciales 
+ * 
+ * @details lo que hara la funcion es, este va a recibir 2 datos, por lo que estos datos seran copiados en las varibales globales de SSID y PSWD que son los que se estaran usando
+ * para conectarse a la red. 
+ * 
+ * 
+*/
+
+esp_err_t new_setup_wifi(char *SSID, char *PSDW);
+
+
+
+
+#endif
