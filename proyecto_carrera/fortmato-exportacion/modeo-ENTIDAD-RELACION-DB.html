@@ -1,0 +1,257 @@
+
+<style>
+#erd-wrap svg { max-width: 100%; }
+#erd-wrap { padding: 0.5rem 0; }
+</style>
+<div id="erd-wrap"><div id="erd"></div></div>
+<script type="module">
+import mermaid from 'https://esm.sh/mermaid@11/dist/mermaid.esm.min.mjs';
+const dark = matchMedia('(prefers-color-scheme: dark)').matches;
+await document.fonts.ready;
+mermaid.initialize({
+  startOnLoad: false,
+  theme: 'base',
+  fontFamily: '"Anthropic Sans", sans-serif',
+  themeVariables: {
+    darkMode: dark,
+    fontSize: '12px',
+    fontFamily: '"Anthropic Sans", sans-serif',
+    lineColor: dark ? '#9c9a92' : '#73726c',
+    textColor: dark ? '#c2c0b6' : '#3d3d3a',
+    primaryColor: dark ? '#2a2a28' : '#f1efe8',
+    primaryBorderColor: dark ? '#5f5e5a' : '#b4b2a9',
+    primaryTextColor: dark ? '#c2c0b6' : '#3d3d3a',
+    edgeLabelBackground: dark ? '#1e1e1c' : '#ffffff',
+  },
+});
+
+const diagram = `erDiagram
+  ORGANIZATION {
+    uuid id PK
+    string name
+    string slug
+    string plan_type
+    timestamp created_at
+  }
+  BRANCH {
+    uuid id PK
+    uuid organization_id FK
+    string name
+    string address
+    string timezone
+    boolean is_active
+    timestamp created_at
+  }
+  USER {
+    uuid id PK
+    uuid organization_id FK
+    string email
+    string name
+    string role
+    string push_token
+    timestamp created_at
+  }
+  PRODUCT {
+    uuid id PK
+    uuid organization_id FK
+    string name
+    string sku
+    float unit_weight_grams
+    float cost_price
+    float sale_price
+    string category
+    timestamp created_at
+  }
+  SHELF {
+    uuid id PK
+    uuid branch_id FK
+    uuid product_id FK
+    uuid esp32_node_id FK
+    string name
+    int hx711_channel
+    float tare_weight_grams
+    float scale_factor
+    float max_capacity_grams
+    float low_stock_threshold_pct
+    float low_stock_threshold_kg
+    string alert_mode
+    timestamp last_calibrated_at
+    boolean is_active
+  }
+  ESP32_NODE {
+    uuid id PK
+    uuid branch_id FK
+    string mac_address
+    string firmware_version
+    timestamp last_heartbeat_at
+    boolean is_online
+    float wifi_rssi
+  }
+  WEIGHT_READING {
+    uuid id PK
+    uuid shelf_id FK
+    float raw_weight_grams
+    float net_weight_grams
+    timestamp recorded_at
+  }
+  STOCK_EVENT {
+    uuid id PK
+    uuid shelf_id FK
+    string event_type
+    float weight_delta_grams
+    float units_delta
+    float weight_before
+    float weight_after
+    timestamp occurred_at
+    boolean is_consolidated
+  }
+  ALERT {
+    uuid id PK
+    uuid shelf_id FK
+    uuid branch_id FK
+    string alert_type
+    string status
+    jsonb metadata
+    timestamp triggered_at
+    timestamp resolved_at
+    uuid resolved_by FK
+  }
+  ANOMALY_EVENT {
+    uuid id PK
+    uuid shelf_id FK
+    string anomaly_type
+    float weight_delta_grams
+    float rate_per_minute
+    boolean out_of_hours
+    string status
+    timestamp detected_at
+  }
+  INVENTORY_AUDIT {
+    uuid id PK
+    uuid branch_id FK
+    uuid created_by FK
+    timestamp period_start
+    timestamp period_end
+    string status
+    timestamp closed_at
+  }
+  AUDIT_LINE {
+    uuid id PK
+    uuid audit_id FK
+    uuid shelf_id FK
+    float sensor_units_out
+    float pos_units_sold
+    float discrepancy_units
+    string resolution_type
+    uuid resolved_by FK
+    timestamp resolved_at
+  }
+  SUPPLIER {
+    uuid id PK
+    uuid organization_id FK
+    string name
+    string contact_email
+    string api_endpoint
+  }
+  PURCHASE_ORDER {
+    uuid id PK
+    uuid shelf_id FK
+    uuid supplier_id FK
+    string trigger_type
+    float quantity_kg
+    string status
+    timestamp created_at
+    timestamp sent_at
+  }
+  SUPPLIER_RECEIPT {
+    uuid id PK
+    uuid shelf_id FK
+    uuid created_by FK
+    float declared_weight_grams
+    float measured_weight_grams
+    float discrepancy_grams
+    string status
+    timestamp received_at
+  }
+  SEASONAL_PATTERN {
+    uuid id PK
+    uuid product_id FK
+    uuid branch_id FK
+    int week_of_year
+    int day_of_week
+    float avg_sales_units
+    float confidence_score
+    timestamp updated_at
+  }
+  BUSINESS_REPORT {
+    uuid id PK
+    uuid branch_id FK
+    string report_type
+    timestamp period_start
+    timestamp period_end
+    jsonb payload
+    string format
+    string status
+    timestamp generated_at
+  }
+  STORE_HOURS {
+    uuid id PK
+    uuid branch_id FK
+    int day_of_week
+    time open_time
+    time close_time
+  }
+  ORGANIZATION ||--o{ BRANCH : "tiene"
+  ORGANIZATION ||--o{ USER : "pertenece"
+  ORGANIZATION ||--o{ PRODUCT : "gestiona"
+  ORGANIZATION ||--o{ SUPPLIER : "trabaja con"
+  BRANCH ||--o{ SHELF : "contiene"
+  BRANCH ||--o{ ESP32_NODE : "aloja"
+  BRANCH ||--o{ ALERT : "genera"
+  BRANCH ||--o{ INVENTORY_AUDIT : "realiza"
+  BRANCH ||--o{ BUSINESS_REPORT : "produce"
+  BRANCH ||--o{ STORE_HOURS : "define"
+  ESP32_NODE ||--o{ SHELF : "monitorea"
+  PRODUCT ||--o{ SHELF : "asignado a"
+  PRODUCT ||--o{ SEASONAL_PATTERN : "aprende"
+  SHELF ||--o{ WEIGHT_READING : "registra"
+  SHELF ||--o{ STOCK_EVENT : "genera"
+  SHELF ||--o{ ALERT : "dispara"
+  SHELF ||--o{ ANOMALY_EVENT : "detecta"
+  SHELF ||--o{ AUDIT_LINE : "auditado en"
+  SHELF ||--o{ PURCHASE_ORDER : "origina"
+  SHELF ||--o{ SUPPLIER_RECEIPT : "recibe en"
+  INVENTORY_AUDIT ||--o{ AUDIT_LINE : "contiene"
+  SUPPLIER ||--o{ PURCHASE_ORDER : "recibe"
+  USER ||--o{ INVENTORY_AUDIT : "crea"
+  USER ||--o{ AUDIT_LINE : "resuelve"
+  USER ||--o{ SUPPLIER_RECEIPT : "registra"
+`;
+
+const { svg } = await mermaid.render('erd-main', diagram);
+document.getElementById('erd').innerHTML = svg;
+
+document.querySelectorAll('#erd svg .node').forEach(node => {
+  const firstPath = node.querySelector('path[d]');
+  if (!firstPath) return;
+  const d = firstPath.getAttribute('d');
+  const nums = d.match(/-?[\d.]+/g)?.map(Number);
+  if (!nums || nums.length < 8) return;
+  const xs = [nums[0], nums[2], nums[4], nums[6]];
+  const ys = [nums[1], nums[3], nums[5], nums[7]];
+  const x = Math.min(...xs), y = Math.min(...ys);
+  const w = Math.max(...xs) - x, h = Math.max(...ys) - y;
+  const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+  rect.setAttribute('x', x); rect.setAttribute('y', y);
+  rect.setAttribute('width', w); rect.setAttribute('height', h);
+  rect.setAttribute('rx', '8');
+  for (const a of ['fill', 'stroke', 'stroke-width', 'class', 'style']) {
+    if (firstPath.hasAttribute(a)) rect.setAttribute(a, firstPath.getAttribute(a));
+  }
+  firstPath.replaceWith(rect);
+});
+
+document.querySelectorAll('#erd svg .row-rect-odd path, #erd svg .row-rect-even path').forEach(p => {
+  p.setAttribute('stroke', 'none');
+});
+</script>

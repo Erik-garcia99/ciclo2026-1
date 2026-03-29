@@ -1,0 +1,93 @@
+
+<style>
+  #wrap { overflow-x: auto; width: 100%; }
+  #arch { min-width: 860px; }
+</style>
+<div id="wrap"><div id="arch"></div></div>
+<script type="module">
+import mermaid from 'https://esm.sh/mermaid@11/dist/mermaid.esm.min.mjs';
+const dark = matchMedia('(prefers-color-scheme: dark)').matches;
+await document.fonts.ready;
+mermaid.initialize({
+  startOnLoad: false,
+  theme: 'base',
+  fontFamily: '"Anthropic Sans", sans-serif',
+  themeVariables: {
+    darkMode: dark,
+    fontSize: '13px',
+    fontFamily: '"Anthropic Sans", sans-serif',
+    lineColor: dark ? '#9c9a92' : '#73726c',
+    textColor: dark ? '#c2c0b6' : '#3d3d3a',
+    primaryColor: dark ? '#1e2a1e' : '#eaf3de',
+    primaryBorderColor: dark ? '#3b6d11' : '#639922',
+    primaryTextColor: dark ? '#c2c0b6' : '#3d3d3a',
+    secondaryColor: dark ? '#1a1a2e' : '#e6f1fb',
+    secondaryBorderColor: dark ? '#185fa5' : '#378add',
+    tertiaryColor: dark ? '#2a1e2a' : '#fbeaf0',
+    tertiaryBorderColor: dark ? '#993556' : '#d4537e',
+    edgeLabelBackground: dark ? '#1e1e1c' : '#ffffff',
+  },
+});
+
+const diagram = `flowchart TB
+  subgraph HARDWARE["🔧  Capa física — Sucursal"]
+    direction TB
+    HX["HX711\\nAmplificador"]
+    LC["Celda de carga\\n×5 por nodo"]
+    ESP["ESP32\\nFirmware C / ESP-IDF\\n─────────────────\\nPolling + debounce\\nHeartbeat MQTT\\nFiltro de ruido"]
+    LC --> HX --> ESP
+  end
+
+  subgraph EDGE["🖥️  Edge Gateway — Raspberry Pi (LAN)"]
+    direction TB
+    subgraph DOCKER_EDGE["Docker Compose"]
+      MOSQ["Contenedor 1\\nMosquitto Broker\\nMQTT :1883"]
+      EDGEAPP["Contenedor 2\\nEdge Service\\nPython / FastAPI\\n──────────────\\nStore & Forward\\nAnomaly detection\\nDebounce logic"]
+      SQLITE["Contenedor 3\\nSQLite\\nBuffer offline"]
+    end
+    MOSQ -- "subscribe topics" --> EDGEAPP
+    EDGEAPP -- "escribe / lee" --> SQLITE
+  end
+
+  subgraph CLOUD["☁️  Nube — Backend (SaaS)"]
+    direction TB
+    subgraph DOCKER_CLOUD["Docker / K8s"]
+      API["Contenedor 4\\nREST API\\nPython / FastAPI\\n──────────────\\nAuth JWT\\nMulti-tenant\\nWebSockets"]
+      WORKER["Contenedor 5\\nWorker / Celery\\n──────────────\\nML estacionalidad\\nReportes PDF/Excel\\nPedidos automáticos"]
+      PG["Contenedor 6\\nPostgreSQL\\nDatos permanentes"]
+      INFLUX["Contenedor 7\\nInfluxDB\\nSeries de tiempo\\n(weight_readings)"]
+      REDIS["Contenedor 8\\nRedis\\nCola Celery\\nCache sesiones"]
+    end
+    API -- "ORM / SQL" --> PG
+    API -- "lecturas históricas" --> INFLUX
+    API -- "pub/sub alertas" --> REDIS
+    WORKER -- "jobs async" --> REDIS
+    WORKER -- "escribe resultados" --> PG
+    EDGEAPP -- "sync progresiva HTTPS" --> API
+  end
+
+  subgraph EXTERNAL["🌐  Servicios externos"]
+    FCM["Firebase FCM\\nNotificaciones Push\\n(U07)"]
+    SMTP["SMTP / SendGrid\\nReportes por email\\n(F10)"]
+    SUPAPI["API Proveedor\\nPedidos automáticos\\n(F06 auto-stock)"]
+    AI["OpenAI / Gemini API\\nSugerencias inventario\\nestancado (F09)"]
+  end
+
+  subgraph CLIENTS["📱  Clientes"]
+    APP["App React Native\\niOS / Android\\n──────────────\\nDashboard\\nAlertas\\nAuditoría\\nModo Proveedor"]
+    WEB["Web Dashboard\\nReact\\n──────────────\\nMulti-sucursal\\nReportes\\nMapa de calor"]
+  end
+
+  ESP -- "MQTT WiFi\\npub: shelf/weight\\npub: heartbeat" --> MOSQ
+  WORKER -- "push notification" --> FCM
+  WORKER -- "email reporte" --> SMTP
+  WORKER -- "orden de compra" --> SUPAPI
+  API -- "sugerencias IA" --> AI
+  APP -- "HTTPS REST\\nWebSocket" --> API
+  WEB -- "HTTPS REST\\nWebSocket" --> API
+  FCM -- "notificación nativa" --> APP
+`;
+
+const { svg } = await mermaid.render('arch-svg', diagram);
+document.getElementById('arch').innerHTML = svg;
+</script>

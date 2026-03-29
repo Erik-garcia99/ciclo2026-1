@@ -1,0 +1,120 @@
+
+<style>
+#wrap { overflow-x: auto; width: 100%; }
+#arch { min-width: 900px; }
+</style>
+<div id="wrap"><div id="arch"></div></div>
+<script type="module">
+import mermaid from 'https://esm.sh/mermaid@11/dist/mermaid.esm.min.mjs';
+const dark = matchMedia('(prefers-color-scheme: dark)').matches;
+await document.fonts.ready;
+mermaid.initialize({
+  startOnLoad: false,
+  theme: 'base',
+  fontFamily: '"Anthropic Sans", sans-serif',
+  themeVariables: {
+    darkMode: dark,
+    fontSize: '13px',
+    fontFamily: '"Anthropic Sans", sans-serif',
+    lineColor: dark ? '#9c9a92' : '#73726c',
+    textColor: dark ? '#c2c0b6' : '#3d3d3a',
+    primaryColor: dark ? '#1e2a1e' : '#eaf3de',
+    primaryBorderColor: dark ? '#3b6d11' : '#639922',
+    primaryTextColor: dark ? '#c2c0b6' : '#3d3d3a',
+    secondaryColor: dark ? '#1a1e2a' : '#e6f1fb',
+    secondaryBorderColor: dark ? '#185fa5' : '#378add',
+    tertiaryColor: dark ? '#2a1e1a' : '#faeeda',
+    tertiaryBorderColor: dark ? '#854f0b' : '#ba7517',
+    edgeLabelBackground: dark ? '#1e1e1c' : '#ffffff',
+  },
+});
+
+const diagram = `flowchart TB
+
+  subgraph FISICA["🔧  Capa física — Sucursal (On-Premise)"]
+    direction LR
+    LC["Celda de carga x5"] --> HX["HX711"] --> ESP["ESP32\\nC / ESP-IDF\\npolling · debounce · heartbeat"]
+  end
+
+  subgraph EDGE["🖥️  Edge Gateway — Raspberry Pi (LAN local)"]
+    direction TB
+    subgraph DC["Docker Compose"]
+      MOSQ["Contenedor 1\\nMosquitto Broker\\nMQTT :1883"]
+      EDGESVC["Contenedor 2\\nEdge Service\\nPython · FastAPI\\n— store & forward\\n— anomaly detection\\n— debounce logic"]
+      SQLITE["Contenedor 3\\nSQLite\\nbuffer offline"]
+    end
+    MOSQ --> EDGESVC --> SQLITE
+  end
+
+  subgraph AWS["☁️  AWS Cloud"]
+    direction TB
+
+    subgraph NET["Networking"]
+      ALB["ALB\\nApplication Load Balancer\\nHTTPS · WebSocket"]
+      APIGW["API Gateway\\nHTTPS / REST"]
+    end
+
+    subgraph COMPUTE["Compute — ECS Fargate"]
+      APIECS["Tarea 1\\nREST API\\nPython · FastAPI\\n— Auth JWT / Cognito\\n— Multi-tenant\\n— WebSocket"]
+      WORKERECS["Tarea 2\\nWorker\\nPython · Celery\\n— ML estacionalidad\\n— reportes PDF/Excel\\n— pedidos automáticos"]
+    end
+
+    subgraph DATA["Data"]
+      RDS["Amazon RDS\\nPostgreSQL\\ndatos permanentes"]
+      TIMESTREAM["Amazon Timestream\\nseries de tiempo\\nweight_readings"]
+      ELASTICACHE["Amazon ElastiCache\\nRedis\\ncola Celery · caché"]
+    end
+
+    subgraph STORAGE["Storage & Messaging"]
+      S3["Amazon S3\\nreportes generados\\nPDF · Excel"]
+      SQS["Amazon SQS\\ncola de jobs\\nasync Worker"]
+      SNS["Amazon SNS\\nfanout alertas\\npush · email"]
+    end
+
+    subgraph DEVOPS["DevOps & Observability"]
+      ECR["Amazon ECR\\nregistry Docker\\nimágenes API + Worker"]
+      CW["Amazon CloudWatch\\nlogs · métricas\\nalertas de infra"]
+      SECRETS["AWS Secrets Manager\\ncredenciales DB\\nAPI keys"]
+    end
+
+    ALB --> APIECS
+    APIGW --> APIECS
+    APIECS --> RDS
+    APIECS --> TIMESTREAM
+    APIECS --> ELASTICACHE
+    APIECS --> SQS
+    APIECS --> SNS
+    WORKERECS --> SQS
+    WORKERECS --> RDS
+    WORKERECS --> S3
+    WORKERECS --> SNS
+  end
+
+  subgraph EXTERNAL["🌐  Servicios externos"]
+    FCM["Firebase FCM\\nnotificaciones push (U07)"]
+    SENDGRID["SendGrid\\nreportes por email (F10)"]
+    SUPAPI["API Proveedor\\npedidos auto-stock (F06)"]
+    OPENAI["OpenAI API\\nsugerencias inventario\\nestancado (F09)"]
+    COGNITO["AWS Cognito\\nauth · roles · MFA"]
+  end
+
+  subgraph CLIENTS["📱  Clientes"]
+    APP["App React Native\\niOS · Android"]
+    WEB["Web Dashboard\\nReact"]
+  end
+
+  ESP -- "MQTT WiFi" --> MOSQ
+  EDGESVC -- "HTTPS sync\\nprogresiva" --> APIGW
+  SNS --> FCM
+  SNS --> SENDGRID
+  WORKERECS --> SUPAPI
+  APIECS --> OPENAI
+  APIECS --> COGNITO
+  APP -- "HTTPS · WebSocket" --> ALB
+  WEB -- "HTTPS · WebSocket" --> ALB
+  FCM --> APP
+`;
+
+const { svg } = await mermaid.render('arch-aws', diagram);
+document.getElementById('arch').innerHTML = svg;
+</script>

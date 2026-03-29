@@ -1,0 +1,123 @@
+
+<style>
+#wrap { overflow-x: auto; width: 100%; }
+#arch { min-width: 960px; }
+</style>
+<div id="wrap"><div id="arch"></div></div>
+<script type="module">
+import mermaid from 'https://esm.sh/mermaid@11/dist/mermaid.esm.min.mjs';
+const dark = matchMedia('(prefers-color-scheme: dark)').matches;
+await document.fonts.ready;
+mermaid.initialize({
+  startOnLoad: false,
+  theme: 'base',
+  fontFamily: '"Anthropic Sans", sans-serif',
+  themeVariables: {
+    darkMode: dark,
+    fontSize: '12px',
+    fontFamily: '"Anthropic Sans", sans-serif',
+    lineColor: dark ? '#9c9a92' : '#73726c',
+    textColor: dark ? '#c2c0b6' : '#3d3d3a',
+    primaryColor: dark ? '#1e2a1e' : '#eaf3de',
+    primaryBorderColor: dark ? '#3b6d11' : '#639922',
+    primaryTextColor: dark ? '#c2c0b6' : '#3d3d3a',
+    secondaryColor: dark ? '#1a1e2a' : '#e6f1fb',
+    secondaryBorderColor: dark ? '#185fa5' : '#378add',
+    tertiaryColor: dark ? '#2a201a' : '#faeeda',
+    tertiaryBorderColor: dark ? '#854f0b' : '#ba7517',
+    edgeLabelBackground: dark ? '#1e1e1c' : '#ffffff',
+  },
+});
+
+const diagram = `flowchart TB
+
+  subgraph FISICA["🔧  Capa física — Sucursal (On-Premise)"]
+    direction LR
+    LC["Celda de carga ×5"]
+    HX["HX711\\nAmplificador"]
+    ESP["ESP32 — C / ESP-IDF\\n· polling + threshold\\n· debounce local\\n· heartbeat MQTT"]
+    LC --> HX --> ESP
+  end
+
+  subgraph EDGE["🖥️  Edge Gateway — Raspberry Pi (LAN)"]
+    direction TB
+    subgraph DCE["Docker Compose — 3 contenedores"]
+      MOSQ["📦 Mosquitto\\nBroker MQTT :1883\\nred local WiFi"]
+      EDGESVC["📦 Edge Service\\nPython · FastAPI\\n· store and forward\\n· anomaly detection\\n· debounce consolidation\\n· filtrado de ruido P02"]
+      SQLITE["📦 SQLite\\nbuffer offline\\ncaída de internet R02"]
+    end
+    MOSQ -- "subscribe" --> EDGESVC
+    EDGESVC -- "escribe / lee" --> SQLITE
+  end
+
+  subgraph AWS["☁️  AWS — Infraestructura principal"]
+    direction TB
+
+    subgraph AWSNET["Networking"]
+      ALB["AWS ALB\\nHTTPS · WebSocket\\nentry point único"]
+    end
+
+    subgraph AWSCOMPUTE["Compute — AWS ECS Fargate"]
+      APIECS["📦 REST API\\nPython · FastAPI\\n· JWT multi-tenant\\n· WebSockets alertas\\n· endpoints móvil/web"]
+      WORKERECS["📦 Worker · Celery\\n· ML estacionalidad F08\\n· reportes PDF/Excel F10\\n· pedidos auto-stock F06\\n· sugerencias IA F09"]
+    end
+
+    subgraph AWSDATA["Data — servicios managed"]
+      RDS["🐘 Amazon RDS\\nPostgreSQL 16\\n✅ definido en reqs\\ndatos permanentes"]
+      INFLUX["📈 InfluxDB Cloud\\nseries de tiempo\\n✅ definido en reqs\\nweight_readings"]
+      REDIS["⚡ Redis OSS\\ncontenedor Fargate\\ncola Celery + caché\\n~$15/mes"]
+    end
+
+    subgraph AWSSTORAGE["Storage & Messaging"]
+      S3["🪣 Amazon S3\\nreportes PDF/Excel\\nassets estáticos\\n~$0.02/GB"]
+      SNS["📣 Amazon SNS\\nfanout alertas\\npush + email simultaneo"]
+    end
+
+    subgraph AWSSEC["Seguridad & DevOps"]
+      COGNITO["🔐 AWS Cognito\\nauth · roles · MFA\\ngratis 50k MAU"]
+      SECRETS["🔑 Secrets Manager\\ncredenciales y API keys"]
+      CW["📊 CloudWatch\\nlogs · métricas · alertas"]
+      ECR["🐳 Amazon ECR\\nregistry imágenes Docker"]
+    end
+
+    ALB --> APIECS
+    APIECS --> RDS
+    APIECS --> INFLUX
+    APIECS --> REDIS
+    APIECS --> SNS
+    APIECS --> COGNITO
+    APIECS --> SECRETS
+    WORKERECS --> REDIS
+    WORKERECS --> RDS
+    WORKERECS --> S3
+    WORKERECS --> SNS
+    APIECS --> CW
+    WORKERECS --> CW
+  end
+
+  subgraph EXTERNAL["🌐  Servicios externos — fuera de AWS"]
+    FCM["🔔 Firebase FCM\\npush notifications\\nGRATIS — U07"]
+    RESEND["📧 Resend.com\\nemail reportes\\n$0 hasta 3k/mes — F10"]
+    SUPAPI["🏭 API Proveedor\\npedidos auto-stock\\nF06 modo auto"]
+    OPENAI["🤖 OpenAI API\\nsugerencias inventario\\nestancado F09 · pay-per-use"]
+  end
+
+  subgraph CLIENTS["📱  Clientes finales"]
+    APP["React Native\\niOS · Android\\ndashboard · alertas\\nauditoría · proveedor"]
+    WEB["React Web\\nmulti-sucursal\\nreportes · mapa calor"]
+  end
+
+  ESP -- "MQTT WiFi\\npub: weight · heartbeat" --> MOSQ
+  EDGESVC -- "HTTPS sync\\nprogresiva R04" --> ALB
+  SNS --> FCM
+  SNS --> RESEND
+  WORKERECS --> SUPAPI
+  WORKERECS --> OPENAI
+  APP -- "HTTPS · WebSocket" --> ALB
+  WEB -- "HTTPS · WebSocket" --> ALB
+  FCM --> APP
+`;
+
+const { svg } = await mermaid.render('arch-def', diagram);
+document.getElementById('arch').innerHTML = svg;
+</script>
