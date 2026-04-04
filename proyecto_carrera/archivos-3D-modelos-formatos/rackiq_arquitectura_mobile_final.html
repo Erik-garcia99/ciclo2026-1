@@ -1,0 +1,119 @@
+
+<style>
+#wrap { overflow-x: auto; width: 100%; }
+#arch { min-width: 1000px; }
+</style>
+<div id="wrap"><div id="arch"></div></div>
+<script type="module">
+import mermaid from 'https://esm.sh/mermaid@11/dist/mermaid.esm.min.mjs';
+const dark = matchMedia('(prefers-color-scheme: dark)').matches;
+await document.fonts.ready;
+mermaid.initialize({
+  startOnLoad: false,
+  theme: 'base',
+  fontFamily: '"Anthropic Sans", sans-serif',
+  themeVariables: {
+    darkMode: dark,
+    fontSize: '12px',
+    fontFamily: '"Anthropic Sans", sans-serif',
+    lineColor: dark ? '#9c9a92' : '#73726c',
+    textColor: dark ? '#c2c0b6' : '#3d3d3a',
+    primaryColor: dark ? '#1e2a1e' : '#eaf3de',
+    primaryBorderColor: dark ? '#3b6d11' : '#639922',
+    primaryTextColor: dark ? '#c2c0b6' : '#3d3d3a',
+    secondaryColor: dark ? '#1a1e2a' : '#e6f1fb',
+    secondaryBorderColor: dark ? '#185fa5' : '#378add',
+    tertiaryColor: dark ? '#2a201a' : '#faeeda',
+    tertiaryBorderColor: dark ? '#854f0b' : '#ba7517',
+    edgeLabelBackground: dark ? '#1e1e1c' : '#ffffff',
+  },
+});
+
+const diagram = `flowchart TB
+
+  subgraph FISICA["⚙️  Capa Física — On-Premise · por Sucursal"]
+    direction LR
+    LC["Celda de carga ×5"] --> HX["HX711\\nADC 24 bits"] --> ESP["ESP32 · C / ESP-IDF\\npolling + threshold · debounce\\nheartbeat · anomaly detect"]
+  end
+
+  subgraph EDGE["🖥️  Edge Gateway — Raspberry Pi · On-Premise LAN"]
+    direction LR
+    subgraph D1["🐳 Docker 1"]
+      MOSQ["Mosquitto\\nBroker MQTT :1883\\nred local WiFi"]
+    end
+    subgraph D2["🐳 Docker 2"]
+      EDGESVC["Edge Service\\nPython · FastAPI\\nstore & forward R03\\nfiltrado ruido · debounce F12"]
+    end
+    subgraph D3["🐳 Docker 3"]
+      SQLITE["SQLite\\nbuffer offline R01 R02"]
+    end
+    D1 -- "subscribe MQTT" --> D2
+    D2 -- "escribe / lee" --> D3
+  end
+
+  subgraph RAILWAY["☁️  Railway.app — Compute · ~10 USD/mes"]
+    direction TB
+    subgraph COMPUTE["🐳 Contenedores Docker"]
+      API["🐳 Docker 4 · REST API\\nPython · FastAPI\\nJWT via Supabase Auth\\nWebSockets"]
+      WORKER["🐳 Docker 5 · Worker · Celery\\nML estacionalidad F08\\nreportes PDF · CSV · XLSX F10\\nsugerencias IA F09"]
+      REDIS["🐳 Docker 6 · Redis\\ncola Celery · caché\\npub/sub WebSocket"]
+    end
+    API --> REDIS
+    WORKER --> REDIS
+  end
+
+  subgraph SUPABASE["🟢  Supabase — BaaS · free tier"]
+    direction LR
+    SBDB["🐘 PostgreSQL 16\\nDB principal · inventario\\nusuarios · sucursales\\nauditorías · tokens"]
+    SBAUTH["🔐 Supabase Auth\\nJWT · roles\\nowner · admin · staff\\n50k MAU gratis"]
+    SBSTORE["🗂 Supabase Storage\\nreportes PDF · CSV · XLSX\\n1 GB gratis"]
+    SBRT["⚡ Supabase Realtime\\nWebSockets\\nalertas tiempo real U07"]
+  end
+
+  subgraph INFLUX["📈  InfluxDB Cloud · free tier"]
+    IDB["Series de Tiempo\\nweight_readings\\nhistorial sensores"]
+  end
+
+  subgraph EXT["🌐  Servicios Externos"]
+    FCM["🔔 Firebase FCM\\npush iOS + Android\\nGRATIS U07"]
+    APNS["🍎 Apple APNs\\npush nativo iOS\\nvía FCM automático"]
+    RESEND["📧 Resend.com\\nemail con PDF/XLSX adjunto\\ngratis 3k/mes F10"]
+    LLM["🤖 LLM API\\nsugerencias F09\\nOpenAI · DeepSeek · Gemini"]
+    NOTIF["💬 Notif. Proveedor\\nstock bajo F06\\nWhatsApp Business · Email"]
+    EXPO["📲 Expo EAS\\nbuild iOS + Android\\nOTA updates"]
+  end
+
+  subgraph CLIENTS["📱  App Móvil — 100% Mobile"]
+    direction LR
+    IOS["iOS\\nApp Store"]
+    AND["Android\\nGoogle Play"]
+  end
+
+  ESP -- "MQTT WiFi\\nweight + heartbeat" --> MOSQ
+  EDGESVC -- "HTTPS sync\\nprogresiva R04" --> API
+  API -- "lee / escribe\\ndatos negocio" --> SBDB
+  API -- "valida tokens\\ngestión roles" --> SBAUTH
+  API -- "sube reportes\\nPDF · CSV · XLSX" --> SBSTORE
+  API -- "publica eventos\\nalertas realtime" --> SBRT
+  API -- "series de tiempo\\nweight readings" --> IDB
+  WORKER -- "lee / escribe\\nreportes · pedidos" --> SBDB
+  WORKER -- "sube archivos\\ngenerados F10" --> SBSTORE
+  WORKER -- "patrones ML" --> IDB
+  WORKER -- "push nativo\\niOS + Android U07" --> FCM
+  WORKER -- "email PDF/XLSX\\nadjunto F10" --> RESEND
+  WORKER -- "sugerencias F09" --> LLM
+  WORKER -- "alerta stock bajo\\nF06 modo manual" --> NOTIF
+  FCM --> APNS
+  SBRT -- "alertas realtime" --> IOS
+  SBRT -- "alertas realtime" --> AND
+  FCM -- "push app\\ncerrada o abierta" --> IOS
+  FCM -- "push app\\ncerrada o abierta" --> AND
+  API -- "HTTPS · WebSocket" --> IOS
+  API -- "HTTPS · WebSocket" --> AND
+  EXPO -- "build + deploy OTA" --> IOS
+  EXPO -- "build + deploy OTA" --> AND
+`;
+
+const { svg } = await mermaid.render('rackiq-mobile', diagram);
+document.getElementById('arch').innerHTML = svg;
+</script>

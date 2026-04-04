@@ -1,0 +1,111 @@
+
+<style>
+#wrap { overflow-x: auto; width: 100%; }
+#arch { min-width: 1100px; }
+</style>
+<div id="wrap"><div id="arch"></div></div>
+<script type="module">
+import mermaid from 'https://esm.sh/mermaid@11/dist/mermaid.esm.min.mjs';
+const dark = matchMedia('(prefers-color-scheme: dark)').matches;
+await document.fonts.ready;
+mermaid.initialize({
+  startOnLoad: false,
+  theme: 'base',
+  fontFamily: '"Anthropic Sans", sans-serif',
+  themeVariables: {
+    darkMode: dark,
+    fontSize: '12px',
+    fontFamily: '"Anthropic Sans", sans-serif',
+    lineColor: dark ? '#9c9a92' : '#73726c',
+    textColor: dark ? '#c2c0b6' : '#3d3d3a',
+    primaryColor: dark ? '#1e2a1e' : '#eaf3de',
+    primaryBorderColor: dark ? '#3b6d11' : '#639922',
+    primaryTextColor: dark ? '#c2c0b6' : '#3d3d3a',
+    secondaryColor: dark ? '#1a1e2a' : '#e6f1fb',
+    secondaryBorderColor: dark ? '#185fa5' : '#378add',
+    tertiaryColor: dark ? '#2a201a' : '#faeeda',
+    tertiaryBorderColor: dark ? '#854f0b' : '#ba7517',
+    edgeLabelBackground: dark ? '#1e1e1c' : '#ffffff',
+    clusterBkg: dark ? '#1a1f2e' : '#f8fafc',
+    clusterBorder: dark ? '#2d3748' : '#cbd5e1',
+  },
+});
+
+const diagram = `flowchart TB
+
+  subgraph FISICA["⚙️  Capa Física — On-Premise · por Sucursal"]
+    direction LR
+    LC["Celda de carga ×5"]
+    HX["HX711\\nADC 24 bits"]
+    ESP["ESP32 · C / ESP-IDF\\npolling + threshold · debounce\\nheartbeat · anomaly detect"]
+    LC --> HX --> ESP
+  end
+
+  subgraph EDGE["🖥️  Edge Gateway — Raspberry Pi Zero 2W · On-Premise LAN"]
+    direction LR
+    subgraph D1["🐳 Docker 1"]
+      MOSQ["Mosquitto\\nBroker MQTT :1883\\nred local WiFi"]
+    end
+    subgraph D2["🐳 Docker 2"]
+      EDGESVC["Edge Service\\nPython · FastAPI\\nstore & forward R03\\nfiltrado ruido · debounce F12"]
+    end
+    subgraph D3["🐳 Docker 3"]
+      SQLITE["SQLite\\nbuffer offline R01 R02"]
+    end
+    D1 -- "subscribe MQTT" --> D2
+    D2 -- "escribe / lee" --> D3
+  end
+
+  subgraph RAILWAY["☁️  Railway.app — Servidor Cloud · ~15 USD/mes"]
+    direction TB
+
+    subgraph COMPUTE["🐳 Contenedores Docker — Railway"]
+      API["🐳 Docker 4 · REST API\\nPython · FastAPI\\nJWT multi-tenant\\nWebSockets alertas U07"]
+      WORKER["🐳 Docker 5 · Worker · Celery\\nML estacionalidad F08\\nreportes PDF/Excel F10\\nsugerencias IA F09"]
+      REDIS["🐳 Docker 6 · Redis · Upstash\\ncola Celery\\ncaché sesiones + WebSocket"]
+    end
+
+    subgraph DB["Bases de Datos — Railway managed"]
+      PG["🐘 PostgreSQL 16\\nRailway managed\\ninventario · usuarios\\nsucursales · auditorías"]
+      INFLUX["📈 InfluxDB Cloud\\nSaaS externo · free tier\\nweight_readings\\npatrones por minuto"]
+    end
+
+    subgraph STORE["Storage — Cloudflare R2"]
+      R2["🗂 Cloudflare R2\\ngratis 10 GB\\nreportes PDF · Excel · assets"]
+    end
+
+    API --> PG
+    API --> INFLUX
+    API --> REDIS
+    WORKER --> REDIS
+    WORKER --> PG
+    WORKER --> R2
+    WORKER --> INFLUX
+  end
+
+  subgraph EXT["🌐  Servicios Externos"]
+    FCM["🔔 Firebase FCM\\npush notifications\\n@react-native-firebase/messaging\\nAndroid + iOS con React Native · GRATIS"]
+    RESEND["📧 Resend.com\\nemail reportes\\ngratis 3k/mes · F10"]
+    LLM["🤖 LLM API\\nsugerencias inventario F09\\nOpenAI · DeepSeek · Gemini\\nel más barato según consumo"]
+    NOTIF["💬 Alerta al Dueño\\nstock bajo detectado F06\\nWhatsApp · Telegram · Email\\nel dueño contacta al proveedor"]
+  end
+
+  subgraph CLIENTS["📱  Clientes Finales"]
+    APP["React Native · Expo\\niOS · Android\\ndashboard · alertas · auditoría\\nmodo proveedor F13"]
+    WEB["React Web · Vercel\\npanel multi-sucursal U03\\nreportes · mapa calor U09"]
+  end
+
+  ESP -- "MQTT WiFi\\npub: weight + heartbeat" --> MOSQ
+  EDGESVC -- "HTTPS sync progresiva R04\\nbatch upload al reconectar" --> API
+  API -- "HTTPS · WebSocket" --> APP
+  API -- "HTTPS · WebSocket" --> WEB
+  WORKER -- "push nativo\\niOS + Android" --> FCM
+  WORKER -- "email\\nreportes F10" --> RESEND
+  WORKER -- "prompt\\nsugerencias F09" --> LLM
+  WORKER -- "alerta stock bajo\\nF06 modo manual" --> NOTIF
+  FCM -- "notificación push\\napp cerrada o abierta" --> APP
+`;
+
+const { svg } = await mermaid.render('rackiq-v3', diagram);
+document.getElementById('arch').innerHTML = svg;
+</script>

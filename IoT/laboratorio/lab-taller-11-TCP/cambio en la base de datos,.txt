@@ -1,0 +1,11 @@
+cambio en la base de datos, 
+
+se necesitara un token con el cual el duenio de una empresa va a poder crear sucurisales y tener una opcion de invitacion con el cual el dusenio o usaurios a nivel owner/admi pueden dar permiso a otro de poder crear una sucursal, 
+
+pero el inicio nosotros como los creados del sistema debemos de asignarle un token este token validara que pueda crear sucursales, sera un token siempre activo para poder crea estas sucursales, el usuario debe de ingresarlo para validar que pueda crear sucrusales.
+
+debemos de actualizar lo que hace la base de datos
+
+el dienio es el ecnargado de crear los primeros admis, el dienio tiene el token, por lo que puede crear los primer usuarios admi, auqnue pueden haber varios usuarios a nivel maximo, digo, que tal que una sucursal no tiene como tal duenio, son franqucias por lo que al final tienen varios jefes o varios personal al mismo nivel que no?, por lo que es necesario modificar la base de datos tomando en cuenta estos puntos, 
+
+al inicio todo usuario que se registre tendra como nivel incial en el sistema el mas bajo pero un admi puede elevarle los permisos
