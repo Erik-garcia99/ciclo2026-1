@@ -1,0 +1,450 @@
+[
+    {
+        "id": "1c98bbf8564299a3",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "119b779b281a15ac",
+        "type": "mqtt in",
+        "z": "1c98bbf8564299a3",
+        "name": "state led",
+        "topic": "device/led",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "4f2b907595520f64",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 140,
+        "wires": [
+            [
+                "688e0901207f0400",
+                "b9ae83d5077e2e80"
+            ]
+        ]
+    },
+    {
+        "id": "fd0c20344add21b9",
+        "type": "mqtt in",
+        "z": "1c98bbf8564299a3",
+        "name": "state ADC",
+        "topic": "device/adc",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "4f2b907595520f64",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 200,
+        "wires": [
+            [
+                "3ce85c0b51297825",
+                "eb79c84b302eb040"
+            ]
+        ]
+    },
+    {
+        "id": "ed168402b145dd03",
+        "type": "mqtt out",
+        "z": "1c98bbf8564299a3",
+        "name": "togg led",
+        "topic": "device/action",
+        "qos": "1",
+        "retain": "false",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "4f2b907595520f64",
+        "x": 580,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "688e0901207f0400",
+        "type": "debug",
+        "z": "1c98bbf8564299a3",
+        "name": "LED",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 550,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "3ce85c0b51297825",
+        "type": "debug",
+        "z": "1c98bbf8564299a3",
+        "name": "ADC",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 580,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "0298d6f1616c2428",
+        "type": "mqtt in",
+        "z": "1c98bbf8564299a3",
+        "name": "TMP",
+        "topic": "device/temp",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "4f2b907595520f64",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 260,
+        "wires": [
+            [
+                "94acd5e26fa8a884",
+                "754bcaf7b7f2c284"
+            ]
+        ]
+    },
+    {
+        "id": "877dd8c7d79eaf03",
+        "type": "mqtt in",
+        "z": "1c98bbf8564299a3",
+        "name": "HUM",
+        "topic": "device/humi",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "4f2b907595520f64",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 210,
+        "y": 320,
+        "wires": [
+            [
+                "5944dd587141f3ea",
+                "5e2cb7114e1fa567"
+            ]
+        ]
+    },
+    {
+        "id": "94acd5e26fa8a884",
+        "type": "debug",
+        "z": "1c98bbf8564299a3",
+        "name": "TMP",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 580,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "5944dd587141f3ea",
+        "type": "debug",
+        "z": "1c98bbf8564299a3",
+        "name": "HMD",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 580,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "3d88fb5af187564d",
+        "type": "inject",
+        "z": "1c98bbf8564299a3",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "device/action",
+        "payload": "ON",
+        "payloadType": "str",
+        "x": 220,
+        "y": 460,
+        "wires": [
+            [
+                "ed168402b145dd03"
+            ]
+        ]
+    },
+    {
+        "id": "dd33572fb913030c",
+        "type": "inject",
+        "z": "1c98bbf8564299a3",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "device/action",
+        "payload": "OFF",
+        "payloadType": "str",
+        "x": 230,
+        "y": 500,
+        "wires": [
+            [
+                "ed168402b145dd03"
+            ]
+        ]
+    },
+    {
+        "id": "eb79c84b302eb040",
+        "type": "ui_gauge",
+        "z": "1c98bbf8564299a3",
+        "name": "",
+        "group": "5fa43105f1255445",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "ADC",
+        "label": "volts",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "4096",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 850,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "754bcaf7b7f2c284",
+        "type": "ui_gauge",
+        "z": "1c98bbf8564299a3",
+        "name": "",
+        "group": "5fa43105f1255445",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temp",
+        "label": "C",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "50",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 850,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "5e2cb7114e1fa567",
+        "type": "ui_gauge",
+        "z": "1c98bbf8564299a3",
+        "name": "",
+        "group": "5fa43105f1255445",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "HUM",
+        "label": "%",
+        "format": "{{value}}",
+        "min": "20",
+        "max": "90",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "diff": false,
+        "className": "",
+        "x": 830,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "8525d4969ba894db",
+        "type": "ui_switch",
+        "z": "1c98bbf8564299a3",
+        "name": "",
+        "label": "PWR LED",
+        "tooltip": "",
+        "group": "5fa43105f1255445",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "decouple": "false",
+        "topic": "topic",
+        "topicType": "msg",
+        "style": "",
+        "onvalue": "ON",
+        "onvalueType": "str",
+        "onicon": "",
+        "oncolor": "",
+        "offvalue": "OFF",
+        "offvalueType": "str",
+        "officon": "",
+        "offcolor": "",
+        "animate": false,
+        "className": "",
+        "x": 210,
+        "y": 560,
+        "wires": [
+            [
+                "ed168402b145dd03"
+            ]
+        ]
+    },
+    {
+        "id": "b9ae83d5077e2e80",
+        "type": "ui_led2",
+        "z": "1c98bbf8564299a3",
+        "order": 0,
+        "group": "5fa43105f1255445",
+        "width": 0,
+        "height": 0,
+        "label": "led",
+        "property": "payload",
+        "labelPlacement": "left",
+        "labelAlignment": "left",
+        "colorForValue": [
+            {
+                "color": "#ff0000",
+                "value": "0",
+                "valueType": "num"
+            },
+            {
+                "color": "#008000",
+                "value": "1",
+                "valueType": "num"
+            }
+        ],
+        "allowColorForValueInMessage": false,
+        "shape": "circle",
+        "showGlow": true,
+        "name": "",
+        "x": 850,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "4f2b907595520f64",
+        "type": "mqtt-broker",
+        "name": "mosquito",
+        "broker": "192.168.1.66",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "5fa43105f1255445",
+        "type": "ui_group",
+        "name": "ADC",
+        "tab": "41aa040f36e431d0",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "41aa040f36e431d0",
+        "type": "ui_tab",
+        "name": "Tab 1",
+        "icon": "dashboard",
+        "order": 1
+    },
+    {
+        "id": "faded8e919fe2a05",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-dashboard": "3.6.6",
+            "node-red-contrib-ui-led2": "0.4.19"
+        }
+    }
+]
