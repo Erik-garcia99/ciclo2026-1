@@ -102,7 +102,6 @@ esp_err_t tcp_client_send(const char *data)
     ESP_LOGI(TAG, "TX: %s", data);
     return ESP_OK;
 }
-
 int tcp_client_recv(char *buf, size_t buf_len)
 {
     if (!tcp_client.connected) return -1;
@@ -112,14 +111,21 @@ int tcp_client_recv(char *buf, size_t buf_len)
         buf[len] = '\0';
         ESP_LOGI(TAG, "RX: %s", buf);
     } else if (len == 0) {
-        ESP_LOGW(TAG, "Servidor cerro la conexion");
+        ESP_LOGW(TAG, "servidor cerro la conexion");
         tcp_client.connected = false;
     } else {
-        ESP_LOGE(TAG, "recv() error: errno %d", errno);
+        if (errno == EAGAIN || errno == EWOULDBLOCK) {
+            // timeout normal del SO_RCVTIMEO, no es error
+        } else {
+            // errno 104 = ECONNRESET, 113 = EHOSTUNREACH, etc.
+            ESP_LOGE(TAG, "recv() error real: errno %d (%s)", errno, strerror(errno));
+            tcp_client.connected = false;  // ← esto faltaba
+        }
     }
 
     return len;
 }
+
 
 void tcp_client_close(void)
 {
@@ -203,16 +209,22 @@ void tcp_recv_task(void *pvParameters)
             ESP_LOGI(TAG, "SERVER >> %s", buf);
 
         } else if (len == 0) {
-            ESP_LOGE(TAG, "servidor desconectado");
-            tcp_client.connected = false;
-            tcp_client.logged_in = false;
+            ESP_LOGE(TAG, "servidor desconectado (cierre limpio)");
             break;
 
         } else {
-            // errno 11 = EAGAIN, timeout normal — no es error
-            vTaskDelay(pdMS_TO_TICKS(100));
+            if (errno == EAGAIN || errno == EWOULDBLOCK) {
+                vTaskDelay(pdMS_TO_TICKS(100)); // timeout normal, seguir
+            } else {
+                // errno 104 u otro error real
+                ESP_LOGE(TAG, "error de socket errno %d, cerrando tarea", errno);
+                tcp_client.connected = false;
+                tcp_client.logged_in = false;
+                break; // ← antes nunca salía aquí
+            }
         }
     }
 
+    tcp_client_close();
     vTaskDelete(NULL);
 }

@@ -18,7 +18,7 @@
 #include<modules/UART/uart_lib.h>
 #include<modules/WIFI/wifi_lib.h>
 #include<global.h>
-#include"modules/TCP/tcp_lib.h"
+
 
 
 
@@ -46,11 +46,6 @@ QueueHandle_t wifi_credential_queue;
 //crendiales para WIFI
 char *ESP_SSID_WIFI;
 char *ESP_PSWD_WIFI;
-
-//credeniclaes por defecto de servidor TCP 
-char *ip_server;
-uint16_t *port_server;
-
 
 /**
  * necesitare una funcion que se ecncargue de capturar estos tipos de datos que ocurran, por ejemplo que no se pudo conectar a la red 
@@ -102,9 +97,10 @@ void app_main(void)
 
     //parte de wifi, inicamos las credenciales para wifi con las de mi chante, para poder modificarlas si es necesatio 
     //inicamos valores pode fectos 
-
     char default_ssid[]="INFINITUMF4AF\0";
     char default_psdw[]="nFukH34MPW\0";
+
+
 
 
     esp_err_t ret =  new_setup_wifi(default_ssid, default_psdw);
@@ -138,39 +134,6 @@ void app_main(void)
 
     ESP_LOGI(TAG, "ESP_MODE_STA");
     wifi_init_sta();
-
-    //en este punto ya deberia de haber inicado WIFI de manera correcta por lo que poderemos inicar con TCP 
-
-    //ip_server = DEFAULT_IP;
-    //port_server = DEFAULT_PORT;
-
-    ESP_LOGI("MAIN", "Esperando estabilizacion de red...");
-    vTaskDelay(pdMS_TO_TICKS(2000));
-
-    if ( tcp_client_init() != ESP_OK) {
-        ESP_LOGE("MAIN", "No se pudo conectar al servidor");
-        return;
-    }
-
-    // 3. Login
-    if (tcp_login() != ESP_OK) {
-        ESP_LOGE("MAIN", "Login fallido");
-        tcp_client_close();
-        return;
-    }
-
-    // 4. Lanzar keep-alive task (ya logueado)
-    xTaskCreate(keepalive_task, "keepalive", 4096, NULL, 5, NULL);
-    xTaskCreate(tcp_recv_task,  "tcp_recv",  4096, NULL, 5, NULL);
-
-
-
-    
-
-    
-    
-
-
 }
 
 
@@ -209,21 +172,6 @@ void task_cmd_uart(void *params){
              * para esto 
              * 
             */
-            //estraemos 
-            // char *cmd_case = strdup(tokens[0]);
-            
-            // cmd_case = strtok(cmd_case, ":");
-
-
-            // uart_write_bytes(UART_MAIN, cmd_case, strlen(cmd_case));
-
-            // 2. ¿Cómo quedaron los tokens?
-            // for(int i = 0; tokens[i] != NULL; i++){
-            //     uart_write_bytes(UART_MAIN, "\r\n", 2);
-            //     uart_write_bytes(UART_MAIN, tokens[i], strlen(tokens[i]));
-            //     // ESP_LOGI("CMD", "token[%d] = [%s]", i, tokens[i]);
-            // }
-
             char *cmd_case = strdup(tokens[0]);
             char  *tmp = strtok(cmd_case, ":");
             
@@ -236,7 +184,7 @@ void task_cmd_uart(void *params){
 
                 //por lo que ahora necesito es serparar la parte que me importa del encabezado del comando 
                 char *ssid = strchr(tokens[0], ':');
-                char *pwsd = strchr(tokens[1], ':');
+                char *pwsd = strchr(tokens[1], ':');;
                 //brincamos ":"
                 ssid++;
                 pwsd++;
@@ -257,26 +205,10 @@ void task_cmd_uart(void *params){
 
 
             }
+            //con IP - purto
+            //con una red para UABC 
+            //con un nuevo usuario
 
-            else if(strcmp(tmp,"IP")){
-               //aqui es donde se va a recibir lo que se escirbio por uart, en este caso es para cunado el comando sea 
-               /**
-                *  IP:xxxxx PORT:xxxx <- este es el comando que indica que habra un update en las credenicales para la conexion TCP 
-                * 
-                * 
-                * 
-                */
-                char *ip = strchr(tokens[0], ':');
-                char *port = strchr(tokens[1], ':');
-                //brincamos ":"
-                ip++;
-                port++;
-
-                //con port debemos de hacer un trabajillo extra que es convertir los caracteres en uint16_t un dato de 16 bits 
-
-                
-                
-            }
 
         }
 
