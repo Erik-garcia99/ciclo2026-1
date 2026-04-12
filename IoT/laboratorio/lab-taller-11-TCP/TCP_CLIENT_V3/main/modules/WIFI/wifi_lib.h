@@ -12,6 +12,8 @@
 //bits
 #define WIFI_CONNECTED_BIT BIT0
 #define WIFI_FAIL_BIT BIT1
+#define WIFI_UPDATE BIT10
+
 
 //variables globales para red 
 /**
@@ -19,17 +21,43 @@
  * 
  * 
 */
-extern char *ESP_SSID_WIFI;
-extern char *ESP_PSWD_WIFI;
+// extern char *ESP_SSID_WIFI;
+// extern char *ESP_PSWD_WIFI;
 
 
-//para una red de empresa o en este caso para la uni
-extern int ENT_NETWORK;
-//pero este lo dejaremos hasta el ultimo
-extern char *SSID_ENT_WIFI;
-extern char *USER_ENT_WIFI;
-extern char *PSWD_ENT_WIFI;
+// //para una red de empresa o en este caso para la uni
+// extern int ENT_NETWORK;
+// //pero este lo dejaremos hasta el ultimo
+// extern char *SSID_ENT_WIFI;
+// extern char *USER_ENT_WIFI;
+// extern char *PSWD_ENT_WIFI;
 
+extern EventGroupHandle_t s_wifi_event_group;
+
+//podemos cambiar estos datos anteriores por esta nuva estrucutra?, podriamos hacer lago parecido con TCP, para que todo este en una estrucutra agrupado y mas limpio?
+
+/**
+ * 
+ * @brief esta estrucutura guaradaremos infromacion de la conexion o del estado de la conexion 
+ * 
+ * ssid - nombre de la red a coenctarse @memberof esp_wifi_t
+ * pswd - contrasenia de la red o de la cuenta @memberof esp_wifi_t   
+ * user_name - usuario de la red para inicar sesion y conectarse a la red @memberof esp_wifi_t  
+ * ip - ip otorgada al dispositivo por parte de la red @memberof esp_wifi_t 
+ * type_connected - valor de 0 o 1, 0 - conexion en una red normal, 1- conexion en una red de empresa @memberof esp_wifi_t 
+ * connected - 1 o 0 indicando que se pudo realizar la conexion y se eucneutra coinectado el ESP @memberof esp_wifi_t
+ * 
+*/
+typedef struct{
+    char *ssid;
+    char *pswd;
+    char *user_name;
+    char *ip;
+    int type_connected;
+    int connected;
+}esp_wifi_t;
+
+extern esp_wifi_t esp_wifi;
 
 
 

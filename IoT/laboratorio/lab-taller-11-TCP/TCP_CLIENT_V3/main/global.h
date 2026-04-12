@@ -36,7 +36,7 @@ extern task_uart_port_t global_uart;
 extern QueueHandle_t flow_data_queue; 
 
 //necesitaremos otra cola que este encargada de notifiar  que ya hay nuevas credenciales para que este vuelva a intentar.
-extern QueueHandle_t wifi_credential_queue;
+// extern QueueHandle_t wifi_credential_queue;
 
 
 /**
@@ -58,6 +58,10 @@ extern QueueHandle_t wifi_credential_queue;
  * 
  * 
 */
+
+
+//nombre del usuario 
+extern char *username;
 
 
 

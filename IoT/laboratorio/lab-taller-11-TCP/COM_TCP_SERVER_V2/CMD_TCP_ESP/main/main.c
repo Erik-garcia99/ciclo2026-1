@@ -73,6 +73,31 @@ char **pasrse_input(char *line);
 */
 static inline void uart_jump(void);
 
+/**
+ * @brief funcion encargada de actualizar las distittas credencuales mediante comandos 
+ * 
+ * 
+ * @param key donde va el nombre del nuevo SSID o la nueva IP.
+ * @param anchor deberia de ir la contrasenia de la nueva red o el nombre del usuario en caso de ser una red de empresa
+ * @param pswd_ent si este tiene datos es que se actualizara una red de empresa o unversidad, va la contrasenia del usuario
+ * 
+ * @param identificator le dira a la funcion que tiepo de actualizacion sera, puede ser <SSID, HOST_IP, SSID_ENT, MAT>
+ * 
+ * @return ESP_OK si se pudo actualziar 
+ * @return ESP_FAIL si no fue posible 
+ * 
+ * 
+ */
+
+ /**
+  * la funcion tratara de ser lo mas general, los parametros que no seran requeridos se les asginara un 0 o NULL 
+  * 
+  */
+esp_err_t update_setup_cred(char *key, char *anchor ,char *pswd_ent,  char *identificator);
+
+
+
+
 //tarea encargada de recibir el comando por UART 
 void task_cmd_uart(void *params);
 
@@ -97,13 +122,16 @@ void app_main(void)
 
     //parte de wifi, inicamos las credenciales para wifi con las de mi chante, para poder modificarlas si es necesatio 
     //inicamos valores pode fectos 
-    char default_ssid[]="INFINITUMF4AF\0";
-    char default_psdw[]="nFukH34MPW\0";
+    // char default_ssid[]="INFINITUMF4AF\0";
+    // char default_psdw[]="nFukH34MPW\0";
 
+    esp_err_t ret;
+    //esta funcion va ser modificada
+    
+    ret = update_setup_cred("INFINITUMF4AF\0","nFukH34MPW\0",NULL,"SSID");
 
+    //---------
 
-
-    esp_err_t ret =  new_setup_wifi(default_ssid, default_psdw);
 
     if(ret !=ESP_FAIL){
         uart_write_bytes(UART_MAIN,"\r\n", 2);
@@ -123,7 +151,7 @@ void app_main(void)
     //indicamos como seran los comandos 
     ESP_LOGI(TAG, "COMANDOS PARA ESTABLECER CARACTERISITRAS");
     ESP_LOGI(TAG, "SETUP WIFI -> red nomal -> SSID:<nombre_ssid> PSWD:<pasword_red>");
-    ESP_LOGI(TAG, "SETUP WIFI ENTERPRISE -> ENT_SSID:<>");
+    ESP_LOGI(TAG, "SETUP TCP SERVER -> HOST_IP:<host_ip> PORT:<# port>");
     //okay, este es la parte de WIFI, por lo primero debemos de poner que va a inicar la conexion 
     ret = nvs_flash_init();
     if(ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND){
@@ -142,6 +170,7 @@ void task_cmd_uart(void *params){
 
 
     char* cmd_receive;
+    esp_err_t ret;
 
     while(1){
 
@@ -184,12 +213,17 @@ void task_cmd_uart(void *params){
 
                 //por lo que ahora necesito es serparar la parte que me importa del encabezado del comando 
                 char *ssid = strchr(tokens[0], ':');
-                char *pwsd = strchr(tokens[1], ':');;
+                char *pwsd = strchr(tokens[1], ':');
                 //brincamos ":"
                 ssid++;
                 pwsd++;
                 //mando las nuevas credenciales a la funcion que se encargara de actualizar las credenciales y volver a correr la coenxion 
-                esp_err_t ret =  new_setup_wifi(ssid, pwsd);
+               
+
+                //en este punto ya se que es wifi normal por lo que mandaremos los datos 
+
+                ret = update_setup_cred(ssid, pwsd, NULL, "SSID");
+
                 
                 //preparamos el envio de una senial 1 que indica que ya ha
                 if(ret !=ESP_FAIL){
@@ -203,6 +237,15 @@ void task_cmd_uart(void *params){
                 }   
 
 
+
+            }
+            else if(strcmp("HOST_IP", tmp) == 0){
+                
+                char *host_ip = strchr(tokens[0], ':');
+                char *port = strchr(tokens[1], ':');
+
+                ret = update_setup_cred(host_ip, port, NULL, "HOST_IP");
+                
 
             }
             //con IP - purto
@@ -246,3 +289,42 @@ static inline void uart_jump(void) {
     uart_write_bytes(UART_MAIN, "\r\n", 2);
 }
 
+
+esp_err_t update_setup_cred(char *key, char *anchor ,char *pswd_ent,  char *identificator){
+
+/**
+  * estaba tratando de hacer 2 veces algo que ya hace la tarea. en esta funcion los guiaremos con el cuerto parametro que idnicara que tipo de actualizacion se necesita realizar 
+  * 
+  * 
+*/
+
+    if(strcmp(identificator, "SSID") == 0){
+
+        ESP_SSID_WIFI =realloc(ESP_SSID_WIFI, strlen(key)+1);
+        ESP_PSWD_WIFI =realloc(ESP_PSWD_WIFI, strlen(anchor)+1);
+
+        if (ESP_SSID_WIFI != NULL && ESP_PSWD_WIFI != NULL) {
+        strcpy(ESP_SSID_WIFI, key);
+        strcpy(ESP_PSWD_WIFI, anchor);
+        return ESP_OK;
+
+        } else {
+            uart_write_bytes(UART_MAIN,"\r\n", 2);
+            const char *mssg = "no hay memoria para las credenicales\0";
+            uart_write_bytes(UART_MAIN,mssg, strlen(mssg));
+
+            return ESP_FAIL;
+        }
+
+    }
+    //ahora cunado sea cambiar la IP
+    else if(strcmp(identificator, "HOST_IP") == 0){
+
+
+
+    }
+
+    
+    return ESP_FAIL;
+
+}

@@ -25,7 +25,7 @@ static void wifi_event_handler(void *args, esp_event_base_t event_base,int32_t e
 
 //varibales globales 
 static int s_retry_num;
-static EventGroupHandle_t s_wifi_event_group;
+EventGroupHandle_t s_wifi_event_group;
 static const char *TAG="wifi_lib";
 
 // flag para saber si el driver ya fue inicializado alguna vez
@@ -39,7 +39,7 @@ void wifi_init_sta(void){
     //     wifi_disconnect();
     // }
 
-    s_wifi_event_group = xEventGroupCreate();
+    // s_wifi_event_group = xEventGroupCreate();
 
     ESP_ERROR_CHECK(esp_netif_init());
 
@@ -62,7 +62,8 @@ void wifi_init_sta(void){
 
     //ahora viene lo bueno. 
     EventBits_t bits;
-    if(ENT_NETWORK != TRUE){
+    //indicamos que si la conexion es diferente a 1 (diferente a una conexion de emprea) entonces entra aqui
+    if(esp_wifi.type_connected != 1){
 
         xEventGroupClearBits(s_wifi_event_group, WIFI_CONNECTED_BIT | WIFI_FAIL_BIT);
         s_retry_num = 0; 
@@ -75,8 +76,8 @@ void wifi_init_sta(void){
                 },
             };
 
-            strncpy((char*)wifi_config.sta.ssid,     ESP_SSID_WIFI, sizeof(wifi_config.sta.ssid)-1);
-            strncpy((char*)wifi_config.sta.password, ESP_PSWD_WIFI, sizeof(wifi_config.sta.password)-1);
+            strncpy((char*)wifi_config.sta.ssid,     esp_wifi.ssid, sizeof(wifi_config.sta.ssid)-1);
+            strncpy((char*)wifi_config.sta.password, esp_wifi.pswd, sizeof(wifi_config.sta.password)-1);
 
             // ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
 
@@ -101,14 +102,15 @@ void wifi_init_sta(void){
                 uart_write_bytes(UART_MAIN, UART_RED, strlen(UART_RED));
                 uart_write_bytes(UART_MAIN, mssg_error, strlen(mssg_error));
                 uart_write_bytes(UART_MAIN, UART_RESET, strlen(UART_RESET));
+                
+                xEventGroupWaitBits(s_wifi_event_group, WIFI_UPDATE, pdTRUE,pdTRUE, portMAX_DELAY);
 
-                uint8_t signal;
-                //entonces aqui lo que deberia de hace  r es esperar a que se 
-                xQueueReceive(wifi_credential_queue,&signal, portMAX_DELAY );
+
             }
         
         }while(!(bits & WIFI_CONNECTED_BIT)); //el programa sigue hasta el el bit que indica que se conecto no este activo 
 
+        esp_wifi.connected = 1; //se estblecio la conexion. 
         const char *mssg_error = "conexion exitoso\n\0";
         uart_write_bytes(UART_MAIN, UART_GREEN, strlen(UART_GREEN));
         uart_write_bytes(UART_MAIN, mssg_error, strlen(mssg_error));
@@ -175,6 +177,7 @@ static void wifi_event_handler(void *args, esp_event_base_t event_base, int32_t 
     else if(event_base ==IP_EVENT && event_id == IP_EVENT_STA_GOT_IP){
         ip_event_got_ip_t *event=(ip_event_got_ip_t *)event_data;
         ESP_LOGI(TAG, "IP obtenida: "IPSTR, IP2STR(&event->ip_info.ip));
+        esp_wifi.ip = &event->ip_info.ip;
         s_retry_num = 0;
         xEventGroupSetBits(s_wifi_event_group, WIFI_CONNECTED_BIT);
     }
