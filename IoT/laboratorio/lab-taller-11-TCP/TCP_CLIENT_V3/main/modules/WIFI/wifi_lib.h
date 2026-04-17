@@ -52,7 +52,7 @@ typedef struct{
     char *ssid;
     char *pswd;
     char *user_name;
-    char *ip;
+    esp_ip4_addr_t *ip;
     int type_connected;
     int connected;
 }esp_wifi_t;
@@ -100,6 +100,11 @@ void wifi_init_sta(void);
  * 
 */
 
+/**
+ * @brief desconecta y vuelve a conectar con las credenciales actuales en esp_wifi.
+ *        llamar despues de actualizar esp_wifi.ssid / pswd.
+ */
+void wifi_reconnect(void);
 
 
 

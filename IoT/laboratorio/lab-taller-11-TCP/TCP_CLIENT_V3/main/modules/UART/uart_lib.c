@@ -70,7 +70,7 @@ void task_uart(void *params){
 
                         char c = buffer[i];
 
-                        if((c >= 'a' && c<='z') || (c >= 'A' && c<='Z') || (c>=32 && c<=63)){
+                        if((c >= 'a' && c<='z') || (c >= 'A' && c<='Z') || (c>=32 && c<=63) || (c=='_')){
 
                             uart_write_bytes(current_port->NUM_PORT, (const char*)&c, sizeof(c));
                             
@@ -106,7 +106,7 @@ void task_uart(void *params){
 
                         else if(c=='\b'){
                             
-                            if(len > 0){
+                            if(index_input > 0){
                                 index_input--;
                                 uart_write_bytes(current_port->NUM_PORT,"\b \b", 3);
                             }

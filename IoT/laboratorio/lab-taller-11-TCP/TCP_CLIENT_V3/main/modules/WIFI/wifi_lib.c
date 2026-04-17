@@ -25,12 +25,9 @@ static void wifi_event_handler(void *args, esp_event_base_t event_base,int32_t e
 
 //varibales globales 
 static int s_retry_num;
-EventGroupHandle_t s_wifi_event_group;
+// EventGroupHandle_t s_wifi_event_group;
 static const char *TAG="wifi_lib";
 
-// flag para saber si el driver ya fue inicializado alguna vez
-static bool wifi_initialized = false;
- 
 
 void wifi_init_sta(void){
     
@@ -70,7 +67,7 @@ void wifi_init_sta(void){
 
         //creo que seria con un DO-while que lo este intentando hasta se logre conectar con exito 
         do{
-             wifi_config_t wifi_config = {
+            wifi_config_t wifi_config = {
                 .sta = {
                     .threshold.authmode = WIFI_AUTH_WPA2_PSK,
                 },
@@ -115,8 +112,6 @@ void wifi_init_sta(void){
         uart_write_bytes(UART_MAIN, UART_GREEN, strlen(UART_GREEN));
         uart_write_bytes(UART_MAIN, mssg_error, strlen(mssg_error));
         uart_write_bytes(UART_MAIN, UART_RESET, strlen(UART_RESET));
-
-
     }
 
 
@@ -185,3 +180,18 @@ static void wifi_event_handler(void *args, esp_event_base_t event_base, int32_t 
 
 
 }   
+
+
+//desconecta y vuelve a conectar con las credenciales, que ya estane en el ssi y el pswd en el momento 
+void wifi_reconnect(void){
+
+    ESP_LOGI(TAG, "reconectando WIFI");
+
+    esp_wifi.connected=0;
+    s_retry_num =0;
+
+    //descoenctar la sesion actual, 
+    esp_wifi_disconnect();
+    //conectar con las nuvas credencuales. 
+    wifi_init_sta();
+}

@@ -1,20 +1,23 @@
 #ifndef TCP_LIB_H
 #define TCP_LIB_H
 
+#include"global.h"
+
 //macros
 //definamos un punto, en este caso haremos un local host en mi red, por lo que cunado arranque tratara de coenctarse 
 //a algun servidor o servicio en mi maquina en mi red, pero al no encontrarla se podra cambiar la direccion de host y el puerto 
 
 #define DEFAULT_HOST "192.168.1.66"
-#define DEFAULT_PORT "5000" 
-#define RETY_SERVER BIT0
-#define READY_CRED BIT1
+#define DEFAULT_PORT "5000"
+
+#define RETRY_SERVER BIT0 
+#define UPDATE_TCP BIT10
+#define EXT_TCP_MEM BIT11
+#define FAIL_TCP_MEM BIT12
+#define BREAK_UPDATE_WIFI BIT13
+#define NO_RETRY_TCP BIT14
 
 
-//variables
-//vamos a definir variables 
-// extern char *host_ip;
-// extern char *host_port;
 
 
 /**
@@ -30,7 +33,7 @@
 
 typedef struct {
     char *host_ip;
-    char *host_port;
+    uint16_t host_port;
     int sock;
     int connected;
     int logged_in;
@@ -42,10 +45,23 @@ extern tcp_client_t tcp_client;
 //mantendre el grupo de eventos pero si despues no cuentro una razon por la que este lo saco 
 extern EventGroupHandle_t g_tcp_event_group;
 
-//cola para indicar si quiere intentar la coenxion de nuevo o no 
-extern QueueHandle_t q_tcp_client_queue;
+
+//tareas 
+/**
+ * @brief tarea que envia un keep alive cada 10s al servidor.  
+ * 
+ * 
+*/
+void keep_alive_task(void *params);
 
 
+/**
+ * @brief tarea encargada de recibir lo que se manda del servidor hacia el ESP
+ * 
+ * 
+ * 
+*/
+void recv_task(void *params);
 
 //funciones
 //la primera funcion que deberia de poner sera la que crea los sockets para establecer la conexion
@@ -67,7 +83,29 @@ extern QueueHandle_t q_tcp_client_queue;
 */
 esp_err_t tcp_cliente_init(void);
 
- 
+
+//funcion que debe de realizar el login
+/**
+ * @brief funcion que funcionara para enivar los datos hacia el servidor
+ * 
+ * @param sockfd parametro en donde vendra el descriptro con el sokcer abierto en el momento para enviar la infocmacion 
+ * @param msg dentro de esta estrucutra se encontrara la informacion del datos a enviar, en especial <op> indicando que estrucutra es la que se va a enviar 
+ * 
+ * 
+ * 
+ * @return ESP_OK si se envio correctamente 
+ * @return ESP_FAIL ocurrio un error en el envio de los datos. 
+ * 
+ * 
+*/
+esp_err_t send_message(tcp_client_t *sockfd,send_info_t *msg);
+
+
+
+
+
+
+
 
 
 
