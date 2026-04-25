@@ -70,7 +70,7 @@ typedef struct{
 extern send_info_t send_info;
 
 //esta varibale se actualizara cunado se prenda un led 
-extern int led_state;
+extern uint8_t led_state;
 
 //esta estructrura su unica funcion es verificar que la peticion este construida de manera adecuada 
 //para establecer la comunicion

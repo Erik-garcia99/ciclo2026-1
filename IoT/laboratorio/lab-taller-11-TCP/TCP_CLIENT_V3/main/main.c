@@ -1,3 +1,5 @@
+//falta la modificacion para modificar la matricula, momas puse todo pero aun no lo tengo 
+
 /**
  * arreglos: 
  * 
@@ -33,7 +35,6 @@
 #include <esp_err.h>
 
 //wifi
-
 #include<esp_wifi.h>
 #include<nvs_flash.h>
 #include<lwip/err.h>
@@ -51,7 +52,7 @@
 //vairbales globales
 static const char *TAG = "MAIN";
 
-int led_state;
+uint8_t led_state;
 
 //++++++++++++++++ colas 
 //cola para los eventos de UART
@@ -155,7 +156,7 @@ void app_main(void)
     set_adc(ADC_CHANNEL);
     pwm_init(); 
     //iniciamos con 0
-    int led_state=0;
+    led_state=0;
 
 
     global_uart.NUM_PORT = UART_MAIN;
@@ -182,7 +183,7 @@ void app_main(void)
     format_request.operation[0] = 'R'; // read
     format_request.operation[1] = 'W'; //wriute
 
-    format_request.user = user;
+    format_request.user = user;   
 
 
 
@@ -216,7 +217,7 @@ void app_main(void)
     //indicamos como seran los comandos 
     ESP_LOGI(TAG, "COMANDOS PARA ESTABLECER CARACTERISITRAS");
     ESP_LOGI(TAG, "SETUP WIFI -> red nomal -> SSID:<nombre_ssid> PSWD:<pasword_red>");
-    ESP_LOGI(TAG, "SETUP TCP SERVER -> HOST_IP:<host_ip> PORT:<pureto>");
+    ESP_LOGI(TAG, "SETUP TCP CLIENT -> HOST_IP:<host_ip> PORT:<pureto>");
     //okay, este es la parte de WIFI, por lo primero debemos de poner que va a inicar la conexion 
     ret = nvs_flash_init();
     if(ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND){
@@ -369,6 +370,13 @@ void task_cmd_uart(void *params){
                 //flata cunado se cambia de matricula 
             }
 
+
+            //ahi otros 2 datos que el servidor puede enviar que son el ACK y en NACK 
+            /**
+             * en donde estos solo reperesentan si es lo que envio fue recibido correctamnete o no. 
+             * 
+             */
+
             
             //con una red para UABC 
             //con un nuevo usuario
@@ -407,6 +415,27 @@ void tcp_process_task(void *params){
 
         //recibira los datos por cola 
         if(xQueueReceive(tcp_rx_queue,&msg, portMAX_DELAY)){
+
+
+            //el mas sencicllo, verificamos con ACK o en NACK del servidor. 
+            if(strncmp(msg, "ACK", 3) == 0){
+            int len = snprintf(buffer, sizeof(buffer), "\r\nMAIN: ACK recibido -> %s\r\n", msg);
+            uart_write_bytes(global_uart.NUM_PORT, UART_GREEN, strlen(UART_GREEN));
+            uart_write_bytes(global_uart.NUM_PORT, buffer, len);
+            uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
+            free(msg);
+            continue;  // no parsear, esperar siguiente mensaje
+        }
+
+        if(strncmp(msg, "NACK", 4) == 0){
+            int len = snprintf(buffer, sizeof(buffer), "\r\nMAIN: NACK recibido -> %s\r\n", msg);
+            uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
+            uart_write_bytes(global_uart.NUM_PORT, buffer, len);
+            uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
+            free(msg);
+            continue;
+        }
+
             /**
              * se supone que en este punto se recibe
              * --> UABC:a1275863:R:L:leer led
@@ -426,183 +455,120 @@ void tcp_process_task(void *params){
             }
 
 
-            /**
-             * duranete todo el procesos de leer, debeomos de verificar que la solicitud sea correcta. 
-             * si en algun punto no es correcto se debe de mandar el NACK indicando que no es correcto  
-             * 
-            */
 
+            char current_op = 0;   // guarda 'R' o 'W' del case 2 para usarlo en case 3
             char *aux;
-            while(aux != NULL){
-                //token toma el sigueinte token necesario para la compracacion
+            for(mem_request = 0; tokens[mem_request] != NULL; mem_request++){
                 aux = tokens[mem_request];
 
-                //verificamos "UABC"
-                if(strcmp(aux,format_request.header)!=0){
-                    //si es diferente a 0 quiere decir que no esta bien por lo que debemos de mandar un NACK 
-                    send_info.op = OP_NACK;
-                    send_message(&tcp_client, &send_info);
+                switch(mem_request){
 
-                }
-                //el seguno token que debe de ser mi matricula, en si, hasta ahora esta bien, 
-                /**
-                 * en si no esta mal, pero si estamos en un broadcast, este mensaje no iria para mi, entonces debemos 
-                 * de indicar que la peticion no es para mi, salir y esperar a que llegue otro mensaje 
-                 * 
-                 * en mi caso tendria que entras "a1275863"
-                 */
-                if(strcmp(aux,format_request.user) != 0 ){
-                    int len = snprintf(buffer,sizeof(buffer), "\n\rMAIN : peticion no para usuario: %s\r\n",format_request.user);
-                    
-                    uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
-                    uart_write_bytes(global_uart.NUM_PORT, buffer, len);
-                    uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
-                    goto cleanup;
-                    break; //terminamos, salimos porque no para nosotros el mesanje y esperamos a que vuelva a recibir algo 
-                }
-                /**
-                 * ahora viene lo buneo, es el saber que quiere hacer y recopilar los datos. 
-                 * primero antes que nada debemos saber que es lo que quiere hacer el usuario con los recursos que tenemos
-                 * si quiere leer o excribir en el. 
-                 * 
-                 * 
-                 * tenemos el apoyo del enum, por lo que esto nos puede facilitar el como va a seguir el codigo
-                 * se puede agrega run switch-case, para facilitar la recopilacion de los datos con base a la OP que se quiere realizar 
-                 */
-                // deberian de ser caracter R o W
-                if(*aux == format_request.operation[0]){
-                    //la operacion ser de lectrua
-                    //debemos de aumentar en 1 elemeto, porque si no, nos estaria dando un error
-                    /**
-                     * ya que se estaria manetneindo en 'R', entonces no va a reciri 'L' o 'A' 
-                     * 
-                     */
-                    mem_request = (mem_request + 1) % modulo;
-                    //ahora debemos de saber que operacion quier leer
-                    //se pueden leer todos los recursos, LED, ADC y PWM 
-                    //necesitmaos funciones que nos traigan esos valores 
-
-                    if(*aux == format_request.resource[0]){
-                        //quiere leer a led 
-                        send_info.op = OP_ACK;
-                        send_info.value = led_state; //pasamos el valor del led actual.
-                        ret = send_message(&tcp_client, &send_info); //mandamos la infromacion 
-                    }
-
-                    //ahora quiere leer ADC 
-                    if(*aux == format_request.resource[1]){
-                        send_info.op = OP_ACK;
-                        uint16_t val = read_adc(ADC_CHANNEL);
-                        send_info.value = val;
-                        ret = send_message(&tcp_client, &send_info);
-                        
-                    }
-
-                    if(*aux == format_request.resource[2]){
-                        //leer PWM 
-                        send_info.op = OP_ACK;
-                        uint16_t val = pwm_get_duty();
-                        send_info.value = val;
-                        ret = send_message(&tcp_client, &send_info);
-                    }
-
-                    //puede que haya puesto un recurso que no esta 
-
-                    else{
-                        //recurso que no esta listado 
-                        int len = snprintf(buffer, sizeof(buffer), "MAIN: \r\nrecurso [%c] no listado\r\n",format_request.resource);
-                        uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
-                        uart_write_bytes(global_uart.NUM_PORT, buffer, len);
-                        uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
-                        goto cleanup;
-                        break;
-                    }
-
-                }
-                else if(*aux == format_request.operation[1]){
-                    //la operacion sera de escritura 
-                    
-                    //debemos de brincar en donde me enceuntro actualmente hacia el sigueint token que es 
-                    //al recurso que vamos a escribir. 
-                    
-                    /**
-                     * aqui hay 2 cosas, tenemos que verificar que se introdujo un valor numerico valido y 
-                     * convertir este valor numerico en un numero de 16 bits.
-                     * 
-                     */
-
-                    //valor maximo al pwm - 8191
-                    //en este punto estamos en el miembro #4 
-                    mem_request = (mem_request + 1) % modulo;
-                    //para escribir solamente a L y a ADC
-                    if(*aux == format_request.resource[0]){
-                        //quiere escirbir a led
-                        /**
-                         * para el led solo pueden ser 0 o 1, prendido o apagodo mi pa. 
-                         */
-
-                        //primero antes que nada debemos de verificar que los datos ingresado, el valor es correcto
-
-                        uint8_t *val;
-                        if(validate_binary(aux[mem_request], &val) == ESP_OK){
-                            //modificamos el estado del led 
-                            led_state = val;
-                            gpio_set_level(OUTPUT_PIN, led_state);
-                            send_info.op = OP_ACK,
-                            send_info.value = val;
-                            ret = send_message(&tcp_client, &send_info);
-
+                    case 0:  // "UABC"
+                        if(strcmp(aux, format_request.header) != 0){
+                            send_info.op = OP_NACK;
+                            send_message(&tcp_client, &send_info);
+                            goto cleanup;
                         }
-                        else{
-                            int len = snprintf(buffer, sizeof(buffer), "\r\nMAIN: valor para LED invalido (0 - 1)\r\n");
-                            uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
-                            uart_write_bytes(global_uart.NUM_PORT, buffer, len);
+                        break;
+
+                    case 1:  // usuario
+                        if(strcmp(aux, user) != 0){
+                            int len = snprintf(buffer, sizeof(buffer), "\r\nN- MAIN: peticion no para: %s\r\n", format_request.user);
+                            uart_write_bytes(global_uart.NUM_PORT, UART_RED,   strlen(UART_RED));
+                            uart_write_bytes(global_uart.NUM_PORT, buffer,     len);
                             uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
                             goto cleanup;
-                            break;
-
                         }
-                    }
-
-                    if(*aux == format_request.resource[2]){
-                        //quiere escribir al PWM
-                        uint16_t *val_pwm;
-                        if(validate_pwm(aux[mem_request], &val_pwm) ==ESP_OK){
-                            //valor OK 
-                            pwm_set_duty(val_pwm);
-                            send_info.op = OP_ACK;
-                            send_info.value = val_pwm;
-                            ret = send_message(&tcp_client, &send_info);
-                        }
-                        else{
-                            int len = snprintf(buffer, sizeof(buffer), "\r\nMAIN: valor para PWD invalido (0 - 8191)\r\n");
-                            uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
-                            uart_write_bytes(global_uart.NUM_PORT, buffer, len);
-                            uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
-                            goto cleanup;
-                            break;
-                        }
-                    }
-                    else{
-                        int len = snprintf(buffer, sizeof(buffer), "\r\nMAIN: recruso invalido R/W ->  (LED, PWM)\r\n");
-                        uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
-                        uart_write_bytes(global_uart.NUM_PORT, buffer, len);
-                        uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
-                        goto cleanup;
                         break;
-                    }
 
+                    case 2:  // operacion R o W
+                        current_op = *aux;
+                        if(current_op != 'R' && current_op != 'W'){
+                            send_info.op = OP_NACK;
+                            send_message(&tcp_client, &send_info);
+                            goto cleanup;
+                        }
+                        break;
+
+                    case 3:  // recurso L, A, P
+                        if(current_op == 'R'){
+                            if(*aux == 'L'){
+                                send_info.op = OP_ACK;
+                                send_info.value = led_state;
+                                send_message(&tcp_client, &send_info);
+                            }
+                            else if(*aux == 'A'){
+                                send_info.op = OP_ACK;
+                                send_info.value = read_adc(ADC_CHANNEL);
+                                send_message(&tcp_client, &send_info);
+                            }
+                            else if(*aux == 'P'){
+                                send_info.op = OP_ACK;
+                                send_info.value = pwm_get_duty();
+                                send_message(&tcp_client, &send_info);
+                            }
+                            else{
+                                send_info.op = OP_NACK;
+                                send_message(&tcp_client, &send_info);
+                                goto cleanup;
+                            }
+                        }
+                        else{  // W
+                            if(*aux == 'A'){  // ADC no se puede escribir
+                                send_info.op = OP_NACK;
+                                send_message(&tcp_client, &send_info);
+                                goto cleanup;
+                            }
+                            // L y P necesitan el valor del case 4, lo guardamos
+                            // solo validamos que el recurso sea válido
+                            if(*aux != 'L' && *aux != 'P'){
+                                send_info.op = OP_NACK;
+                                send_message(&tcp_client, &send_info);
+                                goto cleanup;
+                            }
+                        }
+                        break;
+
+                    case 4:  // valor (solo para W)
+                        if(current_op == 'W'){
+                            char recurso = *tokens[3];
+                            if(recurso == 'L'){
+                                uint8_t val;
+                                if(validate_binary(aux, &val) == ESP_OK){
+                                    led_state = val;
+                                    gpio_set_level(OUTPUT_PIN, led_state);
+                                    send_info.op    = OP_ACK;
+                                    send_info.value = val;
+                                    send_message(&tcp_client, &send_info);
+                                } else {
+                                    send_info.op = OP_NACK;
+                                    send_message(&tcp_client, &send_info);
+                                    goto cleanup;
+                                }
+                            }
+                            else if(recurso == 'P'){
+                                uint16_t val;
+                                if(validate_pwm(aux, &val) == ESP_OK){
+                                    pwm_set_duty(val);
+                                    send_info.op    = OP_ACK;
+                                    send_info.value = val;
+                                    send_message(&tcp_client, &send_info);
+                                } else {
+                                    send_info.op = OP_NACK;
+                                    send_message(&tcp_client, &send_info);
+                                    goto cleanup;
+                                }
+                            }
+                        }
+                        break;
+
+                    case 5:  // comentario, no importa
+                        break;
+
+                    default:
+                        break;
                 }
-                
-                //lo otro seri el mensake lo cual ese no importa, y aumenta el moculo 
-
-
-                //por ahora este aumentara a posiblmente 4 -> que seria o valor o mensaje 
-                mem_request = (mem_request + 1) % modulo; //se incrementa o se reinica el modulo
-
             }
-
-
 
             
             //al ultimo libreramos la memots 
@@ -613,9 +579,6 @@ void tcp_process_task(void *params){
             }
             free(tokens);
             free(msg);
-
-
-
         }
     }
 
@@ -650,31 +613,23 @@ char **pasrse_input(char *line){
 
 
 
-
 char **pasrse_input_recv(char *line){
 
-    char **tokens = malloc(5 * sizeof(char*));
+    char **tokens = malloc(7 * sizeof(char*));  
     char *token; 
-    int position=0;
-
+    int position = 0;
 
     token = strtok(line, ":");
 
     while(token != NULL){
-
-        if(position >= 5 ) break;
-
+        if(position >= 6) break;        
         tokens[position++] = strdup(token);
-        
-        token = strtok(NULL, " ");
+        token = strtok(NULL, ":");
     }
 
     tokens[position] = NULL;
-    
-    
     return tokens;
 }
-
 
 static inline void uart_jump(void) {
     uart_write_bytes(UART_MAIN, "\r\n", 2);
@@ -870,8 +825,10 @@ void gpio_init(){
     gpio_reset_pin(OUTPUT_PIN);
     gpio_reset_pin(PWM_LED);
 
+    // led_state = 0;
+
     gpio_set_direction(OUTPUT_PIN, GPIO_MODE_OUTPUT);
-    gpio_set_level(OUTPUT_PIN, 0);
+    gpio_set_level(OUTPUT_PIN, led_state);
 
     gpio_set_direction(PWM_LED, GPIO_MODE_OUTPUT);
     gpio_set_direction(PWM_LED, 0);

@@ -96,12 +96,11 @@ void keep_alive_task(void *params){
 
         if(err < 0 ){
 
-            const char *err="\r\nocurrio un error al enviar la informacion\r\n";
+            char err[80];
+            snprintf(err, sizeof(err),"\r\nocurrio un error al enviar la informacion errno: %d\r\n", errno);
             //ocurrio un error, no pudo enviar la ifnromacion la servidor 
             uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
             uart_write_bytes(global_uart.NUM_PORT,err,strlen(err));
-            uart_write_bytes(global_uart.NUM_PORT, (const char*)errno, 8);
-            uart_write_bytes(global_uart.NUM_PORT, "\r\n", 3);
             uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
         }   
         else{
@@ -131,14 +130,16 @@ void recv_task(void *params){
 
         if(len < 0 ){
 
+            if(errno == EAGAIN || errno == EWOULDBLOCK){
+                vTaskDelay(pdMS_TO_TICKS(50));
+                continue;  // timeout normal del SO_RCVTIMEO, no es error
+            }
             //hubon un error al recibir del servidor 
             char err[80];
-            snprintf(err, sizeof(err),"TCP_LIB: recv fallo errno: %d", errno);
+            snprintf(err, sizeof(err),"\r\nTCP_LIB: recv fallo errno: %d\r\n", errno);
 
             uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
             uart_write_bytes(global_uart.NUM_PORT,err,strlen(err));
-            uart_write_bytes(global_uart.NUM_PORT, (const char*)errno, 8);
-            uart_write_bytes(global_uart.NUM_PORT, "\r\n", 3);
             uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
         }else if(len > 0){
 
@@ -146,7 +147,7 @@ void recv_task(void *params){
             // mostramos un debbug de la informacion que recibimos del  cliente
             rx_buffer[len]='\0';
 
-            for(int i=0; i<= len ;i++){
+            for(int i=0; i< len ;i++){
 
                 char c = rx_buffer[i];
 
@@ -155,26 +156,32 @@ void recv_task(void *params){
                     if(line_buffer !=NULL && line_len >0 ){
                         //eliminamos \r
                         if(line_buffer[line_len-1] == '\r'){
-                            line_buffer[line_len-1] = '\0';
+                            line_buffer[line_len-1] = '\0';  // quita el \r
                         }
                         else{
-                            line_buffer[line_len-1] = '\0';
+                            line_buffer[line_len] = '\0';    // ← solo null-termina, no borra nada
                         }
                     }
 
                     //creamos la copia para ser enviada 
                     char *msg_copy = strdup(line_buffer);
                     if(msg_copy){
+                        //echo de la infromacion que llego
+                        uart_write_bytes(global_uart.NUM_PORT, UART_CYAN,    strlen(UART_CYAN));
+                            const char *prefix = "\r\nRECV  : ";
+                            uart_write_bytes(global_uart.NUM_PORT, prefix, strlen(prefix));
+                            uart_write_bytes(global_uart.NUM_PORT, msg_copy, strlen(msg_copy));
+                            uart_write_bytes(global_uart.NUM_PORT, "\r\n", 2);
+                            uart_write_bytes(global_uart.NUM_PORT, UART_RESET,   strlen(UART_RESET));
+
                         //encolar el puntero, metodo no bloqueante 
                         if(xQueueSend(tcp_rx_queue, &msg_copy, 0) != pdTRUE){
                             free(msg_copy);
                             char err[80];
-                            snprintf(err, sizeof(err),"TCP_LIB: cola llena, mensaje destarcado");
+                            snprintf(err, sizeof(err),"\r\nTCP_LIB: cola llena, mensaje destarcado -> errno: %d\r\n", errno);
 
                             uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
                             uart_write_bytes(global_uart.NUM_PORT,err,strlen(err));
-                            uart_write_bytes(global_uart.NUM_PORT, (const char*)errno, 8);
-                            uart_write_bytes(global_uart.NUM_PORT, "\r\n", 3);
                             uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
                         }
                     }
@@ -202,11 +209,9 @@ void recv_task(void *params){
         else if(len == 0){
             //conexion cerrada 
             char err[80];
-            snprintf(err, sizeof(err),"TCP_LIB: el servidor cerro la conexion");
+            snprintf(err, sizeof(err),"\r\nTCP_LIB: el servidor cerro la conexion -> errno: %d \r\n", errno);
             uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
             uart_write_bytes(global_uart.NUM_PORT,err,strlen(err));
-            uart_write_bytes(global_uart.NUM_PORT, (const char*)errno, 8);
-            uart_write_bytes(global_uart.NUM_PORT, "\r\n", 3);
             uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
             tcp_client.connected = 0;
             tcp_client.logged_in =0;
@@ -242,10 +247,10 @@ esp_err_t send_message(tcp_client_t *sockfd,send_info_t *msg){
         }break; 
 
         case OP_ACK: {
-            len = snprintf(buffer, sizeof(buffer), "ACK:%d",msg->value);
+            len = snprintf(buffer, sizeof(buffer), "ACK:%d\n",msg->value);
         }break;
         case OP_NACK :{
-            len = snprintf(buffer, sizeof(buffer), "NACK");
+            len = snprintf(buffer, sizeof(buffer), "NACK\n");
         }break;
         
 

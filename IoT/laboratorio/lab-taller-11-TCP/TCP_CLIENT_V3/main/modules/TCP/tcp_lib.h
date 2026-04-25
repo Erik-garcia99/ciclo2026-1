@@ -7,8 +7,11 @@
 //definamos un punto, en este caso haremos un local host en mi red, por lo que cunado arranque tratara de coenctarse 
 //a algun servidor o servicio en mi maquina en mi red, pero al no encontrarla se podra cambiar la direccion de host y el puerto 
 
-#define DEFAULT_HOST "192.168.1.66"
-#define DEFAULT_PORT "5000"
+// #define DEFAULT_HOST "192.168.1.66"
+#define DEFAULT_HOST "148.231.130.229"
+// #define DEFAULT_PORT "5000"
+
+#define DEFAULT_PORT "50005"
 
 #define RETRY_SERVER BIT0 
 #define UPDATE_TCP BIT10
