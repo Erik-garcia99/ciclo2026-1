@@ -89,9 +89,6 @@ typedef enum{
 extern resourse_t resourse;
 
 
-
-
-
 //modificamos user, porque ahora no sera un string si no un valor de 4 byte
 extern uint32_t user;
 
@@ -105,12 +102,6 @@ extern uint8_t led_state;
  * por lo que lo mas adecuado podria ser un enum,
  *
 */
-
-
-typedef struct{
-    op_type_t op_type; //que operacion vamos a relaizar 
-    format_request_t *format_req_send; //trametos la trama a enviar 
-}send_info_t;
 
 
 
@@ -134,6 +125,14 @@ typedef struct{
 
 
 format_request_t format_request;
+
+
+
+typedef struct{
+    op_type_t op_type; //que operacion vamos a relaizar 
+    format_request_t *format_req_send; //trametos la trama a enviar 
+}send_info_t;
+
 
 
 //cola que controlara el flujo de la ifnromacion entre los diferners archivos 

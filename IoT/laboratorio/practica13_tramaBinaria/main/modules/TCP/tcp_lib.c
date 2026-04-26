@@ -275,10 +275,12 @@ esp_err_t send_message(tcp_client_t *sockfd,send_info_t *msg){
     switch(msg->op_type){
 
         case OP_LOGIN : {
-            uint16_t header = htons(HEADER);
-            uint8_t len;
-            uint32_t user = htonl(user);
-            
+            memcpy(buffer + offset, msg->format_req_send->id, 2); offset +=2;
+            memcpy(buffer + offset , msg->format_req_send->len, 1); offset +=1;
+            memcpy(buffer + offset, msg->format_req_send->user, 4), offset +=4;
+            uint8_t login = msg->format_req_send->action << 3 | server;
+            memcpy(buffer + offset , &login, 1); offset +=1;
+            memcpy(buffer + offset, msg->format_req_send->value, 32); offset += 32;
             
         }break; 
 
@@ -294,20 +296,9 @@ esp_err_t send_message(tcp_client_t *sockfd,send_info_t *msg){
             ESP_LOGI(TAG, "debuger");
         }break;
     }
-    
-    //verificamos que el snprinf no se haya psado 
-
-    if(len < 0 || len>=(int)sizeof(buffer)){
-        const char *err= "\r\nbuffer overflow al construir mensaje\r\n";
-        uart_write_bytes(global_uart.NUM_PORT,UART_RED, strlen(UART_RED));
-        uart_write_bytes(global_uart.NUM_PORT,err, strlen(err));
-        uart_write_bytes(global_uart.NUM_PORT,UART_RESET, strlen(UART_RESET));
-
-        return ESP_FAIL;
-    }
 
     //no hubo error por lo que pasamos por enviarlo 
-    int sent = send(sockfd->sock, buffer, len,0);
+    int sent = send(sockfd->sock, buffer, offset,0);
 
     //verificamos que se haya enviado 
 

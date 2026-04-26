@@ -252,42 +252,21 @@ void task_cmd_uart(void *params){
 
     while(1){
 
-        //esta tarea espera a que se reciban los datos de la tarea que se encarga de monitaorear UART
-        //esta tarea se encargara de ver que entro y seguir con el flujo 
         if(xQueueReceive(flow_data_queue, &cmd_receive, portMAX_DELAY)){
 
-            //se recibio una cadena con los comandos, por lo que es necesario parsear la cadena en sus diferentes tokens 
-            //se hace uso de esta funcion que tokenisa la cadena y devuvle los comandos si son correctos el programa debe de seguir  
             char **tokens = pasrse_input(cmd_receive);
-
-            //si no se recibio nada pasa y espera la proxima ingresion de datos. 
+ 
             if(tokens == NULL || tokens[0] == NULL){
                 free(cmd_receive);
                 continue;
             }
-            
-            //si hubo comandos
-            /**
-             * - en este punto no se sabe que comadnos fueron los que entraron por lo que realizo una copio y asigno un nuevo 
-             * espacio de memoria para el primer comando
-             * 
-             * ---NOTA: los comandos siempre vienen en ORDEN, si no viene en orden no se podra ejecutar  
-             * 
-             * actualmete la variable < tokens >> contiene la sigueinte informacion pro dar un ejemplo con WIFI 
-             * 
-             * ["SSID:INFINIMUN123", "PSWD:123456789"]
-             * 
-             * -> entonces < tmp > trata de sacar el primer comando que se introdujo
-             * -- para saber que comandao es y como seguir con el flujo 
-            */
+
             char *cmd_case = strdup(tokens[0]);
 
             char  *tipo = strtok(cmd_case, ":");
-            //aseuramos que sea el comando y que venga con la contrasenia 
-            if(strcmp(tipo,"SSID") ==0 && tokens[1] != NULL){
-                //en este caso ocurrio un error y es necesario introducir otra red, pero el sismte intento conectarse a la red por defecto 
 
-                //por lo que ahora necesito es serparar la parte que me importa del encabezado del comando 
+            if(strcmp(tipo,"SSID") ==0 && tokens[1] != NULL){
+                 
                 char *ssid = strchr(tokens[0], ':');
                 char *pswd = strchr(tokens[1], ':');
 
@@ -296,31 +275,21 @@ void task_cmd_uart(void *params){
                     goto cleanup;
                 }
 
-                //brincamos ":"
                 ssid++;
                 pswd++;
-                //actualizamos a las nuevas credenciales 
                 ret = update_setup_cred(ssid, pswd, NULL, "SSID");
-                //preparamos el envio de una senial 1 que indica que ya ha
                 if(ret !=ESP_FAIL){
-                    //activamos el bit
-                    xEventGroupSetBits(s_wifi_event_group, WIFI_UPDATE); //evento para WIFI - reinica la conexion 
-                    xEventGroupSetBits(g_tcp_event_group, BREAK_UPDATE_WIFI); //wvento para TCP - cierra todas las conexiones y espera a la conexion de WIFI para estbalcer 
-                    //conexion con el servidor. 
+                    xEventGroupSetBits(s_wifi_event_group, WIFI_UPDATE); //evento para WIFI 
+                    xEventGroupSetBits(g_tcp_event_group, BREAK_UPDATE_WIFI); //wvento para TCP - 
                 }
                 else{
-                    // uart_write_bytes(UART_MAIN,"\r\n", 2);
-                    // const char *mssg = 
-                    // uart_write_bytes(UART_MAIN,mssg, strlen(mssg));
 
                     ESP_LOGE(TAG, "no se puderon guardar las credenciales WIFI");
 
                 }   
             }
             else if(strcmp(tipo,"HOST_IP") == 0 && tokens[1] !=NULL){
-                //comandos HOST_IP:<IP> PORT:<puerto>
 
-                //el procesoe s muy similar 
                 char *host_ip = strchr(tokens[0], ':');
                 char *port = strchr(tokens[1], ':');
                 
@@ -328,15 +297,13 @@ void task_cmd_uart(void *params){
                     ESP_LOGE(TAG, "formato incorrecto. Usa: HOST_IP:<ip> PORT:<puerto>");
                     goto cleanup;
                 }
-                //brincamos ":" 
+
                 host_ip++;
                 port++;
-                //actualizamos las credenicales para TCP. 
-
+                
                 ret = update_setup_cred(host_ip, port, NULL, "HOST_IP");
             
                 if(ret != ESP_FAIL){
-                    //se puderin asignar las credenciales 
                     xEventGroupSetBits(g_tcp_event_group, UPDATE_TCP);
                 }
                 else{
@@ -345,8 +312,7 @@ void task_cmd_uart(void *params){
                 }
             
             }
-            //ahora es cuando se procesa los datos ingresados por el usuario "YES" o "NO" indicand que si quiere volver a intentear a establecer una conexion TCP con el servidor
-            //con la esperanza que ya este arriab el servidor. 
+             
             else{
                 // pude que funcione no estoy muy seguro 
                 //tokens nos va a regresar al menos 2 selemtnos en, uno contendra un valor y otro contendra NULL indicando el final del arreglo 
@@ -370,17 +336,6 @@ void task_cmd_uart(void *params){
                 //flata cunado se cambia de matricula 
             }
 
-
-            //ahi otros 2 datos que el servidor puede enviar que son el ACK y en NACK 
-            /**
-             * en donde estos solo reperesentan si es lo que envio fue recibido correctamnete o no. 
-             * 
-             */
-
-            
-            //con una red para UABC 
-            //con un nuevo usuario
-
             cleanup:
             //liberamos tokens 
             for (int i = 0; tokens[i] != NULL; i++) {
@@ -399,17 +354,11 @@ void tcp_process_task(void *params){
     char *msg;
     char **tokens;
     
-
-    //esta variable lo que nos va a indicar sera en que token de la peticion de servidor esta
-    //esto para verificar que la solicitus este hecha adecuadamente. 
-    //mod 
     static int mem_request;
-    int modulo = 7; // 0 - 1 - 2 - 3 - 4 - 5 - 6 {aux -> NULL}- 0 
-    char buffer[80]; //para mostrar mensajes por UART 
-
+    int modulo =  
+    char buffer[80]; 
 
     esp_err_t ret;
-
 
     while(1){
 
@@ -698,29 +647,19 @@ void setup_tcp(void){
     
     while(1){
 
-
-        //se pudo ingresar las credenciales bien por lo que ahora intentara establecer conexion con el servidor. 
+        //creando el socket TCP 
         esp_err_t ret = tcp_cliente_init(); 
-        
+
         static int n_login=0;
         int len;
+
         if(ret == ESP_OK){
-            //hubo exito, el servidor esta arriba 
+
             uart_write_bytes(UART_MAIN, UART_GREEN, strlen(UART_GREEN));
             const char *m = "\r\nconexion con el servidor establecida\r\n";
             uart_write_bytes(UART_MAIN, m, strlen(m));
             uart_write_bytes(UART_MAIN, UART_RESET, strlen(UART_RESET));
 
-            //aqui estareiamos creando las tareas de resv y sned y todo lo demas que seria para la comunicion 
-            /**
-             * entre el server y el ESP, peticiones y rescpuesta 
-            */
-            /**
-             * ---> TAREAS:  <--- 
-             * 
-             */
-
-            //primero antes que nada debemos de inicar sesion dentro del servidor, si se logra inicar sesion es cuando empezamos a mandar nuestros keep alive 
             if(tcp_client.logged_in != 1){
                 
                 char n_rety_log[64];
@@ -745,7 +684,6 @@ void setup_tcp(void){
 
             }
 
-            // ── Crear tarea de keep‑alive (solo una vez) ───────────────
             static bool ka_created = false;
             if (!ka_created) {
                 xTaskCreate(keep_alive_task, "keep_alive_task", 2048, NULL, 6, NULL);
@@ -754,10 +692,7 @@ void setup_tcp(void){
                 ka_created = true;
             }
 
-            //ahora lo unico que podria interferir es que se cambie de red o de servidor. 
-
             EventBits_t btis= xEventGroupWaitBits(g_tcp_event_group, BREAK_UPDATE_WIFI | UPDATE_TCP, pdTRUE, pdFALSE, portMAX_DELAY);
-            //si pasa uno de estos 2 eventos debemos de cerrar todas las conexiones. 
 
             if(tcp_client.sock>=0){
                 close(tcp_client.sock);
@@ -772,7 +707,6 @@ void setup_tcp(void){
             //si fuese una actulizacion de TCP, simpe,emte se vuelve a llamar a la funcion que crea el socket 
             continue;
         }
-        //----- FALLO LA CONEXION CON TCP ----
 
         uart_write_bytes(UART_MAIN, UART_YELLOW, strlen(UART_YELLOW));
         const char *m = "\r\nno se pudo conectar al servidor.\r\n"
@@ -786,7 +720,6 @@ void setup_tcp(void){
 
         // limpiar bits relevantes antes de esperar
         xEventGroupClearBits(g_tcp_event_group,RETRY_SERVER | UPDATE_TCP | BREAK_UPDATE_WIFI | NO_RETRY_TCP);
-        // esperar la decision del usuario (task_cmd_uart activa el bit correspondiente)
         EventBits_t bits = xEventGroupWaitBits(g_tcp_event_group, RETRY_SERVER | UPDATE_TCP | BREAK_UPDATE_WIFI | NO_RETRY_TCP,pdTRUE,pdFALSE,portMAX_DELAY);
 
         if (bits & NO_RETRY_TCP) {
@@ -806,13 +739,9 @@ void setup_tcp(void){
             }
             tcp_client.connected = 0;
 
-            // reconectar WIFI con las nuevas credenciales ya guardadas
             wifi_reconnect();
-            // despues del while vuelve a intentar TCP
-        }
 
-        // RETY_SERVER y UPDATE_TCP: el while simplemente vuelve a llamar tcp_cliente_init()
-        // con los valores actuales de tcp_client.host_ip y tcp_client.host_port
+        }
 
 
     }

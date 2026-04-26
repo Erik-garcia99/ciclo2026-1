@@ -25,7 +25,6 @@ const char *TAG="TCP_CLIENT : ";
 
 esp_err_t tcp_cliente_init(void){
 
-    //reinicamos todo antes de inciar 
     tcp_client.connected = 0;
     if (tcp_client.sock >= 0) {
         close(tcp_client.sock);
@@ -36,18 +35,16 @@ esp_err_t tcp_cliente_init(void){
 
         ESP_LOGI(TAG, "intento %d de establecer conexion", n_retry);
     
-        //creamos el descriptor del socket 
         tcp_client.sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
         if(tcp_client.sock < 0){
             ESP_LOGE(TAG, "error al crear el descriptor del socket(): %d", errno);
             vTaskDelay(pdMS_TO_TICKS(1000));
-            continue; //saltamos todo y se vuelve a intentar. 
+            continue;
         }
-        //timeout de recv
+
         struct timeval timeout = { .tv_sec = 5, .tv_usec = 0 };
         setsockopt(tcp_client.sock, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
 
-        //direccion del servidor 
         struct sockaddr_in server_addr={
             .sin_family = AF_INET,
             .sin_port = htons(tcp_client.host_port),
@@ -55,7 +52,6 @@ esp_err_t tcp_cliente_init(void){
 
         inet_pton(AF_INET, tcp_client.host_ip,&server_addr.sin_addr);
 
-        //conectar 
         if(connect(tcp_client.sock, (struct sockaddr *)&server_addr, sizeof(server_addr)) < 0){
             ESP_LOGE(TAG, "descriptor <connect()> fallo  %d", errno);
             close(tcp_client.sock);
@@ -64,20 +60,16 @@ esp_err_t tcp_cliente_init(void){
             continue;
         }
 
-        //exito, salir de inmediato
         tcp_client.connected = 1;
         ESP_LOGI(TAG, "conectado a %s:%d", tcp_client.host_ip, tcp_client.host_port);
         return ESP_OK;
 
     }
 
-    // se agotaron los 5 intentos
     ESP_LOGE(TAG, "no se pudo conectar al servidor en 5 intentos");
     tcp_client.connected = 0;
     return ESP_FAIL;
 }
-
-// ahora que mas sigue despues de ponder coenctarme a TCP 
 
 void keep_alive_task(void *params){
 
