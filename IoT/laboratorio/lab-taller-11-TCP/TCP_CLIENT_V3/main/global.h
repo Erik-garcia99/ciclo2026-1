@@ -64,7 +64,7 @@ extern char user[MAX_USER_LEN];
 typedef struct{
     op_type_t op;
     uint16_t value;
-    char comment[MAX_COMMENT_LEN];   // "Login el server", "Encender LED", etc.
+    char comment[MAX_COMMENT_LEN]; 
 }send_info_t;
 
 extern send_info_t send_info;

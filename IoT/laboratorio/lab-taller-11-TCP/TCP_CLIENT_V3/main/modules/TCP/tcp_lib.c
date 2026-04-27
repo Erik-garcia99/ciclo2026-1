@@ -229,12 +229,9 @@ esp_err_t send_message(tcp_client_t *sockfd,send_info_t *msg){
 
     char buffer[128];
     int len=0;
-
-
     switch(msg->op){
 
         case OP_LOGIN : {
-
             len = snprintf(buffer, sizeof(buffer), "UABC:%s:L:S:Login server\n", user);
         }break; 
 
@@ -252,7 +249,6 @@ esp_err_t send_message(tcp_client_t *sockfd,send_info_t *msg){
     }
     
     //verificamos que el snprinf no se haya psado 
-
     if(len < 0 || len>=(int)sizeof(buffer)){
         const char *err= "\r\nbuffer overflow al construir mensaje\r\n";
         uart_write_bytes(global_uart.NUM_PORT,UART_RED, strlen(UART_RED));
@@ -261,11 +257,8 @@ esp_err_t send_message(tcp_client_t *sockfd,send_info_t *msg){
 
         return ESP_FAIL;
     }
-
-    //no hubo error por lo que pasamos por enviarlo 
+ 
     int sent = send(sockfd->sock, buffer, len,0);
-
-    //verificamos que se haya enviado 
 
     if(sent < 0 ){
         char err_str[32];
@@ -275,7 +268,6 @@ esp_err_t send_message(tcp_client_t *sockfd,send_info_t *msg){
         uart_write_bytes(global_uart.NUM_PORT, UART_RESET,  strlen(UART_RESET));
         return ESP_FAIL;
     }
-
     uart_write_bytes(global_uart.NUM_PORT, UART_GREEN,  strlen(UART_GREEN));
     const char *info_send = "dato enviado: ";
     uart_write_bytes(global_uart.NUM_PORT, info_send,strlen(info_send));
