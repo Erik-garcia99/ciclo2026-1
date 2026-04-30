@@ -84,14 +84,17 @@ task_uart_port_t global_uart;
 //estucuturua para red 
 esp_wifi_t esp_wifi;
 //estrucutra para parametros de la conexion tcp
-tcp_client_t tcp_client;
+tcp_client_t tcp_client ={0};
 //enum de operacion CP 
 op_type_t op_type;
 //enum de trama bianrio
 action_t action;
 resourse_t resourse;
 //estrucutra de la uncion que agrupa los datos
-send_info_t send_info;
+send_info_t send_info ={0};
+
+format_request_t format_request ={0};
+
 //+++++++++++++++ variables 
 
 //identificacion por la matricula 
@@ -153,7 +156,7 @@ void app_main(void)
     g_tcp_event_group= xEventGroupCreate();
     
     flow_data_queue = xQueueCreate(10, sizeof(char*));
-    tcp_rx_queue = xQueueCreate(10, sizeof(char *));
+    tcp_rx_queue = xQueueCreate(10, sizeof(format_request_t *));
 
     
     //inicmaos los GPIO
@@ -178,7 +181,7 @@ void app_main(void)
     //definimos por defecto pero es varibale por lo que puede ser modificable   
     //dejemos las varibales externs y todo como este. 
     // user = 0x001377d7; //a1275863 -> 4 bytes
-    user = 1275863;
+    user = 0x001377d7;
     //configuracion de WIFI
     esp_err_t ret;
 
@@ -217,20 +220,13 @@ void app_main(void)
 
     ESP_LOGI(TAG, "ESP_MODE_STA");
     wifi_init_sta();
-    
-
-
     //inicamos con los parametros por defecto
 
     update_setup_cred(DEFAULT_HOST, DEFAULT_PORT, NULL, "HOST_IP");//establecer las credenciales para TCP 
 
-
+    // es necesario establecer los apuntadores aaprtir de aqui??mmmm
     //flujo princpal de TCP 
     setup_tcp(); // inicamos todo el proceso del flujo si se conectata o no, y las psoibles flujos. 
-
-
-
-
 }
 
 
@@ -383,192 +379,192 @@ void task_cmd_uart(void *params){
     }
 }
 
+//este recibe del servidor y procesa lo que recibio
+
+//este debe de recibir como parametros otros elementos
+
 void tcp_process_task(void *params){
-
-    char *msg;
-    char **tokens;
     
+    format_request_t *frame;
 
-    //esta variable lo que nos va a indicar sera en que token de la peticion de servidor esta
-    //esto para verificar que la solicitus este hecha adecuadamente. 
-    //mod 
-    static int mem_request;
     char buffer[80]; //para mostrar mensajes por UART 
-
-
     esp_err_t ret;
+
+    uint8_t frame_len;
+    int len;
 
 
     while(1){
 
         //recibira los datos por cola 
-        if(xQueueReceive(tcp_rx_queue,&msg, portMAX_DELAY)){
+        if(xQueueReceive(tcp_rx_queue,&frame, portMAX_DELAY)){
 
 
-            //el mas sencicllo, verificamos con ACK o en NACK del servidor. 
-            if(strncmp(msg, "ACK", 3) == 0){
-            int len = snprintf(buffer, sizeof(buffer), "\r\nMAIN: ACK recibido -> %s\r\n", msg);
-            uart_write_bytes(global_uart.NUM_PORT, UART_GREEN, strlen(UART_GREEN));
-            uart_write_bytes(global_uart.NUM_PORT, buffer, len);
-            uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
-            free(msg);
-            continue;  // no parsear, esperar siguiente mensaje
-        }
-
-        if(strncmp(msg, "NACK", 4) == 0){
-            int len = snprintf(buffer, sizeof(buffer), "\r\nMAIN: NACK recibido -> %s\r\n", msg);
-            uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
-            uart_write_bytes(global_uart.NUM_PORT, buffer, len);
-            uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
-            free(msg);
-            continue;
-        }
-
-            /**
-             * se supone que en este punto se recibe
-             * --> UABC:a1275863:R:L:leer led
-             * 
-             * algo asi es lo que va a llegar por recv
-             * 
-             * 
-            */
-            // inicamos, 
-            mem_request=0;
-            tokens=pasrse_input_recv(msg);
-
-            //verificamos que se haya parseado correctamente 
-            if(tokens == NULL || tokens[0] == NULL){
-                free(msg);
+            if(frame->id == NACK && frame->len == 0xff){
+                //se recibio un nack
+                len = snprintf(buffer, sizeof(buffer), "\r\nservidor conesta: NACK\r\n");
+                uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
+                uart_write_bytes(global_uart.NUM_PORT, buffer, len);
+                uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
+                free(frame);
                 continue;
             }
-            char current_op = 0;   // guarda 'R' o 'W' del case 2 para usarlo en case 3
-            char *aux;
-            for(mem_request = 0; tokens[mem_request] != NULL; mem_request++){
-                aux = tokens[mem_request];
 
-                switch(mem_request){
+            else if(frame->id != ACK && frame->len != 0xff){
+                //lelgo el ACK
 
-                    case 0:  // "UABC"
-                        if(strcmp(aux, format_request.header) != 0){
-                            send_info.op = OP_NACK;
-                            send_message(&tcp_client, &send_info);
-                            goto cleanup;
-                        }
-                        break;
-
-                    case 1:  // usuario
-                        if(strcmp(aux, user) != 0){
-                            int len = snprintf(buffer, sizeof(buffer), "\r\nN- MAIN: peticion no para: %s\r\n", format_request.user);
-                            uart_write_bytes(global_uart.NUM_PORT, UART_RED,   strlen(UART_RED));
-                            uart_write_bytes(global_uart.NUM_PORT, buffer,     len);
-                            uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
-                            goto cleanup;
-                        }
-                        break;
-
-                    case 2:  // operacion R o W
-                        current_op = *aux;
-                        if(current_op != 'R' && current_op != 'W'){
-                            send_info.op = OP_NACK;
-                            send_message(&tcp_client, &send_info);
-                            goto cleanup;
-                        }
-                        break;
-
-                    case 3:  // recurso L, A, P
-                        if(current_op == 'R'){
-                            if(*aux == 'L'){
-                                send_info.op = OP_ACK;
-                                send_info.value = led_state;
-                                send_message(&tcp_client, &send_info);
-                            }
-                            else if(*aux == 'A'){
-                                send_info.op = OP_ACK;
-                                send_info.value = read_adc(ADC_CHANNEL);
-                                send_message(&tcp_client, &send_info);
-                            }
-                            else if(*aux == 'P'){
-                                send_info.op = OP_ACK;
-                                send_info.value = pwm_get_duty();
-                                send_message(&tcp_client, &send_info);
-                            }
-                            else{
-                                send_info.op = OP_NACK;
-                                send_message(&tcp_client, &send_info);
-                                goto cleanup;
-                            }
-                        }
-                        else{  // W
-                            if(*aux == 'A'){  // ADC no se puede escribir
-                                send_info.op = OP_NACK;
-                                send_message(&tcp_client, &send_info);
-                                goto cleanup;
-                            }
-                            // L y P necesitan el valor del case 4, lo guardamos
-                            // solo validamos que el recurso sea válido
-                            if(*aux != 'L' && *aux != 'P'){
-                                send_info.op = OP_NACK;
-                                send_message(&tcp_client, &send_info);
-                                goto cleanup;
-                            }
-                        }
-                        break;
-
-                    case 4:  // valor (solo para W)
-                        if(current_op == 'W'){
-                            char recurso = *tokens[3];
-                            if(recurso == 'L'){
-                                uint8_t val;
-                                if(validate_binary(aux, &val) == ESP_OK){
-                                    led_state = val;
-                                    gpio_set_level(OUTPUT_PIN, led_state);
-                                    send_info.op    = OP_ACK;
-                                    send_info.value = val;
-                                    send_message(&tcp_client, &send_info);
-                                } else {
-                                    send_info.op = OP_NACK;
-                                    send_message(&tcp_client, &send_info);
-                                    goto cleanup;
-                                }
-                            }
-                            else if(recurso == 'P'){
-                                uint16_t val;
-                                if(validate_pwm(aux, &val) == ESP_OK){
-                                    pwm_set_duty(val);
-                                    send_info.op    = OP_ACK;
-                                    send_info.value = val;
-                                    send_message(&tcp_client, &send_info);
-                                } else {
-                                    send_info.op = OP_NACK;
-                                    send_message(&tcp_client, &send_info);
-                                    goto cleanup;
-                                }
-                            }
-                        }
-                        break;
-
-                    case 5:  // comentario, no importa
-                        break;
-
-                    default:
-                        break;
-                }
+                len = snprintf(buffer, sizeof(buffer), "\r\nservidor conesta: ACK\r\n");
+                uart_write_bytes(global_uart.NUM_PORT, UART_GREEN, strlen(UART_GREEN));
+                uart_write_bytes(global_uart.NUM_PORT, buffer, len);
+                uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
+                free(frame);
+                continue;
             }
+
+            //en otro caso recibimos un comando 
+            else if(frame->id == HEADER){
+                frame_len = 0;
+
+                //si llego ahora debemos de ver uqe onda 
+
+                //verificamos que sea para nosotros 
+                if(frame->user != user){
+                    len = snprintf(buffer, sizeof(buffer), "\r\npeticion no para este usuario\r\n");
+                    uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
+                    uart_write_bytes(global_uart.NUM_PORT, buffer, len);
+                    uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
+                    free(frame);
+                    continue;
+                }
+
+                //ahora necesitamos ver que servicio es lo necesario 
+                if(frame->action == read_esp){
+                    switch(frame->resourse){
+                        case led :{
+                            //el estado esta 1 o 0, que solo abarca 1 byte
+                            memcpy(send_info.format_request.value, &led_state, 1);
+                            send_info.format_request.len=1;//solo usamos 1 byte para el led 
+                            send_info.op_type = OP_ACK; //operacion ACK
+                            ret = send_message();
+                            if(ret != ESP_OK){
+                                len = snprintf(buffer, sizeof(buffer), "\r\nERRO AL SER EL ENVIO DEL FRAME\r\n");
+                                uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
+                                uart_write_bytes(global_uart.NUM_PORT, buffer, len);
+                                uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
+                            }
+                            
+                        }break;
+
+                        case adc:{
+                            //adc puede ser un valor de 16 bits 
+                            uint16_t adc_state = read_adc(ADC_CHANNEL);
+
+                            memcpy(send_info.format_request.value, &adc_state, 2); //en este caso usamos 2 bytes 
+                            send_info.format_request.len = 2;
+                            send_info.op_type =OP_ACK;
+                            ret = send_message();
+
+                            if(ret != ESP_OK){
+                                len = snprintf(buffer, sizeof(buffer), "\r\nERRO AL SER EL ENVIO DEL FRAME\r\n");
+                                uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
+                                uart_write_bytes(global_uart.NUM_PORT, buffer, len);
+                                uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
+                            }
+                        }break;
+
+                        case pwm : {
+                            uint16_t duty = pwm_get_duty();
+                            memcpy(send_info.format_request.value, &duty, 2);
+                            send_info.format_request.len = 2;
+                            send_info.op_type = OP_ACK;
+                            ret = send_message();
+
+                            if(ret != ESP_OK){
+                                len = snprintf(buffer, sizeof(buffer), "\r\nERRO AL SER EL ENVIO DEL FRAME\r\n");
+                                uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
+                                uart_write_bytes(global_uart.NUM_PORT, buffer, len);
+                                uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
+                            }
+                        }break;
+
+                        default: {
+                            send_info.op_type = OP_NACK;
+                            ret = send_message();
+                        } break;
+                    }
+                }
+                else if(frame->action == write_esp  ){
+                    switch(frame->resourse){
+
+                        case led:{
+                            //quiere escribir 
+                            led_state = frame->value[0];
+                            gpio_set_level(OUTPUT_PIN, led_state);
+
+                            memcpy(send_info.format_request.value, &led_state, 1);
+                            send_info.format_request.len = 1;
+                            send_info.op_type = OP_ACK;
+                            //conestamos a la peticion 
+                            ret = send_message();
+                        }break;
+
+                        case pwm : {
+                            uint8_t pct = frame->value[0];
+                            if(pct > 100) pct = 100;
+                            uint16_t duty = (pct * PWM_MAX) / 100;
+                            pwm_set_duty(duty);
+                            send_info.format_request.len = 0;
+                            send_info.op_type = OP_ACK;
+                            ret = send_message();
+                        }break;
+                        case adc: {
+                            len = snprintf(buffer, sizeof(buffer), "\r\noperacion con ADC incorrecta\r\n");
+                            uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
+                            uart_write_bytes(global_uart.NUM_PORT, buffer, len);
+                            uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
+
+                            //enviamos un NACK 
+                            send_info.op_type = OP_NACK;
+                            ret = send_message();
+                        }break;
+
+                        default: {
+                            send_info.op_type = OP_NACK;
+                            ret = send_message();
+                        } break;
+                    }
+                }
+
+                
+                vPortFree(frame);
+            }
+
+            else{
+                len = snprintf(buffer, sizeof(buffer), "\r\nFORMTAMO INCORRECTO\r\n");
+                uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
+                uart_write_bytes(global_uart.NUM_PORT, buffer, len);
+                uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
+
+                //debemos de enviar un NACK 
+
+                send_info.op_type = OP_NACK;
+                ret = send_message();
+                if(ret != ESP_OK){
+                    len = snprintf(buffer, sizeof(buffer), "\r\nERRO AL SER EL ENVIO DEL FRAME\r\n");
+                    uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
+                    uart_write_bytes(global_uart.NUM_PORT, buffer, len);
+                    uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
+                }
+                free(frame);
+                continue;
+            }
+
 
             
-            //al ultimo libreramos la memots 
-            cleanup:
-            //liberamos tokens 
-            for (int i = 0; tokens[i] != NULL; i++) {
-                free(tokens[i]);
-            }
-            free(tokens);
-            free(msg);
         }
     }
 
 }
-
 
 
 
@@ -616,10 +612,7 @@ char **pasrse_input_recv(char *line){
     return tokens;
 }
 
-static inline void uart_jump(void) {
-    uart_write_bytes(UART_MAIN, "\r\n", 2);
-}
-
+//actualiza las credencilaes -----> necesita actualicion sobre las varibales de globales --> por referencia 
 //ahora esta conexion sera mediante la estrucuutra para lleva run mejor controky que todo este agrupado en una sola varibale 
 esp_err_t update_setup_cred(char *key, char *anchor ,char *pswd_ent,  char *identificator){
 
@@ -681,12 +674,22 @@ esp_err_t update_setup_cred(char *key, char *anchor ,char *pswd_ent,  char *iden
 
 void setup_tcp(void){
     
+
+    //creamos la vairbales 
+    
+    // const tcp_client_t *tcp_keep_alive;
+    
+
     while(1){
 
-
-        //se pudo ingresar las credenciales bien por lo que ahora intentara establecer conexion con el servidor. 
-        esp_err_t ret = tcp_cliente_init(); 
         
+        //se pudo ingresar las credenciales bien por lo que ahora intentara establecer conexion con el servidor. 
+        // send_info->format_req_send->user = user;
+        //para login solo necesito 6 bytes 
+        esp_err_t ret = tcp_cliente_init(); 
+        xTaskCreate(recv_task,  "recv_task", 4098, NULL, 8, NULL);
+        xTaskCreate(tcp_process_task, "tcp_process_task", 4098,NULL, 8, NULL);
+
         static int n_login=0;
         int len;
         if(ret == ESP_OK){
@@ -703,9 +706,9 @@ void setup_tcp(void){
                 len= snprintf(n_rety_log, sizeof(n_rety_log),"intento #%i\r\n",n_login);
                 uart_write_bytes(global_uart.NUM_PORT, n_rety_log, len);
                 //no ha inicado sesion. 
-                send_info.op = OP_LOGIN;
-
-                ret = send_message(&tcp_client, &send_info);
+                send_info.op_type = OP_LOGIN;
+                send_info.format_request.len= 6;
+                ret = send_message();
                 //verificamos que se vuelva a intentar el login 
                 if(ret != ESP_OK){
                     
@@ -723,10 +726,13 @@ void setup_tcp(void){
 
             // ── Crear tarea de keep‑alive (solo una vez) ───────────────
             static bool ka_created = false;
+            //inicamos la estrcuutra que enviara datos a keep alive, 
+            
+
             if (!ka_created) {
+                //el keep alive necesita que le pasemos parametros 
+
                 xTaskCreate(keep_alive_task, "keep_alive_task", 2048, NULL, 6, NULL);
-                xTaskCreate(recv_task,  "recv_task", 4098, NULL, 8, NULL);
-                xTaskCreate(tcp_process_task, "tcp_process_task", 4098,NULL, 8, NULL);
                 ka_created = true;
             }
 

@@ -7,13 +7,14 @@
 //definamos un punto, en este caso haremos un local host en mi red, por lo que cunado arranque tratara de coenctarse 
 //a algun servidor o servicio en mi maquina en mi red, pero al no encontrarla se podra cambiar la direccion de host y el puerto 
 
-#define DEFAULT_HOST "192.168.1.66" // local
+// #define DEFAULT_HOST "192.168.1.66" // local
 
-#define DEFAULT_PORT "5000" //local
+// #define DEFAULT_PORT "5000" //local
 
-//UABC
-// #define DEFAULT_HOST "148.231.130.229"
-// #define DEFAULT_PORT "50005"
+// UABC
+#define DEFAULT_HOST "148.231.130.229"
+#define DEFAULT_PORT "50005"
+
 
 #define RETRY_SERVER BIT0 
 #define UPDATE_TCP BIT10
@@ -45,8 +46,10 @@ typedef struct {
 
 }tcp_client_t;
 
-
 extern tcp_client_t tcp_client;
+
+
+// extern tcp_client_t tcp_client;
 //mantendre el grupo de eventos pero si despues no cuentro una razon por la que este lo saco 
 extern EventGroupHandle_t g_tcp_event_group;
 
@@ -78,15 +81,24 @@ void recv_task(void *params);
  *  
 */
 
+
+/**
+ *---- > update
+ * ahora tendremos que utilizar una varaible pasada por referencia en vez de una global.
+ * 
+ */
+
 /**
  * @brief funcion encarga de crear el socket con el que se va a conectar al servidor. lo intentara 5 veces antes de salir e indicar que no se pudo conectar 
+ * 
+ * @param tcp_client es la estrucutra que tiene la informacion del socket de la conexion con el servidor 
  * 
  * @return ESP_OK cunado se pude establecer la conexion 
  * @return ESP_FAIL cunado no se pudo establecer la conexion 
  * 
  * 
 */
-esp_err_t tcp_cliente_init(void);
+esp_err_t tcp_cliente_init();
 
 
 //funcion que debe de realizar el login
@@ -103,7 +115,7 @@ esp_err_t tcp_cliente_init(void);
  * 
  * 
 */
-esp_err_t send_message(tcp_client_t *sockfd,send_info_t *msg);
+esp_err_t send_message();
 
 
 

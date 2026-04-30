@@ -15,6 +15,7 @@
 
 #include<driver/uart.h>
 #include<driver/gpio.h>
+#include"modules/TCP/tcp_lib.h"
 
 #define TRUE 1
 #define FALSE 0
@@ -23,6 +24,8 @@
 //HEADER del paruqte 
 
 #define HEADER 0xCAFE
+#define ACK 0x3501
+#define NACK 0x3501
 
 //colores 
 #define UART_RED     "\033[31m"
@@ -71,20 +74,20 @@ extern op_type_t op_type;
 //ahora la operacion y este desmadre sera
 typedef enum{
     action_none  = 0x00,
-	read = 0x01,    
-	write = 0x02,
-	access = 0x04, //login
-	keep_alive = 0x05,
+	read_esp = 0x1,    
+	write_esp = 0x2,
+	access_esp = 0x4, //login
+	keep_alive = 0x5,
 }action_t;
 
 extern action_t action;
 
 
 typedef enum{
-	led = 0x01,
-	adc=0x02,
-	pwm=0x03,
-    server = 0x0f,
+	led = 0x1,
+	adc=0x2,
+	pwm=0x3,
+    server = 0xf,
 }resourse_t;
 extern resourse_t resourse;
 
@@ -123,16 +126,17 @@ typedef struct{
     uint8_t value[32]; //un valor de 0 a 32 bytes para el valor cunado es escritrua 
 }format_request_t;
 
-
-format_request_t format_request;
+// //lo dejamos como global o lo pasamos como parame
+extern format_request_t format_request;
 
 
 
 typedef struct{
     op_type_t op_type; //que operacion vamos a relaizar 
-    format_request_t *format_req_send; //trametos la trama a enviar 
+    format_request_t format_request; //trametos la trama a enviar 
 }send_info_t;
 
+extern send_info_t send_info;
 
 
 //cola que controlara el flujo de la ifnromacion entre los diferners archivos 
