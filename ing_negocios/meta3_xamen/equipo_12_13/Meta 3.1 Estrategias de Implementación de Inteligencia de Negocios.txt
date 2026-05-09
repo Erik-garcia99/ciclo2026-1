@@ -1,0 +1,229 @@
+Hola, me llamo Sulma Romero y a continuación voy a exponer acerca del tema estrategias de implementación de inteligencia de negocios.
+0:16
+16 segundos
+Voy a estar respondiendo cada una de las preguntas que me tocaron. La primera es,
+0:22
+22 segundos
+¿cuál es el objetivo principal de implementar un sistema de inteligencia de negocios en una organización?
+0:30
+30 segundos
+El objetivo principal de implementar un sistema de inteligencia de negocios en una organización es integrar y
+0:37
+37 segundos
+visualizar información proveniente de diversas fuentes para facilitar su análisis y apoyar la toma de decisiones estratégica.
+0:48
+48 segundos
+Un ejemplo de esto es Amazon, que utiliza herramientas de Business Intelligence para analizar el
+0:55
+55 segundos
+comportamiento de sus clientes y mejorar sus decisiones de negocios como la recomendación de productos.
+1:05
+1 minuto y 5 segundos
+La segunda pregunta es, ¿qué factores culturales se deben considerar en la organización antes de implementar un sistema de inteligencia de negocios?
+1:15
+1 minuto y 15 segundos
+Antes de implementar un sistema de inteligencia de negocio, se deben considerar factores culturales dentro de la organización, especialmente la
+1:23
+1 minuto y 23 segundos
+adaptación del personal, el cambio en las formas tradicionales de trabajo y la integración del uso de información en la cultura organizacional.
+1:35
+1 minuto y 35 segundos
+Una empresa que implementa inteligencia de negocios como Microsoft ha tenido que capacitar a sus empleados para adaptarse al uso de herramientas como Power BI.
+1:47
+1 minuto y 47 segundos
+Este cambio implica que los trabajadores adopten nuevas formas de analizar datos y tomar decisiones basadas en
+1:55
+1 minuto y 55 segundos
+información, lo cual puede generar resistencia si no se gestiona adecuadamente.
+2:04
+2 minutos y 4 segundos
+La siguiente pregunta es, ¿cómo impacta la disponibilidad de recursos tecnológicos en la implementación de un sistema VI?
+2:14
+2 minutos y 14 segundos
+La disponibilidad de recursos tecnológicos impacta directamente en la implementación de un sistema de inteligencia de negocios, ya que es
+2:24
+2 minutos y 24 segundos
+necesario contar con la infraestructura tecnológica, herramientas adecuadas y acceso a los datos confiables para su
+2:33
+2 minutos y 33 segundos
+correcto funcionamiento y aprovechamiento.
+2:37
+2 minutos y 37 segundos
+Una empresa que implementa inteligencia de negocios como Netflix depende de una gran infraestructura tecnológica
+2:46
+2 minutos y 46 segundos
+como servidores, bases de datos y sistemas de análisis para procesar millones de datos de usuarios y así
+2:55
+2 minutos y 55 segundos
+recomendar contenido personalizado. Sin estos recursos tecnológicos, el sistema no podría funcionar correctamente.
+3:06
+3 minutos y 6 segundos
+¿Qué rol juegan los actores involucrados en el proceso de implementación de de inteligencia de negocios? Según el
+3:14
+3 minutos y 14 segundos
+estudio de caso, los actores involucrados en el proceso de implementación juegan un rol
+3:21
+3 minutos y 21 segundos
+fundamental, ya que participan en la identificación de necesidades,
+3:27
+3 minutos y 27 segundos
+aportan información, colaboran en el desarrollo del sistema y permiten generar datos para la toma de decisiones.
+3:36
+3 minutos y 36 segundos
+En empresas como Google, los sistemas de inteligencia de negocios requieren la participación de distintos actores como los analistes de datos, desarrolladores,
+3:48
+3 minutos y 48 segundos
+gerentes. Cada uno aporta información y utilizan los resultados para tomar decisiones estratégicas
+3:57
+3 minutos y 57 segundos
+como mejorar productos y servicios.
+4:03
+4 minutos y 3 segundos
+¿Qué metodologías utilizan para detectar las necesidades de un sistema de inteligencia de negocios en una institución académica?
+4:13
+4 minutos y 13 segundos
+Para detectar necesidades de un sistema de inteligencia de negocios en una institución académica se utilizan
+4:22
+4 minutos y 22 segundos
+metodologías mixtas que combinan enfoques cuantitativos y cualitativos
+4:28
+4 minutos y 28 segundos
+apoyadas en instrumentos como encuestas y entrevistas aplicadas a los actores involucrados.
+4:36
+4 minutos y 36 segundos
+Por ejemplo, en UABC se aplican encuestas para identificar qué se puede mejorar en cuanto a
+4:44
+4 minutos y 44 segundos
+servicios de biblioteca o servicio de red wifi.
+4:50
+4 minutos y 50 segundos
+La pregunta número seis dice, ¿cuál es la importancia de comunicar el alcance y cronograma del proyecto de inteligencia de negocios dentro de una organización?
+5:03
+5 minutos y 3 segundos
+Es importante comunicar el alcance y cronograma del proyecto de inteligencia de negocios dentro de la organización,
+5:11
+5 minutos y 11 segundos
+porque permite informar a todos los miembros sobre la implementación,
+5:17
+5 minutos y 17 segundos
+alinear expectativas y facilitar la participación de los colaboradores en el desarrollo del sistema.
+5:25
+5 minutos y 25 segundos
+En proyectos de implementación tecnológica,
+5:28
+5 minutos y 28 segundos
+en empresas como Amazon, Microsoft y Netflix, es fundamental comunicar el alcance y cronograma para coordinar
+5:36
+5 minutos y 36 segundos
+equipos, evitar retrasos y asegurar que todos los involucrados comprendan sus responsabilidades dentro del proyecto.
+5:47
+5 minutos y 47 segundos
+¿Cuáles son algunos pasos recomendados para la implementación de inteligencia de negocio? Según los especialistas consultados,
+5:57
+5 minutos y 57 segundos
+según los especialistas consultados,
+6:00
+6 minutos
+algunos pasos recomendados para la implementación de inteligencia de negocio son: uno, investigar las
+6:07
+6 minutos y 7 segundos
+necesidades de información de la organización, dos, definir el alcance del proyecto,
+6:14
+6 minutos y 14 segundos
+tres, seleccionar la tecnología adecuada, cuatro, comunicar la implementación.
+6:23
+6 minutos y 23 segundos
+5 identificar colaboradores.
+6:26
+6 minutos y 26 segundos
+Seis, desarrollar la solución de forma ágil y mantener un proceso constante de retroalimentación.
+6:35
+6 minutos y 35 segundos
+Por ejemplo, Netflix implementa sistemas de inteligencia de negocios siguiendo pasos muy similares a los descritos por
+6:43
+6 minutos y 43 segundos
+los especialistas. Primero analiza grandes volúmenes de datos de usuarios,
+6:49
+6 minutos y 49 segundos
+como qué es lo que ellos ven, cuánto tiempo, cuáles son sus preferencias y luego define objetivos como mejorar recomendaciones,
+7:01
+7 minutos y 1 segundo
+selecciona tecnologías de análisis de datos, desarrolla modelos y continuamente ajusta el sistema con
+7:09
+7 minutos y 9 segundos
+retroalimentación de los usuarios. Esto le permite mejorar su plataforma constantemente y tomar decisiones
+7:17
+7 minutos y 17 segundos
+estratégicas basadas en datos reales.
+7:25
+7 minutos y 25 segundos
+¿Por qué es fundamental desarrollar una solución de inteligencia de negocios de manera ágil durante la implementación?
+7:35
+7 minutos y 35 segundos
+Es fundamental desarrollar una solución de inteligencia de negocios ágil porque permite recibir retroalimentación de los
+7:43
+7 minutos y 43 segundos
+usuarios durante el proceso de implementación y realizar mejoras continuas para asegurar que el sistema
+7:50
+7 minutos y 50 segundos
+cumpla con las necesidades de la organización.
+7:54
+7 minutos y 54 segundos
+Por ejemplo, Microsoft al desarrollar herramientas como Power BI utiliza metodologías ágiles para lanzar
+8:02
+8 minutos y 2 segundos
+versiones iniciales, recibir retroalimentación de los usuarios y mejorar continuamente la plataforma con nuevas funcionalidades y correcciones.
+8:17
+8 minutos y 17 segundos
+¿Qué desafíos específicos pueden surgir en el proceso de implementación de inteligencia de negocios en una organización educativa?
+8:27
+8 minutos y 27 segundos
+En el proceso de implementación de inteligencia de negocios en una organización educativa pueden surgir diversos
+8:35
+8 minutos y 35 segundos
+desafíos tales como la dificultad para adaptar la información a la herramienta,
+8:41
+8 minutos y 41 segundos
+problemas en el ingreso y actualización de los datos, costos de implementación,
+8:47
+8 minutos y 47 segundos
+capacitación de personal y resistencia al cambio organizacional. Por ejemplo,
+8:53
+8 minutos y 53 segundos
+Amazon enfrenta varios desafíos al implementar sistemas de inteligencia negocios, especialmente en la gestión de
+9:01
+9 minutos y 1 segundo
+grandes volúmenes de datos. Uno de los principales retos es mantener la calidad y actualización de los datos en tiempo
+9:10
+9 minutos y 10 segundos
+real, así como garantizar la seguridad de la información de millones de usuarios. Además, Amazon ha tenido que
+9:18
+9 minutos y 18 segundos
+invertir en la capacitación de su personal y en la infraestructura tecnológica avanzada para poder analizar
+9:26
+9 minutos y 26 segundos
+correctamente los datos y utilizar la toma de decisiones como en gestión de inventarios y recomendaciones de productos.
+9:39
+9 minutos y 39 segundos
+¿Qué recomendaciones hacen los especialistas para la sostenibilidad del sistema?
+9:45
+9 minutos y 45 segundos
+de inteligencia de negocios en su implementación.
+9:49
+9 minutos y 49 segundos
+Los especialistas recomiendan para la sostenibilidad del sistema eh de inteligencia de negocios después de su
+9:58
+9 minutos y 58 segundos
+implementación, mantener un proceso constante de retroalimentación,
+10:04
+10 minutos y 4 segundos
+asegurar la participación de los usuarios y continuar mejorando el sistema conforme a las necesidades de la organización.
+10:12
+10 minutos y 12 segundos
+Por ejemplo, Microsoft mantiene la sostenibilidad de su herramienta Power BI mediante actualizaciones constantes,
+10:21
+10 minutos y 21 segundos
+incorporación de nuevas funciones y retroalimentación continua de los usuarios, lo que permite que la plataforma siga siendo útil y relevante.
+10:31
+10 minutos y 31 segundos
+Y esto ha sido todo por mi parte. Muchas gracias por su atención. Yeah.

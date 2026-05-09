@@ -1,25 +1,9 @@
 /*
- * PRACTICA 13 Trama binaria
+ * SIMULULACRO DE EXAMEN
  *
- * esta nueva practica en vez de mandar por medio de una cadena ascii que abarca mucha memoria, son demacdos bytes y poca informacion 
- *
- * la trama binaria puede abarcar lo mismo o mas informacion con menos espacio ente los paquetes enviados 
- *
- *tenemos para la nueva trama 6 bloques principales 
- *
- * 1: indentificador -> funciona como el inciio del frame el cual tiene valor de OxCA 0xFE <como el UABC en ASCII> -> (2bytes)
- *
- * 2: longitud -> contiene la longitud de bytes del resto de la trama (1 byte)
- * 3:usuario -> valor de (4 bytes) para alamcenar la matricula de identificacion del usuario 
- *
- * 4: accion -> un campo de 1 nibble mas significativo (4 bits) para indicar la accion que se hara sobre un recurso del esp32 que se puede ver en la tabla 1 (tomando en cuenta que se puede leer y escribir y que no )
- *
- * 5: recurso -> el nibble menos significativo que indica el recruso 
- *
- * 6: valor -> solo necesario en operaciones de escritura y puede ser de 0 a 32 bytes. 
- *
- *
- *
+ * establecer el recurso de reset 
+ * 
+ * 
  *
 */
 
@@ -30,7 +14,7 @@
  */
 
 
-
+//+++++++++++++++++++++++++++++++librerias
 #include <stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -38,6 +22,7 @@
 
 //drivers
 #include<driver/uart.h>
+#include<esp_timer.h>
 
 //logs
 #include<esp_log.h>
@@ -49,7 +34,7 @@
 #include<lwip/err.h>
 #include<lwip/sys.h>
 
-//librerias 
+//librerias  propias
 #include<modules/UART/uart_lib.h>
 #include<modules/WIFI/wifi_lib.h>
 #include<modules/TCP/tcp_lib.h>
@@ -58,10 +43,27 @@
 #include<global.h>
 
 
-//vairbales globales
-static const char *TAG = "MAIN";
+//+++++++++++++++++++++++++++++++++++++++++vairbales globales
 
+static const char *TAG = "MAIN";
 uint8_t led_state;
+//identificacion por la matricula 
+uint32_t user;
+volatile uint8_t login_pending = 0;
+
+//sera de 64 bits porque usare timer para obtener el tiempo 
+static uint64_t reset_state; //este es el que llevara la cuenta desde que se inicio a contar, es la varibale global se deifinira si ya se cumplio o no para el resert 
+static uint8_t time_resert; //variable en donde se guarda en tiempo en el cual se planea realizar resert 
+//inicia el conteo, comparacion de desde cunato se empezo a contar, apra la referencia 
+static uint64_t init_count;
+//conviertie lo qeu se recibcio en timepo para comparar 
+static uint64_t limite_us;
+
+
+//handle con el que podremos eliminar la tarea en caso de ser necesario 
+TaskHandle_t handle_resert_set;
+// TaskHandle_t set_count;
+
 
 //++++++++++++++++ colas 
 //cola para los eventos de UART
@@ -78,6 +80,8 @@ EventGroupHandle_t g_tcp_event_group;
 EventGroupHandle_t s_wifi_event_group;
 
 EventGroupHandle_t g_login_event_group;
+
+EventGroupHandle_t g_rst_event;
 
 
 //++++++++++++++++++  estrucutra
@@ -96,15 +100,7 @@ resourse_t resourse;
 send_info_t send_info ={0};
 
 format_request_t format_request ={0};
-
-//+++++++++++++++ variables 
-
-//identificacion por la matricula 
-uint32_t user;
-volatile uint8_t login_pending = 0;
-
-
-//funciones
+//++++++++++++++++++++++++++++funciones
 /**
  * @brief funcion que se encargara de serparar los tokens ingresador por le usuario
  * este solo es serparar entre los comandos, mas no extrae los token necesarios 
@@ -144,11 +140,24 @@ esp_err_t update_setup_cred(char *key, char *anchor ,char *pswd_ent,  char *iden
 
 void setup_tcp(void);
 
+static int parse_number(const char *str);
+
+//funcion en donde se estara contando 
+// void set_reset_time(void);
+
+void get_time_current(void);
+
+//++++++++++++++++++++++++++++++tareas 
 //tarea encargada de recibir el comando por UART 
 void task_cmd_uart(void *params);
 
+//la tarea para realizar el resertn
 
-static int parse_number(const char *str);
+void task_resert_esp(void *params);
+
+//mantendremos el set como unatarea que necesitamos qeu este coriendo en paralelo 
+void set_resert_time_task(void *params);
+
 
 
 void app_main(void)
@@ -157,6 +166,7 @@ void app_main(void)
     s_wifi_event_group = xEventGroupCreate();
     g_tcp_event_group= xEventGroupCreate();
     g_login_event_group = xEventGroupCreate();
+    g_rst_event = xEventGroupCreate();
 
 
     flow_data_queue = xQueueCreate(10, sizeof(char*));
@@ -181,6 +191,7 @@ void app_main(void)
 
     xTaskCreate(task_cmd_uart, "task_cmd_uart", 4096, NULL, 8, NULL);
 
+    // xTaskCreate(task_resert_esp, "task_resert_esp", 2048, NULL, 5, NULL);
     
     //definimos por defecto pero es varibale por lo que puede ser modificable   
     //dejemos las varibales externs y todo como este. 
@@ -502,13 +513,29 @@ void tcp_process_task(void *params){
                             }
                         }break;
 
+                        case resert_esp:{
+                            //en este caso no es neceasrio el get
+                            //ahora la cuestion es que la varibale es de 64bits entonces como ponemos es avaribale a a lo mucho en su valor real no va a superar el byte (255)
+                            //por tcp ira la repesentacion en segundos no en micros o milisegundos. 
+                            //primero restamos el timpo en el qeu se hara resert con el tiempo transcurrido 
+                            
+                            uint64_t limite_total_us = (uint64_t)time_resert * 1000000ULL;
+                            
+                            uint64_t restante_us = (limite_total_us > reset_state) ? (limite_total_us - reset_state) : 0;
+                            uint8_t segundos = (uint8_t)(restante_us / 1000000ULL);
+                            send_info.format_request.value[0] = segundos;
+                            send_info.format_request.len = 1;
+                            send_info.op_type = OP_ACK;
+                            ret = send_message(); //mandamos 
+                        }break;
+
                         default: {
                             send_info.op_type = OP_NACK;
                             ret = send_message();
                         } break;
                     }
                 }
-                else if(frame->action == write_esp  ){
+                else if(frame->action == write_esp){
                     switch(frame->resourse){
 
                         case led:{
@@ -522,16 +549,31 @@ void tcp_process_task(void *params){
                             //conestamos a la peticion 
                             ret = send_message();
                         }break;
-
+                        //falta que mande el ACK con el valor estabelcido 
                         case pwm : {
                             uint8_t pct = frame->value[0];
                             if(pct > 100) pct = 100;
                             uint16_t duty = (pct * PWM_MAX) / 100;
                             pwm_set_duty(duty);
-                            send_info.format_request.len = 0;
+                            send_info.format_request.len = 1;
                             send_info.op_type = OP_ACK;
                             ret = send_message();
                         }break;
+
+                        case resert_esp:{
+                            //vamos a ecribir el byte que se reibio representan los segundos en los cuales de requieren reinicar la esp 
+                            //establecer el tiempo que queremos que se relice el resert 
+                            time_resert = frame->value[0];//el valor entara en el primero byte del frame porqeu sera un valor de 1 byte 
+                            //ahora lo que sigue es crear la tarea princilapl 
+                            xTaskCreate(task_resert_esp, "task_resert_esp", 2048, NULL, 5, NULL);
+                            //
+                            memcpy(send_info.format_request.value, &time_resert, 1); //sera de 1 byte
+                            send_info.format_request.len = 1;
+                            send_info.op_type = OP_ACK;
+                            ret = send_message();
+                            
+                        }break;
+
                         case adc: {
                             len = snprintf(buffer, sizeof(buffer), "\r\noperacion con ADC incorrecta\r\n");
                             uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
@@ -543,11 +585,23 @@ void tcp_process_task(void *params){
                             ret = send_message();
                         }break;
 
+                        
+
                         default: {
                             send_info.op_type = OP_NACK;
                             ret = send_message();
                         } break;
                     }
+                }
+
+                else if(frame->action == cancel_resert_esp){
+                    //quiere canelcar el resert de la esp 
+                    //tna solo pasa en que debemos de activar el grupo de eventos que calncela todo 
+                    xEventGroupSetBits(g_rst_event, RST_CANCEL);
+                    send_info.format_request.value[0] = 0;
+                    send_info.format_request.len=1;
+                    send_info.op_type = OP_ACK;
+                    ret = send_message();
                 }
 
                 
@@ -911,6 +965,80 @@ void setup_tcp(void)
         }
     }
 }
+
+
+
+void task_resert_esp(void *params){
+
+    uint8_t close_servicios = 1; //un colchon de 1 segundos para cerrar TCP y WIFI 
+    //en esta tarea se mantendra 
+    if (time_resert <= close_servicios) {
+        esp_restart(); // no hay tiempo suficiente ni para el colchon
+    }
+    //convertirmos el timepo en segundos 
+    limite_us = (uint64_t)(time_resert - close_servicios) * 1000000ULL;
+    //creamos la tarea para empeozar a contar 
+    xTaskCreate(set_resert_time_task, "set_resert_time_task", 2048, NULL, 5, &handle_resert_set);
+    //debriamos de esperar a que cancelamos o se completa el resert
+        
+    //un grupo de eventos con un bit para eso 
+    EventBits_t bits = xEventGroupWaitBits(g_rst_event, RST_CANCEL | RST_SUCCESS, pdTRUE, pdFALSE, portMAX_DELAY);
+    //verificamos cual se activo 
+    if(bits & RST_CANCEL){
+        //qioere decir que se canelo el resert 
+        // primero matar la tarea para que no hyana errores 
+        vTaskDelete(handle_resert_set);
+        limite_us=0;
+        time_resert = 0;
+        init_count=0;
+        reset_state=0;
+        vTaskDelete(NULL); //eliminamos esta tarea 
+            // break; //salimos del ciclo a elminar esta tarea hasta que se vuelva a necesitar 
+    }
+    else{
+            
+            //no se cancelo y llego a la cenleacion por lo que se procese a cerrar todas las coneciones etc.. 
+            //eliminamos la tarea 
+        char msg[60];
+        int len = sniprintf(msg, sizeof(msg), "\n\rreinciando esp\r\n");
+        uart_write_bytes(UART_NUM_0, msg, len);
+        close(tcp_client.sock);
+        vTaskDelete(handle_resert_set);
+        esp_restart();
+    }
+    //creo que nucna se llega 
+    vTaskDelete(NULL);
+}
+
+void set_resert_time_task(void *params){
+
+    init_count = esp_timer_get_time();
+
+    char msg[60];
+
+    while(1){
+        reset_state = esp_timer_get_time() - init_count;
+
+        // int len = snprintf(msg,sizeof(msg),"resert en : %llu...", reset_state);
+        // uart_write_bytes(UART_NUM_0, UART_YELLOW, strlen(UART_YELLOW));
+        // uart_write_bytes(UART_NUM_0, msg, len);
+        // uart_write_bytes(UART_NUM_0, UART_RESET, strlen(UART_RESET));
+
+        ///ahora asi, dedebemos de verificiar tner 1 o 2 segunso menos, de colchon para realizar cierres 
+
+        if(reset_state >= limite_us){
+            //activamos el bit que inidiq eu se llego al conteio final 
+            xEventGroupSetBits(g_rst_event, RST_SUCCESS);
+        }
+        vTaskDelay(pdMS_TO_TICKS(100));
+    }
+
+}
+
+
+
+
+
 
 void gpio_init(){
 

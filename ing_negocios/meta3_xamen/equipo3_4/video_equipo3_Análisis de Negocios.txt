@@ -1,0 +1,354 @@
+0:02
+2 segundos
+Hola, profesora. Nosotros somos el equipo tres conformado por eh Marcos Reyes, Luis Cazares Meraz y Juan Weng. Y
+0:11
+11 segundos
+nuestro tema es análisis y preparación de datos. A continuación le vamos a presentar el trabajo realizado
+0:19
+19 segundos
+y bueno, un poco del contenido de la investigación realizada. Pues los tenemos como primer tema análisis de datos, definición e importancia. Después el análisis de macrodatos.
+0:30
+30 segundos
+Big Data, conocido también como después tenemos la técnica de análisis,
+0:35
+35 segundos
+posteriormente la automatización y externalización del análisis,
+0:40
+40 segundos
+después la preparación de datos y machine learning y por último pasos para preparar los datos.
+0:49
+49 segundos
+Y bueno, a continuación empezaremos con qué es el análisis de datos y pues tenemos definido, lo tenemos definido como
+0:59
+59 segundos
+eh la conversión de datos sin procesar en información práctica mediante
+1:07
+1 minuto y 7 segundos
+herramientas y procesos para encontrar tendencias, mejorar decisiones y fomentar el crecimiento empresarial.
+1:18
+1 minuto y 18 segundos
+En cuanto a la importancia del análisis de datos, pues bueno, se detalla que el anis de datos ayuda a las empresas a
+1:26
+1 minuto y 26 segundos
+obtener mayor visibilidad y un conocimiento más profundo de sus procesos y servicios. Les proporciona información detallada sobre experiencia del cliente, sus problemas y pues bueno,
+1:36
+1 minuto y 36 segundos
+al cambiar el paradigma más allá de los datos para conectar los conocimientos con la acción. Las empresas pueden crear experiencias personalizadas para los clientes y productos digitales
+1:44
+1 minuto y 44 segundos
+relacionados y optimizar las las capacidades de operación, aumentar productividad de los empleados, entre otras cosas. Y bueno, eh para este
+1:54
+1 minuto y 54 segundos
+primer tema, un caso práctico, pues sería pues, por ejemplo, si una empresa decide lanzar y registrar una aplicación digital orientada al apoyo social o
+2:01
+2 minutos y 1 segundo
+salud mental, analizar los datos de cómo interacturan los usuarios con la interfaz, pues eso permite al equipo de desarrollo saber qué módulos de ayuda
+2:09
+2 minutos y 9 segundos
+son los más utilizados y esta visibilidad es vital para optimizar la experiencia y enfocar los esfuerzos de las siguientes versiones.
+2:18
+2 minutos y 18 segundos
+Y bueno, ahora indagando en qué es el análisis de macrodatos, pues bueno,
+2:22
+2 minutos y 22 segundos
+tenemos se define como grandes conjuntos de datos diversos, estructurados, no estructurados y semiestructurados que se generan continuamente a gran velocidad y
+2:30
+2 minutos y 30 segundos
+sobre todo en grandes volúmenes. Y pues es tanto este punto que es suelen medirse comúnmente en terabytes o terabytes incluso.
+2:42
+2 minutos y 42 segundos
+Y bueno,
+2:43
+2 minutos y 43 segundos
+en resumidas cuentas, el análisis de macrodatos es el proceso de encontrar patrones, tendencias y relaciones en conjunto de datos masivos. Y bueno, esos análisis al ser más complejos requieren herramientas y tecnologías específicas,
+2:54
+2 minutos y 54 segundos
+sobre todo que permitan potencia de cálculo y almacenamiento de datos que soporten la gran escala.
+3:01
+3 minutos y 1 segundo
+¿Y cómo funciona el este tipo de análisis? pues tenemos que se definen las siguientes fases que es la recopilación de datos, el almacenamiento de los mismos y luego el procesamiento.
+3:13
+3 minutos y 13 segundos
+Y por último, el análisis que es convertir toda esa información bruta en información procesable mediante análisis descriptivo, diagnóstico predictivo o prescriptivo.
+3:23
+3 minutos y 23 segundos
+Y un pequeño caso práctico para este tema, pues tenemos que por ejemplo una aplicación global extrae constantemente referencias de imágenes y registros
+3:31
+3 minutos y 31 segundos
+desde un almacenamiento en la nube, como lo podría ser Firebase. Estos estos datos se cargan en un almacel central,
+3:38
+3 minutos y 38 segundos
+se limpian de usuarios suplicados y se procesan aplicando una arquitectura de corte vertical que se le se denomina para predecir de forma aislada la carga
+3:46
+3 minutos y 46 segundos
+que tendrá la base de datos el próximo en futuras fechas.
+3:52
+3 minutos y 52 segundos
+Ahora yo voy a hablar un poquito sobre las técnicas de análisis. Primero tenemos el procesamiento de lenguaje natural. Este es la tecnología utilizada
+4:01
+4 minutos y 1 segundo
+para que las computadoras entiendan el lenguaje humano hablando y escrito y respondan a este. Eh, los analistas de
+4:09
+4 minutos y 9 segundos
+datos utilizan esta técnica para procesar datos como notas dictadas, eh comando de voz y mensaje de chat. Y el siguiente tenemos la minería de texto.
+4:19
+4 minutos y 19 segundos
+Este, los analistas usan de datos usan eh minería de texto para identificar tendencias de en datos de textos como
+4:29
+4 minutos y 29 segundos
+correos electrónicos, eh tweets, eh investigaciones y publicaciones en Brock. Se puede utilizar para clasificar
+4:36
+4 minutos y 36 segundos
+el contenido de las noticias, lo de los comentarios de los clientes y los correos electrónicos de estos.
+4:44
+4 minutos y 44 segundos
+Y luego tenemos el análisis de datos de sensores. Este, los análisis de sensores de datos de sensores implican examinar
+4:53
+4 minutos y 53 segundos
+los datos generados por diferentes sensores. Eh, se utilizan para mantener el mantenimiento predictivo de máquinas,
+5:01
+5 minutos y 1 segundo
+el seguimiento de envíos y otros procesos empresariales en los que las máquinas generan datos.
+5:10
+5 minutos y 10 segundos
+Y por último tenemos el análisis de valores atípicos o la detección de anomalías.
+5:17
+5 minutos y 17 segundos
+Eh, esta técnica identifica puntos de datos y eventos que se desvían de resto de los datos.
+5:24
+5 minutos y 24 segundos
+En como caso práctico, las técnicas de la técnica de de análisis de valores antípicos es fundamental en la evaluación de vulnerabilidades.
+5:34
+5 minutos y 34 segundos
+Al ejecutar escaneo con herramientas como Nmap o NC sobre un servidor web, el
+5:41
+5 minutos y 41 segundos
+sistema detecta respuesta que se desvíen de los patrones normales de red indicando rápidamente una posible brecha o mala configuración.
+5:55
+5 minutos y 55 segundos
+Ah, luego sigue los temas sobre la automatización y externalización. Primero, en la automatización,
+6:03
+6 minutos y 3 segundos
+este, las empresas recurren a ayudas externas para a realizar el análisis de sus datos. Externalizar esto permite que
+6:12
+6 minutos y 12 segundos
+los directivos se enfoquen en otras operaciones de la empresa, dejando la tarea a departamentos expertos que se
+6:20
+6 minutos y 20 segundos
+conocen las técnicas. más recientes y pueden hacer predicciones más eficientes. Por ejemplo, una empresa de
+6:28
+6 minutos y 28 segundos
+ciberseguridad podría usar la automatización para recopilar datos de grandes franjas de actividad en la web,
+6:34
+6 minutos y 34 segundos
+llevar a cabo un análisis adicionales y luego usar la visualización de datos para mostrar los resultados y apoyar las decisiones empresariales.
+6:47
+6 minutos y 47 segundos
+Por otro lado, la externalización eh la externalización de análisis de datos permite la dirección y al
+6:55
+6 minutos y 55 segundos
+departamento ejecutivo centrarse en otras operaciones básicas de la empresa.
+7:01
+7 minutos y 1 segundo
+Los departamentos dedicados a la analítica empresarial son expertos en en su campo, conocen las últimas
+7:10
+7 minutos y 10 segundos
+técnicas de análisis de datos y son expertos en la gestión de datos. De este modo, eh pueden hacer un análisis de datos más eficiente, identificar
+7:18
+7 minutos y 18 segundos
+patrones y predecir con éxito las tendencias futuras. Sin embargo, la transferencia de conocimientos y la
+7:27
+7 minutos y 27 segundos
+confidencialidad de los datos podrían representar desafíos empresariales en en la externalización.
+7:36
+7 minutos y 36 segundos
+Eh, por ejemplo, un equipo de ingenieros que desarrolla una aplicación en Fuder puede externalizar los el análisis de
+7:46
+7 minutos y 46 segundos
+fallos subiendo a PU plataformas de pruebas como DEFS de Apple. En lugar de
+7:53
+7 minutos y 53 segundos
+crear sus propios servidores de analítica. Apo procesa y entrega los reportes de bloqueos directamente al
+8:00
+8 minutos
+equipo, permitiéndoles eh centrarse solo en programar. Por ejemplo,
+8:07
+8 minutos y 7 segundos
+a continuación sobre el tema de los BI en las empresas, las organizaciones eh
+8:14
+8 minutos y 14 segundos
+utilizan estos eh inteligencia de negocios principalmente para para la toma de
+8:22
+8 minutos y 22 segundos
+decisiones, este análisis de datos y el seguimiento de indicadores de cumplimiento.
+8:29
+8 minutos y 29 segundos
+También se aplica en formulación y planificación estratégica, diseño de modelos de negocios y proyecciones proyecciones y reportería.
+8:41
+8 minutos y 41 segundos
+En un caso práctico, el en la industria de ciencia de deporte y biomecánica,
+8:48
+8 minutos y 48 segundos
+empresas de tecnología verbal analizan constantemente datos físicos para proporcionar a los atletas informaciones
+8:57
+8 minutos y 57 segundos
+precisas sobre la fatica fatica y los ciclos de recuperación de los grupos de
+9:04
+9 minutos y 4 segundos
+fibra musculares específicos y así ayudándolos a planificar el entrenamiento más eficientes.
+9:14
+9 minutos y 14 segundos
+A continuación pasamos al tema de preparación de datos y machine learning al compañero Diego Cázares.
+9:25
+9 minutos y 25 segundos
+Gracias. Este,
+9:27
+9 minutos y 27 segundos
+yo soy Luis Diego Cázares Meraz y me toca cerrar con esta presentación con el tema de ah preparación de datos y su relación con el machine learning. Este,
+9:39
+9 minutos y 39 segundos
+cuando nosotros hablamos de la de preparación de datos,
+9:44
+9 minutos y 44 segundos
+básicamente nos referimos al proceso de tomar datos crudos y convertirlos a un formato que ya puede usarse para análisis o para entrenar modelos. Este,
+9:56
+9 minutos y 56 segundos
+esto incluye cuatro etapas. La primera es recopilar, la segunda es limpiar, la tercera es etiquetar y por último
+10:04
+10 minutos y 4 segundos
+tenemos validar. Eh, en la siguiente diapositiva los veremos este con un poquito más de detalle.
+10:12
+10 minutos y 12 segundos
+Ah, pero primero pues me gustaría aterrizar en este dato que a mí se me hizo muy muy interesante y me parece
+10:21
+10 minutos y 21 segundos
+importante destacar, ¿no? Que es que el 80% del tiempo de un proyecto de machine learning se dedica única y exclusivamente a preparar los datos,
+10:32
+10 minutos y 32 segundos
+¿no? No no a programar el modelo ni entrenarlo, este, sino pues a dejarlos listos. eh lo cual habla de lo crítico
+10:40
+10 minutos y 40 segundos
+que es este paso, ¿no? Este, y obviamente que entendemos el por qué. Si un modelo se entrena con datos
+10:47
+10 minutos y 47 segundos
+incompletos o con sesgos o inclusive mal formateado, el resultado de las predicciones van a ser incorrectas, ¿no?
+10:55
+10 minutos y 55 segundos
+Datos malos entran, predicciones malas salen, ¿no? Este, un ejemplo puede ser
+11:02
+11 minutos y 2 segundos
+ah una de recursos humanos entrenada con datos históricos.
+11:07
+11 minutos y 7 segundos
+eh donde existía una preferencia por cierto perfil de candidato, el modelo aprende ese sesgo y lo reproduce,
+11:15
+11 minutos y 15 segundos
+¿no? Este, por eso limpiar y preparar bien los datos no es una cuestión técnica, sino también pues es una cuestión ética, ¿no? Este,
+11:27
+11 minutos y 27 segundos
+ahora este entonces, ¿cómo se hace correctamente esto, no? ¿Cómo se preparan los datos correctamente?
+11:34
+11 minutos y 34 segundos
+Eh, estos son los cuatro pasos. Eh,
+11:38
+11 minutos y 38 segundos
+bueno, se logra con cuatro pasos en secuencia, más bien. El primero es recopilar, que no es nada más que reunir
+11:45
+11 minutos y 45 segundos
+todos los datos eh que necesitamos sin importar dónde estén, ya sean en la nube, en dispositivos locales, en
+11:52
+11 minutos y 52 segundos
+distintos formatos. Todos estos datos recopilados necesitamos moverlos a un solo lugar o tenerlos en un solo lugar.
+12:01
+12 minutos y 1 segundo
+Este, en segundo, necesitamos limpiar,
+12:04
+12 minutos y 4 segundos
+que limpiar o este paso más bien hace referencia a que se corrigen errores,
+12:09
+12 minutos y 9 segundos
+¿no? Rellenas campos vacíos, eliminas duplicados y estandarizas el formato, ¿no? Este,
+12:17
+12 minutos y 17 segundos
+tercero, etiquetamos, ¿no? Esto sobre todo es cuando trabajamos con imágenes,
+12:22
+12 minutos y 22 segundos
+video, este, tienes que decir el modelo que es cada cosa, ¿no? Por ejemplo, si tienes una foto de una calle, por
+12:29
+12 minutos y 29 segundos
+ejemplo, hablamos de vehículos autónomos en este caso, eh, pues necesitas la foto de una calle, ¿no? Volvamos a
+12:38
+12 minutos y 38 segundos
+esto. Este necesitamos eh decirle qué es cada cosa, ¿no? Por ejemplo, en este cuadro hay un peatón, en este otro hay
+12:47
+12 minutos y 47 segundos
+una señal de alto, en este otro hay un paso de cebra, acá hay un semáforo rojo. Ah, y pues es importante.
+12:55
+12 minutos y 55 segundos
+Cuarto, validaron. Antes de empezar a entrenar a hay que usar herramientas visuales,
+13:05
+13 minutos y 5 segundos
+histogramas, gráficas de dispersión para confirmar que los datos tienen sentido y que pues no hay anomalías que se nos
+13:12
+13 minutos y 12 segundos
+hayan este pasado, ¿no? Eh, el caso que mejor ilustra esto pues es el que dije
+13:20
+13 minutos y 20 segundos
+anteriormente, ¿no? El de los vehículos autónomos. Obviamente los ingenieros graban horas y horas y horas de video en
+13:26
+13 minutos y 26 segundos
+las calles. Eh, descartan los cuadros borrosos, etiquetan manualmente cada peatón, cada semáforo, cada señal, cada
+13:34
+13 minutos y 34 segundos
+todo y validan que el modelo haya visto este escenarios tanto de día como de
+13:40
+13 minutos y 40 segundos
+noche, ¿no? Todo todo esto pues antes de que ni siquiera el carro sepa manejar,
+13:48
+13 minutos y 48 segundos
+¿no? antes de que el carro empiece a aprender a manejar, ¿no? Lo cual pues nos habla de lo importante que es eh
+13:54
+13 minutos y 54 segundos
+todo este tema, ¿no? Ah, y pues por mi parte fue todo por parte de de nosotros.
+14:02
+14 minutos y 2 segundos
+Este, con esto concluimos, ¿no? Este,
+14:06
+14 minutos y 6 segundos
+como pudimos ver a lo largo de esta presentación, estuvimos hablando de datos, de cómo se analizan, de qué
+14:13
+14 minutos y 13 segundos
+técnicas existen para procesarlos, de cómo las empresas ah lo usan para tomar mejores decisiones. Eh,
+14:22
+14 minutos y 22 segundos
+y pues hay algo que conecta todo esto y que muchas veces se da por sentado, ¿no? La calidad del dato es primordial, ¿no?
+14:31
+14 minutos y 31 segundos
+Y pues es algo que necesitamos eh tener en cuenta desde el principio de los proyectos, ¿no? Este, no importa que tan
+14:39
+14 minutos y 39 segundos
+sofisticado sea el algoritmo que que se use, ni qué tan avanzada sea la herramienta
+14:47
+14 minutos y 47 segundos
+que se use, que tenga la empresa. Si los datos que entran están mal, eh pues la
+14:55
+14 minutos y 55 segundos
+los resultados van a ser igual, no van a estar igual de mal.
+14:59
+14 minutos y 59 segundos
+Este, el análisis que describió mi compañero Marcos, las técnicas que explicó mi compañero Juan eh y los
+15:06
+15 minutos y 6 segundos
+modelos de machine learning que vimos de mi parte. Todo depende de datos que alguien preparó correctamente antes,
+15:13
+15 minutos y 13 segundos
+¿no? O sea, no de nada sirve, como lo dije, ¿no? Que tengas las mejores herramientas, el mejor algoritmo, si no si no tienes buenos datos.
+15:22
+15 minutos y 22 segundos
+Y eso es eso es lo que hace que la preparación de datos no sea solo ah un
+15:30
+15 minutos y 30 segundos
+paso técnico más, sino la base sobre la que eh cualquier proyecto debe estar construido, ¿no? Este
+15:39
+15 minutos y 39 segundos
+y que sea útil, preciso y pues confiable. Es lo que nos da como resultado, ¿no? Y de mi parte y de mis compañeros fue todo. Muchas gracias por su atención. M.

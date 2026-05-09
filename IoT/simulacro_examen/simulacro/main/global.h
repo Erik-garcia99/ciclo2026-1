@@ -53,6 +53,17 @@
 
 
 
+#define RETRY_SERVER BIT0 
+#define TCP_DISCONNECTED BIT1   // servidor cerro la conexion inesperadamente
+#define UPDATE_TCP BIT10
+#define EXT_TCP_MEM BIT11
+#define FAIL_TCP_MEM BIT12
+#define BREAK_UPDATE_WIFI BIT13
+#define NO_RETRY_TCP BIT14
+//para el resert 
+#define RST_CANCEL BIT15
+#define RST_SUCCESS BIT16
+
 
 
 //estrucutra que contendra el puerto de UART esot sera ideal para cunado estemos menjando diferentes puerto de UART 
@@ -62,9 +73,6 @@ typedef struct {
 }task_uart_port_t;
 
 extern task_uart_port_t global_uart;
-
-
-
 
 
 typedef enum{
@@ -82,6 +90,7 @@ typedef enum{
     action_none  = 0x00,
 	read_esp = 0x1,    
 	write_esp = 0x2,
+    cancel_resert_esp=0x03, //cancelar el reinciio del esp
 	access_esp = 0x4, //login
 	keep_alive = 0x5,
 }action_t;
@@ -90,6 +99,7 @@ extern action_t action;
 
 
 typedef enum{
+    resert_esp = 0x00,
 	led = 0x1,
 	adc=0x2,
 	pwm=0x3,

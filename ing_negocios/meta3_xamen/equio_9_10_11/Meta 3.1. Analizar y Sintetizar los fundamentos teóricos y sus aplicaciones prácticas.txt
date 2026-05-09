@@ -1,0 +1,292 @@
+Hola, mi nombre es Steven Nicolá de la Cruz Estrada y en esta presentación voy a exponer el tema un marco de trabajo
+0:08
+8 segundos
+para la inteligencia de negocios correspondiente a la materia de ingeniería de negocios. Durante esta exposición voy a analizar qué es la
+0:15
+15 segundos
+inteligencia de negocios, cuáles son sus principales componentes, cómo contribuye a la toma de decisiones estratégicas y
+0:23
+23 segundos
+qué beneficios generan dentro de una organización. Además veremos que Business Intelligence no es solo empresas privadas, sino también
+0:32
+32 segundos
+instituciones educativas, hospitales y organizaciones públicas.
+0:39
+39 segundos
+¿Qué es business intelligence? Primero,
+0:42
+42 segundos
+es importante entender qué es la inteligencia de negocios o BI, que es el término que se utiliza. Bude referirse como un conjunto de estrategias,
+0:54
+54 segundos
+metodologías y herramientas que permiten transformar grandes cantidades de información en
+1:01
+1 minuto y 1 segundo
+cosas útiles para apoyar nuestras decisiones.
+1:05
+1 minuto y 5 segundos
+Es decir, tomamos datos, lo convertimos en información útil y con eso apoyamos nuestras decisiones. Muchas organizaciones tienen enormes volúmenes de datos,
+1:16
+1 minuto y 16 segundos
+pero pues tener datos no garantiza las mejores decisiones.
+1:20
+1 minuto y 20 segundos
+El verdadero valor aparece pues cuando esos datos se convierten en información,
+1:26
+1 minuto y 26 segundos
+luego en conocimiento y pues finalmente en decisiones estratégicas. Ese flujo es justamente lo que representa pues esta
+1:33
+1 minuto y 33 segundos
+diapositiva, ¿no?, que tenemos los datos, la información y las decisiones.
+1:39
+1 minuto y 39 segundos
+El propósito central de B es ayudar a las organizaciones a entender lo que está ocurriendo, anticipar escenarios
+1:47
+1 minuto y 47 segundos
+futuros y responder mejor ante problemas u oportunidades.
+1:52
+1 minuto y 52 segundos
+Por ejemplo, una empresa minorista puede analizar patrones de compra para ajustar inventarios según la demanda. Eso es inteligencia de negocios aplicados.
+2:02
+2 minutos y 2 segundos
+Aquí va a ser la siguiente diapositiva.
+2:04
+2 minutos y 4 segundos
+Ahora, pues, ¿para qué existe VI? ¿Cuál es el propósito? Su propósito, pues, no es solo generar reportes, sino también
+2:11
+2 minutos y 11 segundos
+mejorar decisiones. Busca reducir incertidumbre, detectar oportunidades,
+2:18
+2 minutos y 18 segundos
+responder rápido a problemas y generar una ventaja competitiva.
+2:23
+2 minutos y 23 segundos
+Hoy las organizaciones, pues como ya saben, no compiten solo por recursos.
+2:27
+2 minutos y 27 segundos
+sino por quién toma las mejores decisiones, por quién se antepone al futuro, quién es el que está más cercano a lo que va a pasar. Y pues ahí es donde Business Intelligence se vuelve clave.
+2:39
+2 minutos y 39 segundos
+Por ejemplo, si una empresa detecta mediante análisis que ciertas ventas aumentan en ciertas temporadas, pues puede ajustar el inventario, campañas o
+2:47
+2 minutos y 47 segundos
+producción anticipadamente. Eso pues básicamente convierte todos estos datos que tenemos en acciones concretas.
+2:57
+2 minutos y 57 segundos
+Ahora, ¿cuáles son los componentes principales de B?
+3:02
+3 minutos y 2 segundos
+Un sistema de inteligencia de negocios pues funciona como un ecosistema compuesto por cuatro tecnologías principales. Primero está el data
+3:11
+3 minutos y 11 segundos
+warehouse que centraliza la información de múltiples fuentes. Luego está el OLAP, que permite analizar esta información desde distintas dimensiones.
+3:21
+3 minutos y 21 segundos
+Luego encontramos la minería de datos que descubre patrones y genera predicciones. Y finalmente el portal de
+3:28
+3 minutos y 28 segundos
+información corporativa o ep que presenta esa información en dashbors e indicadores para apoyar decisiones, o sea, los KPI.
+3:38
+3 minutos y 38 segundos
+Lo importante pues es entender que no son herramientas aisladas, sino que pues todo esto funciona como un marco
+3:45
+3 minutos y 45 segundos
+integrado. Las decisiones pues al final de cuentas es en base a los datos que capturamos, organizamos, analizamos y
+3:53
+3 minutos y 53 segundos
+luego presentamos por cual tomamos estas decisiones.
+4:00
+4 minutos
+Ahora tenemos el data warehouse.
+4:03
+4 minutos y 3 segundos
+Profundizando más en lo que es pues el data warehouse, funciona como un almacén central de información. Su función es
+4:10
+4 minutos y 10 segundos
+consolidar datos, integrarlos y conservarlos históricos para análisis futuros. Por ejemplo, en un hospital se
+4:19
+4 minutos y 19 segundos
+podrían centralizar historiales clínicos, costos y ocupación hospitalaria. Esto pues permite análisis estratégicos.
+4:28
+4 minutos y 28 segundos
+Ahora, el OLAR o procesamiento analítico en línea permite analizar estos datos en múltiples dimensiones, por ejemplo,
+4:35
+4 minutos y 35 segundos
+ventas por región, por producto, por periodo, incluso hacer drill drum, que es decir, pasar de un resumen general,
+4:43
+4 minutos y 43 segundos
+pues a un detalle específico. Entonces,
+4:45
+4 minutos y 45 segundos
+simplificando data warehouse, almacena o app, analiza y pues juntos generan una información que es muy valiosa para la toma de decisiones, como ya comentamos.
+4:58
+4 minutos y 58 segundos
+Ahora, en cuanto a la minería de datos y EIP, la minería de datos pues va más allá de todo lo que mencionamos, no solo
+5:07
+5 minutos y 7 segundos
+analiza los datos, sino que se encarga de encontrar patrones ocultos. Se utiliza para predicciones, segmentación,
+5:14
+5 minutos y 14 segundos
+detección de fraudes y pronósticos. Por ejemplo, un banco puede identificar transacciones sospechosas mediante modelos de minería de datos.
+5:23
+5 minutos y 23 segundos
+Eso difícilmente pues nosotros como seres humanos podríamos detectarlo manualmente, sería muy complicado.
+5:31
+5 minutos y 31 segundos
+Después pues tenemos los portales ep.
+5:34
+5 minutos y 34 segundos
+Estos funcionan como puntos centrales donde la información se visualiza mediante pues dashboards e indicadores.
+5:41
+5 minutos y 41 segundos
+Son las interfaces que usan directivos para consultar métricas clave. Por ejemplo, tenemos un dashboard
+5:48
+5 minutos y 48 segundos
+institucional con indicadores de matrícula, finanzas o desempeño.
+5:53
+5 minutos y 53 segundos
+Entonces, pues la minería descubre conocimiento e IP lo vuelve visible y accionable al final de cuentas.
+6:02
+6 minutos y 2 segundos
+Ahora, ¿cuáles son las características de un VI efectivo? ¿Cuáles son las características esenciales? Entonces,
+6:11
+6 minutos y 11 segundos
+las más importantes es la usabilidad, la flexibilidad y la seguridad, porque pues no basta con implementar vi únicamente.
+6:22
+6 minutos y 22 segundos
+Para que realmente funcione debemos cumplir tres características esenciales.
+6:27
+6 minutos y 27 segundos
+Pues la primera es que sea fácil de usar, que tú como usuario pues realmente sea intuitivo, que sea algo que no
+6:35
+6 minutos y 35 segundos
+tengas que ver un manual o que no necesites de un conocimiento técnico muy avanzado. Porque pues, por ejemplo, si
+6:43
+6 minutos y 43 segundos
+los reportes que estamos viendo son muy complejos o difíciles de entender, pues en sí no es como que generen un valor
+6:50
+6 minutos y 50 segundos
+muy importante porque pues al final de cuentas se pierde la noción de esta información en toda esta complejidad. Entonces, por eso
+6:58
+6 minutos y 58 segundos
+la usabilidad es una de las características más esenciales de un buen business intelligence.
+7:06
+7 minutos y 6 segundos
+La segunda, pues es la flexibilidad. Eso quiere decir pues que básicamente debe de funcionar en distintas plataformas y adaptarse a las necesidades cambiantes,
+7:16
+7 minutos y 16 segundos
+o sea, que funcione en el teléfono, que funcione en una tablet, que funcione en una laptop de cualquier sistema
+7:23
+7 minutos y 23 segundos
+operativo que pueda pues al final que sea un sistema escalable para cualquier tipo de cambio que se necesita a futuro.
+7:32
+7 minutos y 32 segundos
+La tercera, pues también super importante, la seguridad, porque pues estamos trabajando con información estratégica, es información sensible,
+7:41
+7 minutos y 41 segundos
+información que pues si se filtra, si sufres algún hackeo, pues puede acabar costando bastante dinero a a la empresa en general.
+7:50
+7 minutos y 50 segundos
+Pues estas tres características son fundamentales para que un sistema de business intelligence no sea solo tecnología, sino que también se vuelva
+7:59
+7 minutos y 59 segundos
+una solución útil para nosotros, porque eso es lo más importante al final de cuentas, que todo esto realmente tenga
+8:06
+8 minutos y 6 segundos
+una aplicación específica en el contexto de negocio.
+8:11
+8 minutos y 11 segundos
+Ahora, más específicamente en la seguridad, pues, ¿por qué la seguridad es crítica? Pues la seguridad merece especial atención. ¿Por qué?
+8:21
+8 minutos y 21 segundos
+Porque pues los sistemas VI concentran información crítica, finanzas, clientes,
+8:27
+8 minutos y 27 segundos
+operaciones, estrategias. Si esa información pues se vulnera, puede ser bastante grave, ¿no? Porque pues ya hemos tenido casos de empresas que
+8:36
+8 minutos y 36 segundos
+sufren hackeos masivos y se filtran datos de millones de usuarios y datos demasiado sensibles.
+8:43
+8 minutos y 43 segundos
+Y pues eso se requiere para proteger la confidencibilidad, la integridad, accesos autorizados y pues el cifrado.
+8:51
+8 minutos y 51 segundos
+Un dashboard financiero pues no puede funcionar sin los controles adecuados para evitar exponer información sensible. Entonces, pues la seguridad no
+9:00
+9 minutos
+es un complemento, es tal cual lo que se ocupa sí o sí dentro de un buen business intelligence.
+9:08
+9 minutos y 8 segundos
+Ahora, los beneficios del B están hechos de la siguiente forma, o sea, son
+9:17
+9 minutos y 17 segundos
+son los siguientes. Los principales beneficios que aporta el Business Intelligence es la mejor toma de decisiones, mayor competitividad,
+9:26
+9 minutos y 26 segundos
+integración de información,
+9:28
+9 minutos y 28 segundos
+visualización interactiva, benchmarking y sostenibilidad.
+9:32
+9 minutos y 32 segundos
+Pues uno de los puntos más importantes que tiene el B es que permite responder a problemas de negocio en base en evidencia, no en intuición. Por ejemplo,
+9:43
+9 minutos y 43 segundos
+comparar desempeño interno frente al mercado para ajustar a estrategia. ese pues benchmarking puede marcar diferencia competitiva. Entonces, por
+9:52
+9 minutos y 52 segundos
+ejemplo, en el en el proyecto que yo hice la anterior fue de Steam y pues ahí
+9:58
+9 minutos y 58 segundos
+se demostró como usando los KPI, pues básicamente se adelantaron a su época
+10:05
+10 minutos y 5 segundos
+frente a otros mercados y por algo Steam sigue siendo como que la plataforma número uno. En resumen, pues VI no solo informa,
+10:14
+10 minutos y 14 segundos
+sino que también genera valor.
+10:18
+10 minutos y 18 segundos
+Ahora, ¿cómo es que B apoya las decisiones estratégicas? Pues una de las mayores aportaciones de B es facilitar
+10:26
+10 minutos y 26 segundos
+decisiones estratégicas. Lo hace porque pues transforma los datos en información accionable, permite pues dar seguimiento a los indicadores, hacer pronósticos,
+10:36
+10 minutos y 36 segundos
+medir desempeño y apoyar lación.
+10:39
+10 minutos y 39 segundos
+Por ejemplo, pues una universidad puede decidir abrir un nuevo programa académico con base a la demanda
+10:47
+10 minutos y 47 segundos
+proyectada, tendencias y el análisis institucional. Eso pues es una decisión estratégica soportada por el Business
+10:55
+10 minutos y 55 segundos
+Intelligence y es uno de pues los usos más claros que vemos hasta en nuestra universidad.
+11:02
+11 minutos y 2 segundos
+Ahora, como conclusión, pues la inteligencia de negocios representa el marco de trabajo integral, integra de almacenamiento, análisis, minoría de
+11:10
+11 minutos y 10 segundos
+datos, visualización y soporta decisiones, pero pues su valor no está solo en la tecnología, está en transformar los datos en ventaja
+11:19
+11 minutos y 19 segundos
+competitiva. Otro punto importante es que B no se limita solo al sector empresarial, sino que también puede
+11:27
+11 minutos y 27 segundos
+aplicarse en educación, salud o gobierno, es decir, en el sector público. El caso presente en la UNET
+11:34
+11 minutos y 34 segundos
+muestra justamente eso. Finalmente podría resumirse así y no solo ayuda a entender el pasado, sino que también
+11:42
+11 minutos y 42 segundos
+permite orientarnos a decisiones futuras.
+11:46
+11 minutos y 46 segundos
+Y pues para finalizar pues podemos decir que es un entorno impulsado por datos.
+11:50
+11 minutos y 50 segundos
+La inteligencia de negocios se han convertido en un recurso estratégico para cualquier organización y pues es algo que nos queda claro con toda nuestra investigación. Entonces sería
+11:59
+11 minutos y 59 segundos
+todo para mí por mi parte. Muchas 

@@ -16,15 +16,6 @@
 #define DEFAULT_PORT "50007"
 
 
-#define RETRY_SERVER BIT0 
-#define TCP_DISCONNECTED BIT1   // servidor cerro la conexion inesperadamente
-#define UPDATE_TCP BIT10
-#define EXT_TCP_MEM BIT11
-#define FAIL_TCP_MEM BIT12
-#define BREAK_UPDATE_WIFI BIT13
-#define NO_RETRY_TCP BIT14
-
-
 
 
 /**

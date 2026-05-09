@@ -1,0 +1,326 @@
+6 segundos
+Buenas tardes, nosotros somos el equipo número ocho. Vamos a hablar acerca del tema de recopilación, limpieza y
+0:13
+13 segundos
+transformación de datos en BI, en Business In.
+0:18
+18 segundos
+Ah, los integrantes del equipo somos Jesús Ris y su servidor Ian Peralta.
+0:27
+27 segundos
+Empezaremos con el objetivo de esta sesión, que sería explicar el flujo de datos en un sistema de BI
+0:35
+35 segundos
+desde su origen hasta su conversión en conocimiento estratégico. Aquí podemos ver un pequeño dibujo donde tenemos
+0:42
+42 segundos
+varias fuentes donde conseguimos la información, la procesamos, la limpiamos, la juntamos para después poderla presentar claramente.
+0:54
+54 segundos
+El primer punto importante es la recopilación.
+1:01
+1 minuto y 1 segundo
+El propósito de la recopilación es transformar datos en información y conocimiento.
+1:07
+1 minuto y 7 segundos
+Esto para favorecer la toma de decisiones estratégicas.
+1:13
+1 minuto y 13 segundos
+Un ejemplo de recopilación de información sería el uso de datos masivos para predecir demanda de algún producto,
+1:22
+1 minuto y 22 segundos
+por ejemplo, algo que esté de moda. En redes sociales se recopilan la información y pues con eso pueden hacer más stock.
+1:34
+1 minuto y 34 segundos
+Luego está fuentes de datos en Business Intelligent. Las principales serían portales financieros y estadísticos,
+1:43
+1 minuto y 43 segundos
+sistemas de planificación de recursos,
+1:45
+1 minuto y 45 segundos
+base de datos estructurados y sistemas de transaccionales propios de la empresa.
+1:53
+1 minuto y 53 segundos
+Otro ejemplo sería de esto, el cruce de datos en ERP, que serían las planificación de recursos empresariales,
+2:04
+2 minutos y 4 segundos
+que en este caso enfocado a recopilación de datos, que sería mediante sensores en alguna fábrica.
+2:13
+2 minutos y 13 segundos
+Luego, la recopilación de datos facilita el análisis de la información.
+2:20
+2 minutos y 20 segundos
+Esto mediante tecnologías que permiten transformar los datos crudos en activos estratégicos.
+2:27
+2 minutos y 27 segundos
+Esto entrega eh causa una entrega de datos contextualizados a los directivos para un proceso de toma de decisión más ágil y eficiente.
+2:35
+2 minutos y 35 segundos
+Genera una visualización de múltiples fuentes de información integradas en un único ecosistema para un análisis en tiempo real y de forma más sencilla,
+2:43
+2 minutos y 43 segundos
+además de que optimiza el flujo de trabajo mediante automatización de recopilación de datos.
+2:52
+2 minutos y 52 segundos
+Otro ejemplo sería en las finanzas personales que se encuentran en los bancos, pues cuando recogen el historial
+2:59
+2 minutos y 59 segundos
+crediticio, el los ingresos y hábitos de pago de de algún cliente para generar algún algoritmo que
+3:07
+3 minutos y 7 segundos
+determine en tiempo real la tasa óptima de su crédito y reducir los riesgos que podría presentarse para los bancos prestar dinero.
+3:19
+3 minutos y 19 segundos
+El segundo punto importante sería la transparencia y la limpieza de los datos.
+3:26
+3 minutos y 26 segundos
+La transparencia de la información sería un punto, la recopilación como expositor, como alguien dentro de del
+3:35
+3 minutos y 35 segundos
+sistema o de la empresa y funciona como una herramienta de transparencia que permite una visión clara de los procesos internos,
+3:43
+3 minutos y 43 segundos
+lo que nos da una información, lo que nos da información accesible, verificable,
+3:48
+3 minutos y 48 segundos
+tenemos rendición de cuentas y limitamos asimetrías.
+3:53
+3 minutos y 53 segundos
+Para esto, necesitamos utilizar metodologías científicas que nos aseguren la transparencia de los resultados, que sean medibles y que no sea solo algún una intención. Con esto validamos la integridad de los datos,
+4:04
+4 minutos y 4 segundos
+identificamos sesgos y podríamos realizar también auditorías basadas en evidencias.
+4:15
+4 minutos y 15 segundos
+Un ejemplo de esto sería en algún dashboard público de donaciones. Aquí se ve como de manera general.
+4:23
+4 minutos y 23 segundos
+ah donde podemos presentar de manera transparente el uso exacto de las donaciones y genera confianza, pues, a los donantes.
+4:34
+4 minutos y 34 segundos
+Y hay dos puntos importantes para o que nos lleva a la limpieza de los datos. Uno sería la agilidad en extracción y depuración,
+4:44
+4 minutos y 44 segundos
+lo que quiere decir que la limpieza permite que la información sea procesada con mayor rapidez, precisión y precisión desde sus fuentes
+4:52
+4 minutos y 52 segundos
+originales. Esto optimiza los tiempos de respuesta en el análisis de datos,
+4:56
+4 minutos y 56 segundos
+facilita la identificación de valores atípicos y errores estructurales.
+5:00
+5 minutos
+Asegura la integridad desde la fase de recolección inicial.
+5:05
+5 minutos y 5 segundos
+El otro punto sería la de evitar la deficiente el deficiente ingreso de datos. Esto es prevenir errores de la captura.
+5:15
+5 minutos y 15 segundos
+Así evitamos asimetrías de información y resultados sesgados.
+5:19
+5 minutos y 19 segundos
+Esto reduce la necesidad de correcciones constantes, mantiene la coherencia en los modelos matemáticos y estadísticos y
+5:27
+5 minutos y 27 segundos
+fortalece la la veracidad y confianza de los informes.
+5:34
+5 minutos y 34 segundos
+Un ejemplo de esto sería aplicarlo en la rentabilidad y mantenimiento,
+5:40
+5 minutos y 40 segundos
+que la limpieza de datos evita errores críticos en el curso de información entre el mantenimiento y la rentabilidad. Esto previene asimetrías
+5:47
+5 minutos y 47 segundos
+de información, resultados desgados en el análisis, como como habíamos mencionado, lo que reduce costos operativos.
+5:56
+5 minutos y 56 segundos
+Esto asegura un mantenimiento preventivo y se basa en datos precisos.
+6:02
+6 minutos y 2 segundos
+evita fallas estructurales por deficiencia de ingreso de datos, por eficiencia de información, lo que podría este afectar la productividad de una
+6:11
+6 minutos y 11 segundos
+empresa y garantiza que la integridad de los modelos matemáticos eh sea buena.
+6:21
+6 minutos y 21 segundos
+Luego, desafíos en la limpieza de datos. Primero están los problemas de origen, ah,
+6:28
+6 minutos y 28 segundos
+que es una barrera crítica para la integración.
+6:32
+6 minutos y 32 segundos
+Y a esto nos referimos al ingreso manual erróneo por fallas de ortografía o formatos inconsistentes, dificultad para
+6:39
+6 minutos y 39 segundos
+adaptar información a alguna herramienta de BI y también riesgos en registros duplicados.
+6:49
+6 minutos y 49 segundos
+Luego también por otro lado está la falta de de coordinación,
+6:53
+6 minutos y 53 segundos
+que esto es gestionar que gestionar los datos requiere una alineación estructural entre los diferentes departamentos de pues de la empresa.
+7:03
+7 minutos y 3 segundos
+Se necesita una un se necesita coordinar con los encargados de los sistemas para descargar y para descargas y modificaciones.
+7:12
+7 minutos y 12 segundos
+Necesitamos evitar errores de integración antes de exponer la información y se necesitan reglas para validar este la unificación de los registros.
+7:26
+7 minutos y 26 segundos
+Un ejemplo de esto pues sería en algún servicio de salud que se necesitan limpiar los datos para
+7:34
+7 minutos y 34 segundos
+corregir inconsistencias en la identificación de pacientes. Por ejemplo, corregir los nombres y fechas de nacimiento mal capturados por el médico.
+7:42
+7 minutos y 42 segundos
+Eh, esto evita la duplicidad de registros en el sistema y asegura la integridad de la historia clínica evolutiva del paciente.
+7:54
+7 minutos y 54 segundos
+Esto facilita pues el cruce de información y el mantenimiento.
+8:04
+8 minutos y 4 segundos
+Okay, ahora toca el tema de transformación y estructura.
+8:53
+8 minutos y 53 segundos
+Okay, vuelvo. Eh,
+8:56
+8 minutos y 56 segundos
+el tema de ahorita es de transformación y extracción. Empezamos hablando del tema de herramientas CTL. Esto viene de sus siglas en inglés, extract,
+9:04
+9 minutos y 4 segundos
+transform, load. lo tenemos traducido nosotros como extracción depuración y transformación, que básicamente cuando
+9:11
+9 minutos y 11 segundos
+estamos hablando de la automatización e integración de procesos sobre la inteligencia de negocios, tratamos esos
+9:19
+9 minutos y 19 segundos
+tres puntos como los puntos de herramientas.
+9:23
+9 minutos y 23 segundos
+La extracción se basa en la obtención de datos, de fuentes y que tengan que ver con la información que necesitamos. La
+9:31
+9 minutos y 31 segundos
+deporación se basa en tratar de hacer que esta información que conseguimos se vuelva más
+9:39
+9 minutos y 39 segundos
+útil, le quitemos los errores, los ross que pueda tener y la transformación se basa en adecuarla para la información que queremos para nuestro negocio específico.
+9:50
+9 minutos y 50 segundos
+El ejemplo que ponemos es el de la estandarización de procesos de monedas,
+9:56
+9 minutos y 56 segundos
+que se necesita extraer la información que se tiene sobre monedas de otros países. Necesitamos depurar de esta información, cuál es la que nos va a servir cuando queramos hacer eh tarifas
+10:05
+10 minutos y 5 segundos
+internacionales y la automatización de flujos es cómo van a ver los cambios de moneda, los cambios de billetes, cómo vamos a tratar de transformar uno en
+10:13
+10 minutos y 13 segundos
+otro y cumplimos con los tres puntos de los que hablamos. ¿Siguient?
+10:20
+10 minutos y 20 segundos
+Okay. Herramientas ETL. Pusimos algunas arquitecturas clave que nos sirven mucho para comprobar este tipo de herramientas. La primera es el data
+10:29
+10 minutos y 29 segundos
+warehouse, que básicamente permite integrar y estructurar la información de manera centralizada. Y como esta parte se centra mucho en la estructuración, el
+10:38
+10 minutos y 38 segundos
+data warehouse siempre es uno de los más de los que más resaltan como una de las arquitecturas utilizadas. Los sistemas Solap son básicamente soluciones de
+10:47
+10 minutos y 47 segundos
+procesos analíticos donde utilizamos cubos para tratar de definir el problema y se tratan de estructurar, se tratan de acomodar. Y el modelado, el modelado es
+10:55
+10 minutos y 55 segundos
+una técnica convierte datos duros en formatos entendibles y esto es muy importante al momento de tratar de hablar sobre la estandarización de los procesos.
+11:07
+11 minutos y 7 segundos
+La aplicación práctica que pusimos es básicamente transformación de un dato Jason de aplicaciones móviles a tablas que puedan
+11:15
+11 minutos y 15 segundos
+ser entendidas por un sistema SQL. A su vez, el sistema de CQL va a tratar de transformar esa información en formatos
+11:21
+11 minutos y 21 segundos
+amigables que puedan darse al negocio para formar planes estratégicos con la información recopilada.
+11:31
+11 minutos y 31 segundos
+Ahora, relación entre transformación y calidad. Otro punto muy importante que tenemos, hablamos mucho sobre que uno de nuestros tres puntos es el de la
+11:39
+11 minutos y 39 segundos
+transformación. Básicamente, ¿qué relación tiene la transformación y la calidad? Se considera que es una relación muy directa porque se obtiene un dato, se buscan todos los datos
+11:48
+11 minutos y 48 segundos
+duros, toda la información básica que se puede obtener y esta y esta información se tiene que transformar de una manera que los datos que obtengamos al final
+11:55
+11 minutos y 55 segundos
+sean muy entendibles. Entonces, la calidad de estos datos final se basa en qué tan fácil es utilizar esta estos datos por la inteligencia de negocios y
+12:04
+12 minutos y 4 segundos
+por los estudios que se tienen. La conversión directa es clave y es vital para alimentar con calidad los planes a futuros de la organización. Y
+12:12
+12 minutos y 12 segundos
+consideramos que una transformación alineada a los a los objetivos de la empresa se considera que se mantienen mayor calidad de datos al terminar la transformación.
+12:26
+12 minutos y 26 segundos
+La aplicación básica que tenemos que pusimos como ejemplos un score en bancario, conviertes un historial crediticio y comportamiento de pago en
+12:33
+12 minutos y 33 segundos
+un score. Con este score eres capaz de obtener información sobre todo lo que significaba de fondo el historial crediticio, toda la información, datos duros que se tienen.
+12:43
+12 minutos y 43 segundos
+Garantizas que la información es de calidad, donde el score va a hacer un reflejo directo de toda la otra información que se transformó. El los el
+12:52
+12 minutos y 52 segundos
+score es un dato mucho más fácil de interpretar que todos los datos que reemplazó. que la importancia de la estructuración,
+13:00
+13 minutos
+que es el otro de nuestros dos temas claves. La estructuración permite que los datos de sistemas transaccionales se conviertan en modelos multidimensionales. Esto sirve como
+13:08
+13 minutos y 8 segundos
+ejemplo de nuestros cubos Solap, donde tomamos datos CRP, que son nuestros planificación de recursos empresariales.
+13:17
+13 minutos y 17 segundos
+Con estos datos se puede obtener una manera más fácil de organizar la información. Esta interconexión de bases
+13:26
+13 minutos y 26 segundos
+de datos es fundamental para extraer información valiosa de manera eficiente y favorecer la toma de decisiones, que es básicamente lo que hemos estado hablando este momento. Otra vez más, la
+13:34
+13 minutos y 34 segundos
+arquitectura del data warehouse es la más utilizada que solemos entender, que solemos tener y utilizar. Depende mucho de recolectar los datos y transformarlos de manera satisfactoria.
+13:46
+13 minutos y 46 segundos
+Nuestra aplicación sobre esto sería recursos humanos. Tiene que haber un análisis entre la inversión y la capacitación que se le dio a las
+13:53
+13 minutos y 53 segundos
+personas. y el incremento de productividad trimestral. Entonces, esto da una estructura directa sobre los datos que se están tratando de manejar.
+14:02
+14 minutos y 2 segundos
+Identificamos la correlación, eh fue el tiempo, fue qué qué parte de nuestro análisis, qué parte de datos duros
+14:09
+14 minutos y 9 segundos
+tratamos de poner, que estamos tratando de analizar con los resultados y hacemos una una evaluación sistemática para tratar de comprobar cómo nos ve.
+14:21
+14 minutos y 21 segundos
+Y las conclusiones, eh consideramos que hay dos. partos muy importantes al momento de tratar de concluir nuestro tema. El primero es el pilar estratégico
+14:28
+14 minutos y 28 segundos
+y la centralización y después la calidad de transparencia, que son los cuatro temas más importantes que tuvimos y como lo separamos entre como más se relacionaban entre ellos.
+14:39
+14 minutos y 39 segundos
+El pilar estratégico y la centralización es que la inteligencia de negocios BI es un pilar estratégico que transforma
+14:46
+14 minutos y 46 segundos
+datos de fuentes como sistema CRP en conocimiento accionable. Ya conocimiento accionable, la centralización facilita
+14:54
+14 minutos y 54 segundos
+una visión integrada de cómo se van a aplicar estos datos. Calidad de transparencia. Eh, la calidad es dar una
+15:01
+15 minutos y 1 segundo
+solución fija a nuestra inteligencia de negocios, que los datos dados sean útiles, directos, que sean entendibles,
+15:07
+15 minutos y 7 segundos
+que sean organizados y que sean estructurados.
+15:10
+15 minutos y 10 segundos
+La transparencia ayuda mucho a esta estructuración porque se puede entender la relación y calidad de estos dos datos.
+15:19
+15 minutos y 19 segundos
+Gracias.

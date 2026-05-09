@@ -1,0 +1,334 @@
+Eh, buenas tardes. Primero que nada, eh esta es la presentación para la meta 3.1, que sería el analizar, sintetizar
+0:10
+10 segundos
+los fundamentos teóricos y sus aplicaciones prácticas de la inteligencia de negocios. Eh, los participantes del equipo somos mi compañero Cristian David de la Peña Gin,
+0:20
+20 segundos
+Gael Alejandro González Martín del Campo y su servidor Julián Esteban López Velázquez.
+0:27
+27 segundos
+El como primer tema a tratar durante la presentación sería lo de pues aterrizar.
+0:31
+31 segundos
+¿Qué es el análisis de negocios? El análisis de negocios es un proceso orientado a la mejora y la optimización de recursos, procesos y otros aspectos
+0:38
+38 segundos
+dentro de una organización. Básicamente sería ver qué tenemos, con qué contamos y cómo los podemos optimizar de la mejor manera para llegar a cierto objetivo de
+0:46
+46 segundos
+para verlo de una manera. Básicamente se basa en identificar posibles puntos de mejora que que funcionan como señales de alerta ante la necesidad de un cambio
+0:54
+54 segundos
+urgente. También esto mismo abarca que todos los niveles de la empresa, que serían departamentos, áreas, procesos,
+1:02
+1 minuto y 2 segundos
+cartera de clientes y canales de captación, cómo los podríamos cómo podríamos optimizar los recursos,
+1:06
+1 minuto y 6 segundos
+procesos y otros aspectos que se tienen en cada uno para poder mejorar a la organización.
+1:12
+1 minuto y 12 segundos
+Un ejemplo muy bueno o un ejemplo práctico de esto sería Amazon. Pues Amazon es un ejemplo paradigmático de la aplicación de este análisis de negocios,
+1:21
+1 minuto y 21 segundos
+porque ellos lo que buscan continuamente es mejorar sus procesos de logística y canales de venta. ¿Cómo sería más rápido enviar paquetes, por dónde, eh cómo
+1:29
+1 minuto y 29 segundos
+sería mejor optimizar las máquinas, todo ese tipo de cosas. Básicamente identifican ineficiencias para optimizar su cadena de suministro, permitiendo que
+1:38
+1 minuto y 38 segundos
+incluso sea posible el entregar eh paquetes al mismo día. Y obviamente su éxito reside en que pues ellos evalúan constantemente la rentabilidad y la
+1:46
+1 minuto y 46 segundos
+experiencia del cliente y lo toman como el punto clave pues de todas sus operaciones y todo esto en base a un análisis de negocios.
+1:57
+1 minuto y 57 segundos
+¿Cuál es el objetivo del análisis de negocios? Esta sería evaluación objetiva, lo cual es permitir alejarse de la operación diaria para evaluar la
+2:06
+2 minutos y 6 segundos
+situación real de la empresa con perspectiva y detección de riesgos que es identificar a tiempo conflictos que podrían mitigarse pero que no se
+2:15
+2 minutos y 15 segundos
+afrontan por falta de conciencia. Las decisiones focalizadas que orientan las estrategias hacia lo verdaderamente importante, aumentando la probabilidad
+2:23
+2 minutos y 23 segundos
+de éxito. El valor añadido que descubre soluciones que incrementan la rentabilidad y el valor entregado al cliente.
+2:35
+2 minutos y 35 segundos
+Como ejemplo práctico sería Netflix, que aplica el análisis de negocios con el objetivo de detectar oportunidades y reducir la tasa de cancelación de sus
+2:43
+2 minutos y 43 segundos
+suscripciones. A través de este análisis de patrones de visualización, la empresa toma decisiones focalizadas sobre la producción de contenidos. Esta
+2:52
+2 minutos y 52 segundos
+estrategia genera un valor añadido para sus más de 260 millones de suspores anuales globales.
+3:04
+3 minutos y 4 segundos
+Ahora voy a explicar cómo se rela análisis de negocios con la inteligencia de negocios, también con como business
+3:11
+3 minutos y 11 segundos
+intelligen B. Importante entender que no son lo mismo, pero trabajan juntos. El análisis de negocios es el proceso.
+3:20
+3 minutos y 20 segundos
+Identificamos problemas dentro de empresa y diseñuciones.
+3:25
+3 minutos y 25 segundos
+En cambio, la se encarga proporcionarnos los datos y las herramientas necesarias para poder hacer análisis, es decir,
+3:37
+3 minutos y 37 segundos
+como base de información los dashboard.
+3:43
+3 minutos y 43 segundos
+anális de negocios para tomar decis estratég por ejemplo los datos son poderosa. Si estánados
+3:53
+3 minutos y 53 segundos
+pueden sea más basado en sus con intelligence se vuelva objetivo.
+4:09
+4 minutos y 9 segundos
+Un caso claro es Walmart. Esta empresa utilizableo y sistema para analizar tiempo real
+4:19
+4 minutos y 19 segundos
+millones de clientes. Gracias eso buscar precios y estrategias casi al instante.
+4:28
+4 minutos y 28 segundos
+El business intelligence alimenta análisis de negocio. Uno proporcionaos y el otro lo convierte en decisiones.
+4:39
+4 minutos y 39 segundos
+Ahora vamos a hablar del papel que juega el análisis financiero dentro del análisis de negocios. El análisis financiero es uno de los elementos
+4:48
+4 minutos y 48 segundos
+importantes porque permite enter realmente cómo está funcionando una empresa en términos económicos. No solo
+4:55
+4 minutos y 55 segundos
+se trata de ver cuánto dinero sino de analizar cada detalle. Por ejemplo,
+5:02
+5 minutos y 2 segundos
+se analizan los ingresos, los gastos,
+5:06
+5 minutos y 6 segundos
+los sombras, los sueldos. También se revisa el balance general donde vemos inversiones, deudas, inventarios y todo
+5:14
+5 minutos y 14 segundos
+lo relacionado con flujo de dinero. Esto es importante porque identificar problemas como gastos necesarios, baja rentabilidad, gestión de recursos.
+5:25
+5 minutos y 25 segundos
+Además ayuda a tomar decisiones más inteligentes como invertir más diversas áreas oos en otras.
+5:38
+5 minutos y 38 segundos
+Ejemplo claro es Tesla. Esta empresa analiza constantemente líneas de negocio con autos, energía y servicios para generar ganancias.
+5:50
+5 minutos y 50 segundos
+Gracias análisis en 2003 precios deusos, aunque esto rebujó el
+5:59
+5 minutos y 59 segundos
+margen de ganancia por un permitió en el Esto demuestra que el análisiso no
+6:08
+6 minutos y 8 segundos
+solo mide resultados sino que también guía decisiones estrategias estratégicas importantes.
+6:19
+6 minutos y 19 segundos
+Ahora vamos a hablar de cuáles son los pasos básicos de un análisis de negocios. Eh, primero paso sería la identificación, que sería analizar cuentas de resultados y drivers,
+6:30
+6 minutos y 30 segundos
+estudiar balance, que sería inversiones y deuda, revisar procesos centrados en el cliente y también sería identificar tecnología en cada proceso y recoger
+6:39
+6 minutos y 39 segundos
+opiniones de involucrados. El segundo paso sería la definición, que sería segmentar poros y líneas, estructurar la
+6:46
+6 minutos y 46 segundos
+información para compresión, eh mapear procesos e interrelaciones y determinar indicadores de rendimiento, así como
+6:53
+6 minutos y 53 segundos
+también investigar benchmarking en la industria. Y como tercer paso sería el plan de acción, que básicamente este
+7:01
+7 minutos y 1 segundo
+incluiría lluvia de ideas, brainstorming de soluciones, prever impacto sobre el negocio, estudiar viabilidad de la
+7:08
+7 minutos y 8 segundos
+técnica económica y también eh una reunión con stakeholders y owners y también definir tiempos de tiempos de plazo, deadlines y seguimiento.
+7:22
+7 minutos y 22 segundos
+Eh, un ejemplo práctico de esto, pues sería Starbucks. Starbucks aplicó el análisis de negocios al identificar una caída en la satisfacción del cliente ahí
+7:31
+7 minutos y 31 segundos
+por el 2008 debido a la pérdida de la experiencia del café.
+7:35
+7 minutos y 35 segundos
+estructuró que la información por región eh estructuró la información por región y definió el net promotor score, que sería el NPS como indicador clave de
+7:44
+7 minutos y 44 segundos
+rendimiento. Eh, también implementó un plan de acción radical que sería el cierre masivo de 7100 de sus tiendas
+7:53
+7 minutos y 53 segundos
+para recapacitar sus baristas y recuperar la lealtad. Esto para beneficiar y, ¿cómo se llama?,
+7:58
+7 minutos y 58 segundos
+garantizar la satisfacción del cliente.
+8:05
+8 minutos y 5 segundos
+Ahora, ¿cuáles serían qué habilidades son esenciales para un analista de negocios? Bueno, vienen siendo pensamiento y análisis que se divide en
+8:13
+8 minutos y 13 segundos
+analítico y sistemático, el cual es descomponer problemas y dibujar procesos e interpretación técnica que es en
+8:21
+8 minutos y 21 segundos
+análisis correcto de DAFO o Péstele, el dominio financiero y datos que se divide en conocimiento financiero, análisis de
+8:31
+8 minutos y 31 segundos
+resultados, balance y cashflow y gestión de KPIs, que es la determinación de las métricas del departamento.
+8:39
+8 minutos y 39 segundos
+gestión y comunicación que se dividen en stakeholders que presentan soluciones y construir consensos e investigación que
+8:47
+8 minutos y 47 segundos
+es el matchmaking con estándares de la industria y el perfil multidisciplinario.
+8:56
+8 minutos y 56 segundos
+El ejemplo práctico sería Mcken and Company que este ejemplifica el perfil de analista de negocios al integrar dominio cuantitativo con pensamiento estructurado.
+9:06
+9 minutos y 6 segundos
+Sus consultores poseen habilidades críticas de presentación para comunicar hallazgos complejos a la alta dirección
+9:13
+9 minutos y 13 segundos
+de forma efectiva. Cierran la brecha técnica mediante el uso experto de herramientas de business intelligence como PowerB o Tableo para la toma de decisiones.
+9:25
+9 minutos y 25 segundos
+El análisis de negocio tiene un muy fuerte en la estrategia de de un esto se
+9:34
+9 minutos y 34 segundos
+debe a que permite tomar decisiones basadas en real. Cuando analiza su dato
+9:41
+9 minutos y 41 segundos
+puede confirmar si su estrategia fue funcionado o si necesita cambiarla.
+9:48
+9 minutos y 48 segundos
+Por ejemplo, el análisis ayuda a enfocar los los [carraspeo] esos en lo que importa. Esto se conoce como decisiones
+9:58
+9 minutos y 58 segundos
+focalizadas de gastar recursos enas. La empresa se concentra en lo que genera mejores resultados. También permiteir el rumbo.
+10:10
+10 minutos y 10 segundos
+Si los datos muestran que algo no está funcionando, la empresa puede justar su estrategia antes de que el programa crezca.
+10:24
+10 minutos y 24 segundos
+Un caso muy es a finales de los años 90 la empresa estaba en crisis, entonces hicieron un análisis profundo de su
+10:33
+10 minutos y 33 segundos
+negocio. Gracias a esto significaron su línea de y cambiaron su hacia la innovación. Eso cambió este cambio
+10:42
+10 minutos y 42 segundos
+estratégico permitió el desarrollo de productos como el iPhone y el iPad. El análisis de negocios no solo a mejorar
+10:51
+10 minutos y 51 segundos
+procesos, sino que define el rumbo completo de una organización.
+11:01
+11 minutos y 1 segundo
+¿Cuál sería la contribución de la ley al análisis de mercado? La inteligencia de negocios permite ponerse en contexto e
+11:07
+11 minutos y 7 segundos
+investigar mediante la optimizad de la industria para compararlos con los resultados propios. Esto provee datos
+11:16
+11 minutos y 16 segundos
+estructurados, dashboards y reportes que facilitan un análisis de mercado eficiente y en tiempo real. El marketing facilita la creación de campañas más
+11:25
+11 minutos y 25 segundos
+rentables al procesar grandes volúmenes de datos externos e internos para un conocimiento profundo del mercado.
+11:34
+11 minutos y 34 segundos
+Como ejemplo práctico está Coca-Cola, en la cual utiliza plataformas de Business Intelligence para analizar el comportamiento del mercado en más de 200 países.
+11:44
+11 minutos y 44 segundos
+Hay herramientas como Microsoft PowerB que permitan a sus equipos de marketing identificar tendencias de consumo o
+11:51
+11 minutos y 51 segundos
+región y comparar su cuota de mercado frente a la competencia.
+11:56
+11 minutos y 56 segundos
+Ajustan sus estrategias de distribución en tiempo real, lo que constituye un ejemplo directo de cómo B potencia en el análisis de mercado.
+12:08
+12 minutos y 8 segundos
+Y bueno, eh ahora tocaría lo de que la importancia de la integración de sistemas. Ah, la integración condiciona directamente la calidad y la velocidad
+12:15
+12 minutos y 15 segundos
+del flujo de información. Es necesario que y es necesario esto para la toma de decisiones. Eh, esto permite que podamos
+12:23
+12 minutos y 23 segundos
+identificar la tecnología aplicada en cada proceso, asegurando que los datos sean consistentes y completos. Facilita
+12:31
+12 minutos y 31 segundos
+el dibujo de procesos e interrelaciones en entornos modernos soportados por ERP,
+12:36
+12 minutos y 36 segundos
+CRM y plataformas de business intelligen B.
+12:41
+12 minutos y 41 segundos
+Un ejemplo práctico de esto sería General Electric. Eh, General Electric implementó un programa llamado Brilliant Factory que integraba sistemas de IoT,
+12:51
+12 minutos y 51 segundos
+RPSP y plataformas de análisis de datos.
+12:54
+12 minutos y 54 segundos
+Esta integración permitió acceder a datos en tiempo real de todos los procesos productivos que ocurrían en la empresa, optimizando la visibilidad
+13:01
+13 minutos y 1 segundo
+operativa. Eh, esto provocó un una reducción de los tiempos de inactividad en un 10 a 20%, un porcentaje bastante
+13:10
+13 minutos y 10 segundos
+considerable al identificar cuellos de botella que antes eran invisibles o que no se notaban dentro de la empresa.
+13:23
+13 minutos y 23 segundos
+Ahora vamos a hablar de los indicadores deimiento,
+13:27
+13 minutos y 27 segundos
+también conocidos como KPI. Los QPI son métricas permiten medir el desempeño de una empresa, un pro una persona. Son
+13:36
+13 minutos y 36 segundos
+fundamentales en el análisis de negocios convierten la información en algo ejemplo en lugar de decir vamos y nos dice exactamente qué tan bien vamos.
+13:48
+13 minutos y 48 segundos
+Puede ser de ventas, la certificación de expediente o el tiempo de entrega. Es
+13:56
+13 minutos y 56 segundos
+indicadores se para entender la situación actual de la empresa y también para evaluar si las soluciones se implentan realmente funcion. Además,
+14:06
+14 minutos y 6 segundos
+permiten comprar resultados antes de aplicar cambios.
+14:12
+14 minutos y 12 segundos
+Sería muy difícil saber sión fue correcta.
+14:19
+14 minutos y 19 segundos
+Un ejemplo claro es el Airbnb. Esta utiliza indicadores como noches reservadas y activos y satisfactos del cliente.
+14:31
+14 minutos y 31 segundos
+Gracias a descubrieron que en algunos mercados no no crecían porque faltaba aitrones, no porque faltarán clientes.
+14:41
+14 minutos y 41 segundos
+Entonces cambiaron su paraer anfitriones. Esto demuestra que los
+14:49
+14 minutos y 49 segundos
+space hay una descubrir más real y
+15:00
+15 minutos
+como conclusión final del equipo, eh llegamos a que el análisis de negocios es una herramienta estratégica que es indispensable para cualquier negocio
+15:09
+15 minutos y 9 segundos
+organización y sin ella las organizaciones toman decisiones a ciegas en un entorno competitivo, lo cual no es
+15:16
+15 minutos y 16 segundos
+ideal. Eh, básicamente datos versus decisiones. La inteligencia de negocios requiere interpretar, o sea, convertir datos en acciones concretas y no depender únicamente la intuición.
+15:26
+15 minutos y 26 segundos
+También está el método y los KPIs, que sería seguir una secuencia de identificar, definir y actuar, eh, que permite evaluar si los cambios generan
+15:35
+15 minutos y 35 segundos
+resultados reales, como en [resoplido][carraspeo] el caso anterior mencionado de Starbucks o Apple, que tomaron decisiones muy contundentes,
+15:40
+15 minutos y 40 segundos
+pero que al final terminaron beneficiando de manera muy grande al a la empresa. y también la integración
+15:47
+15 minutos y 47 segundos
+holística, que básicamente sería que el análisis es incompleto si no se integran sistemas, o sea, áreas y stakeholders para detectar oportunidades anticipadamente.
+15:56
+15 minutos y 56 segundos
+Y eso sería todo en nuestra parte eh para cumplir lo de la meta 3.1. Muchas gracias. M.
