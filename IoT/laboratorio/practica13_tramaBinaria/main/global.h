@@ -25,7 +25,7 @@
 
 #define HEADER 0xCAFE
 #define ACK 0x3501
-#define NACK 0x3501
+// #define NACK 0x3501
 
 //colores 
 #define UART_RED     "\033[31m"

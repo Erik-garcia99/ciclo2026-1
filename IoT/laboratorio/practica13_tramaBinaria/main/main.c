@@ -421,7 +421,7 @@ void tcp_process_task(void *params){
             }
 
             // NACK: identificador 0x3501 y len == 0xFF
-            else if(frame->id == NACK && frame->len == 0xFF){
+            else if(frame->id == ACK && frame->len == 0xFF){
 
                 if(login_pending) {
                     xEventGroupSetBits(g_login_event_group, LOGIN_FAIL);
@@ -473,8 +473,8 @@ void tcp_process_task(void *params){
                         case adc:{
                             //adc puede ser un valor de 16 bits 
                             uint16_t adc_state = read_adc(ADC_CHANNEL);
-
-                            memcpy(send_info.format_request.value, &adc_state, 2); //en este caso usamos 2 bytes 
+                            uint16_t adc_net = htons(adc_state);
+                            memcpy(send_info.format_request.value, &adc_net, 2); //en este caso usamos 2 bytes 
                             send_info.format_request.len = 2;
                             send_info.op_type =OP_ACK;
                             ret = send_message();
@@ -489,7 +489,8 @@ void tcp_process_task(void *params){
 
                         case pwm : {
                             uint16_t duty = pwm_get_duty();
-                            memcpy(send_info.format_request.value, &duty, 2);
+                            uint16_t duty_net = htons(duty);
+                            memcpy(send_info.format_request.value, &duty_net, 2);
                             send_info.format_request.len = 2;
                             send_info.op_type = OP_ACK;
                             ret = send_message();

@@ -356,7 +356,7 @@ esp_err_t send_message(){
         }break;
         case OP_NACK :{
 
-            uint16_t id = htons(NACK);
+            uint16_t id = htons(ACK);
             memcpy(buffer + offset, &id, 2); offset += 2;
             buffer[offset] = 0xFF; offset++;  // len=0xFF indica NACK, sin value        
         }break;
