@@ -322,9 +322,9 @@ class ClientHandler(threading.Thread):
                 log.info(f"[{self.addr}] READ ADC → {self.state.adc}")
                 self.send(build_ack(adc_val))
 
-            elif resource == 0x3:   # PWM
-                pwm_val = struct.pack(">H", self.state.pwm)
-                log.info(f"[{self.addr}] READ PWM → {self.state.pwm}")
+            elif resource == 0x3:   # PWM (1 byte de porcentaje 0-100)
+                pwm_val = bytes([self.state.pwm & 0xFF])
+                log.info(f"[{self.addr}] READ PWM → {self.state.pwm}%")
                 self.send(build_ack(pwm_val))
 
             elif resource == 0x0:   # RESET timer
@@ -346,11 +346,11 @@ class ClientHandler(threading.Thread):
                 else:
                     self.send(build_nack())
 
-            elif resource == 0x3:   # PWM (porcentaje 0-100 → duty 0-8191)
+            elif resource == 0x3:   # PWM (porcentaje 0-100)
                 if len(value) >= 1:
                     pct = min(value[0], 100)
-                    self.state.pwm = int(pct * 8191 / 100)
-                    log.info(f"[{self.addr}] WRITE PWM ← {pct}% → duty={self.state.pwm}")
+                    self.state.pwm = pct   # guardamos porcentaje directamente
+                    log.info(f"[{self.addr}] WRITE PWM ← {pct}%")
                     self.send(build_ack())
                 else:
                     self.send(build_nack())

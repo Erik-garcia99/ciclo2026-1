@@ -502,7 +502,7 @@ void tcp_process_task(void *params){
 
                         case pwm : {
                             uint16_t duty = pwm_get_duty();
-                            uint8_t pct = (uint8_t)((duty * 100) / PWM_MAX);
+                            uint8_t pct = (uint8_t)(((uint32_t)duty * 100U) / PWM_MAX);
                             send_info.format_request.value[0] = pct;
                             send_info.format_request.len = 1;
                             send_info.op_type = OP_ACK;
@@ -543,6 +543,7 @@ void tcp_process_task(void *params){
 
                             memcpy(send_info.format_request.value, &led_state, 1);
                             send_info.format_request.len = 1;
+                            send_info.format_request.value[0] =led_state ;
                             send_info.op_type = OP_ACK;
                             //conestamos a la peticion 
                             ret = send_message();
@@ -551,8 +552,11 @@ void tcp_process_task(void *params){
                         case pwm : {
                             uint8_t pct = frame->value[0];
                             if(pct > 100) pct = 100;
-                            uint16_t duty = (pct * PWM_MAX) / 100;
+                            uint16_t duty = (uint16_t)(((uint32_t)pct * PWM_MAX) / 100U);
                             pwm_set_duty(duty);
+                            duty = pwm_get_duty();
+                            pct = (uint8_t)(((uint32_t)duty * 100U) / PWM_MAX);
+                            send_info.format_request.value[0] = pct;
                             send_info.format_request.len = 1;
                             send_info.op_type = OP_ACK;
                             ret = send_message();

@@ -78,6 +78,7 @@ EventGroupHandle_t g_tcp_event_group;
 EventGroupHandle_t s_wifi_event_group;
 
 EventGroupHandle_t g_login_event_group;
+EventGroupHandle_t Manchester;
 
 
 //++++++++++++++++++  estrucutra
@@ -155,6 +156,7 @@ void app_main(void)
     s_wifi_event_group = xEventGroupCreate();
     g_tcp_event_group= xEventGroupCreate();
     g_login_event_group = xEventGroupCreate();
+    Manchester = xEventGroupCreate();
 
 
     flow_data_queue = xQueueCreate(10, sizeof(char*));
@@ -421,7 +423,6 @@ void tcp_process_task(void *params){
 
                 if(login_pending) {
                     xEventGroupSetBits(g_login_event_group, LOGIN_FAIL);
-                    // xEventGroupWaitBits()
                     login_pending = 0;
                 }
 
@@ -437,10 +438,14 @@ void tcp_process_task(void *params){
             else if(frame->id == HEADER){
                 frame_len = 0;
 
-                //si llego ahora debemos de ver uqe onda 
+                //del servidor llega el usuario a 4 bytes realizar codificar -> 8 bytes
+                //si llega entonces debemos de codificar 
+                xEventGroupSetBit(Manchester, codificar);
 
                 //verificamos que sea para nosotros 
                 if(frame->user != user){
+                    //
+
                     len = snprintf(buffer, sizeof(buffer), "\r\npeticion no para este usuario\r\n");
                     uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
                     uart_write_bytes(global_uart.NUM_PORT, buffer, len);
@@ -927,5 +932,39 @@ void gpio_init(){
 
     gpio_set_direction(PWM_LED, GPIO_MODE_OUTPUT);
     gpio_set_direction(PWM_LED, 0);
+}
+
+
+
+uint64_t codificacion(uint64_t user){
+
+
+    EventBits_t bit = xEventGroupWaitBits(Mastercher, codificacion | decodificar, pdTRUE,pdFALSE,porMAX_DELAY);
+
+    if(bit & codificacion){
+        //llego en 4 bytes convertir a 64 
+        uint64_t *user_par = user << 32;
+        uint64_t *user_cod; //varibale en donde ira el el usuario ya codificado  
+        uint8_t offset=0; // recorremos lo largo de la trama para traer byte por byte 
+        uint8_t offset_bit =0; //offset para empezar a introducir los bits en la varibale que tendra el usuario codificiado s
+
+        uint8_t byte;
+        for(uint8_t i = 0; i < 4 ; i++){
+            memcpy(&byte, &user_par[offset], 8); offset += 9;
+            uint8_t user_not != byte;
+            for(uint8_t j =1; j<=8; j++){
+                //ahora vamos a pasar -- necetios una forma de reocrrer el byte y solo tomar el que me importa, dependiendo la posicion. 
+                //si son bits, necesito 1 no 0, para si es 1 en la psicojn se deja pasar si era 0 se pone cero, pero solo me interesa de una posicion 
+                uint8_t op = 
+                user_cod[offset_bit] = byte & ;
+            }
+        }
+
+
+    }else{
+
+    }
+
+
 }
 

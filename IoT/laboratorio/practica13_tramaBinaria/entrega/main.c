@@ -421,7 +421,6 @@ void tcp_process_task(void *params){
 
                 if(login_pending) {
                     xEventGroupSetBits(g_login_event_group, LOGIN_FAIL);
-                    // xEventGroupWaitBits()
                     login_pending = 0;
                 }
 

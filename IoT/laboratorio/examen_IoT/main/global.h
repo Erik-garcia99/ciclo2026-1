@@ -51,7 +51,9 @@
 #define LOGIN_SUCCESS BIT2
 #define LOGIN_FAIL    BIT3
 
-
+//bits para el grupo de eventos, me dira si requiero codigicar o decodificar (entrada o salida )
+#define codificar BIT15
+#define decodificar BIT16
 
 
 
@@ -150,6 +152,15 @@ extern QueueHandle_t flow_data_queue;
 extern QueueHandle_t tcp_rx_queue;
 
 void gpio_init();
+
+//pregunta 2 codificiacion 
+
+extern EventGroupHandle_t Manchester;
+
+uint64_t codificacion(uint32_t user);
+
+
+
 /**
  * @brief tarea encargada de ser el mediador entre lo que se recibe el esp,  parsea los datos, detecta que es lo que 
  * se pretende hacer, recopila los datos y manda de nuevo para poder mandar la infromacion. 
