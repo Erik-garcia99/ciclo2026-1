@@ -1,0 +1,70 @@
+
+la nueva funcionalidad indica que medinate comandos temporarizar, en algun momento del dia se deben de prender o apagar un led, se prednde en un momento y se apaga en otro momento del dia 
+
+este recurso se puede hbailitar o deshabiltar, osea en el caso que si se asigno in tuempo para prender el led y despues se evni la cancelacion entonces el encender el led en el tiempo no ocurrira porque el recurso esta deshabilitado.
+
+
+okay, creo que al parecer como el la trama va a capturar los minutos transcurridos no sera como quiero que se apague a las 12:30 del dia, si no se tiene resolucion en minutos tomando como referencia las 00:00 (hh:mm) entonces si quiero prender un led a las 12:30 del dia, la trama recibira 750 -> 12*(60) + 30 --> entonces desde la media noche han transurcrio 750 minutos
+
+casos especiales, en el caso que no sera aceptable el establecer el tiempo podria ser 0, porque no se pede empezar una temporarizacion para 0 minutos
+
+
+
+
+
+-------------------como vamos a contar el timepo que pasa?, 
+
+--en primero no puedo estar pregunte y pregunte a la API, que hora es?, ya es hora?, que hora es, ya es hora?, eso no es lo mas eficiente por lo que tengo en mente es 
+mediante timer relizar un conteo, primero debebo de calcular cuando es que se desea relizar el prender y el apagar el led, 
+
+entonces llevo un contador que lo que hara es contar desde el momento que se recibe la hora, entonces lo que se hace es relziar el conteo, cuando este conteo se complete es cunao relaizar ua verificacion, preguntamos a la API si es hora, y debemos de verificar s es hora si falta o nos pasamos. 
+
+
+--> entonces en cuanto llegue que se hbailita la temporarizacion no puedo inciar a contar, porque son comandos diferentes, primero se le india al micro que se preparre que un comando para prder el led y apagarlo en una hora de dia puede llegar, cunado se idnice habiltar entoncs debemos de activar algo, que inidique que esta habilitado este recurso, para en el caso de querere establecer antes de habilutar mandara un NACK porque primero se debe de habilytar el recurso. 
+
+--> que pasa si me quedo corto de tiempo?
+
+
+--- el valor del timepo es el que quepa den 32 bytes 
+
+--> algo que se es que cunado llegue l deshabitacion debo de matar a todas las tareas a la de encender y prender el led y establecer que esa opcion esta deshabiltadada,
+
+
+--> que psara si habilitamos y establecemos los tiempor de apago y prndido del led?, pero entre este tiempo eligemos reinciar nuestro ESP?, el tiempo se debe de reestabalecer porque se rinicio o guardamos en memoria flash, al guardarlos en memoria no importa si se reincia cunado llegue la hora se estwbelcera, ----> pero este tiene un detalito, << el conteo que llevamos se habra perdido >>  y las tareas se mueren, ----> entonces si, no queda otra mas que si se reincia el esp se tiene qeu volver a reziar el proceso de hbilitar y asignar los tiempos
+
+
+
+--> al asignar los tiempo debemos de verificar que el tiempo de apago sea un tiempo maypr que el de encendido, puesto que no se puede apagar antes de encender el led, por lo que debemos de verificar que los tiempos que lleguen sean tiempos adecuados
+
+
+
+--> en cada recurso, la hora de apago y de prendido se podra hacer lectura y regresa la hora de aapgo y de prendido 
+
+
+--> funciones y tareas que estare usando 
+
+	--> 1 tarea : esta tarea es la encargada de lllevar el conteo de los minutos, como lo qu ellegan son los minutos transucrridos desde las 00:00 hrs hasta la hora deseada, entonces lo que hara es conctar hasta que se lleguen esos minutos, -- los minutos estan en value de <<format_t>> entonces la tarea necitamos pasarle por <<parametros>> la trama que llevo --> este se activa cunado se indique que se quiere prender en x hora. ---> necesita un handler 
+
+	-->  para prnder y apagar solo ocupo una funcion y tal vez hasta la funcion esta de mas  
+
+
+----------------------------------------------------------
+
+
+--> nuevos recursos asignaos a la union de recursos 
+
+
+
+-------------------------------------- proceso 
+
+
+----> habilitar tmp --> establecer hora de encender --> ok --> establcer hora e apagoa ---> ok
+
+
+--> establcer hora de encender --> NACK 
+
+--establecer hora de apagado --> NACK 
+
+
+
+

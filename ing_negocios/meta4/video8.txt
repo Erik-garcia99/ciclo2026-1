@@ -1,0 +1,326 @@
+Muy bien pues el último paso es el de desarrollar el sistema de soporte de decisiones ya Contamos con la estructura
+0:06
+6 segundos
+o Este modelo tipo estrella donde vamos ya tenemos organizados los datos cómo los vamos a estar recibiendo y en dónde
+0:16
+16 segundos
+los vamos a estar concentrando no vamos a hacer esa es la parte que centraliza todo nuestro Data ware ahora este ya
+0:25
+25 segundos
+hicimos las asociaciones y vínculos entre ellas y ahora es necesario pues explotar esos datos
+0:33
+33 segundos
+en elementos visuales que le permitan a los tomadores de decisiones pues evaluar
+0:40
+40 segundos
+métricas clave en este ejemplo pues como ventas márgenes este y tendencias temporales no Entonces vamos a empezar
+0:49
+49 segundos
+con uno de los de los elementos más este básicos y tradicionales como dice aquí es la la
+0:57
+57 segundos
+forma más básica y ampliamente utilizada para visualizar datos debido a que es simple y claro que es una tabla Entonces
+1:04
+1 minuto y 4 segundos
+esta tabla está organizado Pues en en filas y y columnas donde cada fila representará una
+1:11
+1 minuto y 11 segundos
+entidad alguien un criterio o esa parte de la métrica a la que queremos darle seguimiento y cada columna será un
+1:19
+1 minuto y 19 segundos
+atributo no algo que describa eso que queremos evaluar en este caso nosotros estamos evaluando de fac ventas que es
+1:27
+1 minuto y 27 segundos
+nuestra tabla de de hechos este los productos Bueno más bien Esto el nombre Porque recordarán que en Fac
+1:36
+1 minuto y 36 segundos
+este ventas tenemos el product ID tenemos todas las foráneas y en Din prod product que o producto que es la
+1:44
+1 minuto y 44 segundos
+dimensión tenemos ya los descriptivos de Sas forania entonces de dinm producto nos traemos esta Pues todos los
+1:53
+1 minuto y 53 segundos
+productos que se venden en ese periodo o en ese corte o en ese H Ajá esa fotografía De ese momento que
+2:01
+2 minutos y 1 segundo
+se tomó y se obtuvieron los datos Entonces se obtienen ventas por cada producto este vendido y del total se
+2:10
+2 minutos y 10 segundos
+obtiene el sup porcentaje representativo no esto nos va a servir este para poder validar otros
+2:19
+2 minutos y 19 segundos
+componentes u otros visualizadores que vamos a tener en este sistema de soporte decisiones entonces en cierta medida uno
+2:27
+2 minutos y 27 segundos
+nos brindan más detalles que otros pero en conjunto este pues todos representan la solución no muy bien entonces sería este pues
+2:36
+2 minutos y 36 segundos
+esta eh eh Este primer elemento que vamos a configurar pero voy a presentar todos
+2:43
+2 minutos y 43 segundos
+los visualizadores o todos los elementos visuales que va a tener nuestro sistema de soporte de decisiones y ya luego nos
+2:50
+2 minutos y 50 segundos
+pasamos a a configurarlos el siguiente elemento que vamos a tener es una tarjeta es un
+2:58
+2 minutos y 58 segundos
+visualizador eh o una visualización que muestra un valor único o métrica clave es decir este nos va a a generar el el
+3:07
+3 minutos y 7 segundos
+valor total de las ventas realizadas en en el periodo que se haya generado no
+3:14
+3 minutos y 14 segundos
+Entonces se utiliza para destacar un dato importante como por ejemplo pues total de venta número de clientes o
+3:21
+3 minutos y 21 segundos
+márgenes de ganancia esta parte de del sistema de soporte decisiones que realicé todo va con enfoque a ventas y
+3:29
+3 minutos y 29 segundos
+con enfoque que a a productos Okay se pueden realizar otras perspectivas de de análisis en en
+3:38
+3 minutos y 38 segundos
+ahorita van a ver que podemos hacer distintos tipos de de tabs donde cada tabs pudiera cada Tab Perdón pudiera
+3:46
+3 minutos y 46 segundos
+contener un un una evaluación específica no la otra pudiera irse orientada a clientes por regiones este pues
+3:56
+3 minutos y 56 segundos
+diferentes formas de evaluar nuestra información el tercer elemento visual es un
+4:02
+4 minutos y 2 segundos
+indicador clave del desempeño o capeis que muestra una métrica en relación con un objetivo definido sirve para medir el
+4:10
+4 minutos y 10 segundos
+progreso hacia un objetivo ejemplo comprar comparar Perdón ventas actuales contra una meta definida Entonces
+4:19
+4 minutos y 19 segundos
+ustedes observan aquí que la meta establecida o el objetivo de ventas a perseguir son de 15 unidades por ejemplo
+4:26
+4 minutos y 26 segundos
+y acá dice el título total de ventas de del producto más representativo entonces este nos está diciendo que eh uno de los
+4:36
+4 minutos y 36 segundos
+productos algunos de los productos cumplen con esa objetivo esperado no Entonces vamos a ver ahorita este cómo
+4:45
+4 minutos y 45 segundos
+lo vamos a a realizar y cómo se va a poder interpretar este indicador otro de los básicos también es
+4:54
+4 minutos y 54 segundos
+el gráfico de línea o Line Chart dice es una visualización que conecta puntos de datos a través de líneas en un eje
+5:04
+5 minutos y 4 segundos
+temporal o categórico en este caso pues son eh este pudía decirse que es categórico porque estamos evaluando los productos
+5:13
+5 minutos y 13 segundos
+con respecto a las ventas realizadas no entonces vemos que los productos e y J sostienen el objetivo mientras que los
+5:21
+5 minutos y 21 segundos
+demás pues van van decayendo no Entonces es Útil para analizar tendencias patrones y cambios en los datos a lo
+5:29
+5 minutos y 29 segundos
+largo del tiempo evolución de ventas mensuales no entonces vemos como de de la
+5:37
+5 minutos y 37 segundos
+J hacia perdón de la d hacia abajo este pues no no se logra mantener una el
+5:44
+5 minutos y 44 segundos
+objetivo establecido según el kpi que mostramos y aquí pudiera ser útil evaluar este dónde se están vendiendo
+5:53
+5 minutos y 53 segundos
+Qué regiones eh En dónde se está ofreciendo el producto este qué qué tipo
+6:00
+6 minutos
+Bueno ya se harían más más análisis de decir Bueno A qué representa el producto de Por qué no se está vendiendo o se
+6:08
+6 minutos y 8 segundos
+está regresando o porque su comportamiento Con respecto al objetivo esperado luego tenemos otra que es q&
+6:18
+6 minutos y 18 segundos
+que es preguntas y respuesta dice una herramienta que permite a los usuarios realizar preguntas en lenguaje natural
+6:27
+6 minutos y 27 segundos
+sobre los datos ayuda a datos rápidamente sin necesidad de configurar visualizaciones específicas respondiendo
+6:35
+6 minutos y 35 segundos
+consultas dinámicas entonces este preguntas y respuesta pues ya nos ofrece algunas preguntas por defecto sin
+6:43
+6 minutos y 43 segundos
+embargo Nosotros también pudiéramos hacerle preguntas específicas en lenguaje natural como bien dice y si el
+6:50
+6 minutos y 50 segundos
+componente no existe esto rápidamente se convierte en algo en un indicador cercano a la respuesta que tú estás
+6:58
+6 minutos y 58 segundos
+esperando Entonces es muy útil también por qué porque pues no podemos tener un un dashboard que cubla Perdón que cubra
+7:07
+7 minutos y 7 segundos
+todo en su en su lugar este podemos ayudarnos de esta herramienta para que cosas que no contemplemos se puedan
+7:15
+7 minutos y 15 segundos
+generar desde aquí y luego tenemos la parte del slicer o segmentador entonces dice un filtro visual interactivo que
+7:24
+7 minutos y 24 segundos
+permite al usuario segmentar datos en reporte se utiliza para filtrar los datos de otras visualizaciones en el
+7:32
+7 minutos y 32 segundos
+dashboard por ejemplo seleccionar un Rango de fechas o categorías específicas entonces acuérdense que que la idea de
+7:40
+7 minutos y 40 segundos
+generar un modelo estrella es principalmente Porque queremos eh generar este a partir
+7:50
+7 minutos y 50 segundos
+del de las asociaciones entre las diferentes relaciones que tenemos ahí o diferentes tablas tener la capacidad de poder
+7:59
+7 minutos y 59 segundos
+generar también gracias a las métricas que se calculan en tiempo real Eh Pues esta interactividad no de decir Ah bueno
+8:08
+8 minutos y 8 segundos
+Quiero ver todo el año expresado en estos o visualizado en estos indicadores o necesito evaluar ciertos periodos que
+8:17
+8 minutos y 17 segundos
+son de mi interés por ejemplo Y entonces este slicer nos brinda esa facilidad no decir Ah pues mi Rango inicio mi Rango
+8:25
+8 minutos y 25 segundos
+fin y sobre eso evalúa entonces Y estos eh eh visualizadores elementos visuales
+8:35
+8 minutos y 35 segundos
+Ya los tengo este generados en en el en Power bi ahora vamos a a irlos
+8:42
+8 minutos y 42 segundos
+explorando para ver cómo fue que se hicieron y que ustedes pues sepan Cómo pueden implementarlo en sus propios
+8:49
+8 minutos y 49 segundos
+datas sets muy bien entonces me voy a cambiar de pantalla Pues el primer elemento que insertamos es una tabla esta tabla la
+8:58
+8 minutos y 58 segundos
+pueden ustedes encontrar aquí en la parte de visualization vamos a a esconder esta parte del filtro Entonces
+9:07
+9 minutos y 7 segundos
+esta parte visualization tiene distintos componentes incluso Acá hay tres puntitos Para obtener más objetos visuales Pero estos son los que presenta
+9:15
+9 minutos y 15 segundos
+por defecto Entonces esta esta tabla Eh pues representa una tabla porque la siguiente es una matriz Entonces
+9:23
+9 minutos y 23 segundos
+nosotros vamos a elegir la básica como dijimos este para poder observar al el
+9:30
+9 minutos y 30 segundos
+detalle de los datos y sus agrupaciones sobre las cuales están componiendo los diferentes
+9:39
+9 minutos y 39 segundos
+este elementos visuales y que nos sirve como de cierta manera validar sus resultados entonces eh Cómo se establece
+9:47
+9 minutos y 47 segundos
+o cómo se se llena esta tabla en esta área de columnas nosotros si observan estamos utilizando tres atributos de la
+9:56
+9 minutos y 56 segundos
+tabla fac ventas no que nuestra tabla eh de hechos esta tabla de hechos tiene por
+10:03
+10 minutos y 3 segundos
+defecto el el atributo cantidad se todo valor numérico siempre se establece como
+10:11
+10 minutos y 11 segundos
+una sumatoria por eso se observa aquí porque puede ser sumado este contado generado promedios máximos mínimos
+10:20
+10 minutos y 20 segundos
+etcétera pues son valores que puedes trabajar de esa manera clientes ID es el identificador del cliente las fechas
+10:28
+10 minutos y 28 segundos
+este es es recordarán que fue un campo calculado luego tenemos el estas son
+10:35
+10 minutos y 35 segundos
+métricas que generamos aquí para eh que se hagan cálculos al vuelo según necesitemos y ahorita vamos a ver cómo
+10:43
+10 minutos y 43 segundos
+actúan entonces ahorita estamos utilizando un valor en específico que viene como dice aquí de dinm producto
+10:49
+10 minutos y 49 segundos
+por qué Porque yo solamente aquí tengo su llave foránea pero en dim productos si lo extiendo tengo también su su
+10:58
+10 minutos y 58 segundos
+descripción no tengo su llave primaria y su descripción entonces Eh pues yo pongo
+11:04
+11 minutos y 4 segundos
+el descriptor de dinm producto y aquí se observa que dice Din producto producto pongo una
+11:12
+11 minutos y 12 segundos
+eh una una métrica generada un campo un campo tipo métrica que se llama total
+11:21
+11 minutos y 21 segundos
+venta y que es esta que está generada aquí y tengo otra que se llama porcentaje venta este que viene de acá
+11:31
+11 minutos y 31 segundos
+que es otra métrica Entonces recordarán ustedes que para hacer métricas en una tabla por ejemplo sobre la tabla de
+11:39
+11 minutos y 39 segundos
+hechos primero se elige la tabla de hechos y se da clic en New measures o nueva métrica Entonces al abrir esto se
+11:48
+11 minutos y 48 segundos
+va a abrir un un cuadro de texto Ahorita como las métricas Ya las tengo hechas pues simplemente le doy doble clic a la métrica y este es el campo que se
+11:57
+11 minutos y 57 segundos
+abriría cuando ustedes gener an el New measure se abre este como no sé text Box
+12:04
+12 minutos y 4 segundos
+que ustedes pueden escribir la función que quieren utilizar y le dan un comit o a esta palomita en este caso como ya ya
+12:12
+12 minutos y 12 segundos
+fue creada pues ya no ya no me brinda la oportunidad de hacerlo entonces básicamente lo que le decimos es de la tabla hechos quiero que me sumar o
+12:21
+12 minutos y 21 segundos
+acumules todas las ventas que están eh que que están registradas ahí no y es a través de la fun zoom Okay entonces
+12:31
+12 minutos y 31 segundos
+eso es lo que hace ahí y esto es lo que me ofrece acá Entonces como he hecho un agrupador descriptivo el primer campo es
+12:38
+12 minutos y 38 segundos
+para corresponde a la entidad como dijimos o a ese atributo que por registro por tupla vamos a describir a
+12:45
+12 minutos y 45 segundos
+través de estos dos atributos entonces eh en el primer campo que es el descriptor es el producto y lo demás ya
+12:54
+12 minutos y 54 segundos
+tiene que ver con agrupamientos este o sumarizacion o acumulaciones etcétera entonces voy a mostrar ese total de
+13:02
+13 minutos y 2 segundos
+ventas por el producto a b y así sucesivamente hasta llegar a a la a la totalidad o a las ventas totales
+13:11
+13 minutos y 11 segundos
+registradas en nuestro dataset ahora necesito saber qué porcentaje representan esas ventas con respecto al
+13:20
+13 minutos y 20 segundos
+100% que son estos 7,000 productos vendidos entonces para ello hacemos otra métrica le voy a dar doble clic a esta
+13:28
+13 minutos y 28 segundos
+que ya tenemos hecha y hacemos lo siguiente le hacemos la sumatoria de de todas las ventas
+13:36
+13 minutos y 36 segundos
+generadas y hacemos este la sumatoria removiendo los filtros por qué porque me quiero traer esta
+13:45
+13 minutos y 45 segundos
+parte de zoom Eh bueno del llamado a la sumatoria del total de ventas eh de la tabla de hechos
+13:54
+13 minutos y 54 segundos
+fac pentas me regresa esta distribución por producto pero a cada tupla yo la
+14:03
+14 minutos y 3 segundos
+tengo que dividir entre el 100% que es este este 7,000 entonces ahí entra este
+14:11
+14 minutos y 11 segundos
+cálculo que nuevamente voy a hacer una sumatoria pero le digo remu év los filtros que haya en Fac ventas Es decir
+14:19
+14 minutos y 19 segundos
+para obtener este 7,000 yo ya no quiero que me lo distribuyes entre cada producto porque entonces obtendría eh
+14:26
+14 minutos y 26 segundos
+100 o sea obtendría los mismos valores que estoy obteniendo aquí de manera desagregada y pues todo me daría el 100%
+14:36
+14 minutos y 36 segundos
+pero yo quiero obtener este valor global o total Entonces le digo remueve todos los filtros y tráeme la sumatoria
+14:43
+14 minutos y 43 segundos
+completa independientemente de cómo fue distribuido y me trae este 7,000 y ahora sí lo lo lo envío a la función divide
+14:53
+14 minutos y 53 segundos
+para que haga la división del de cada tupla o cada valor de venta por su
+

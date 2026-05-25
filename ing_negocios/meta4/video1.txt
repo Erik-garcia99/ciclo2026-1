@@ -1,0 +1,383 @@
+Hola jóvenes Buen día bueno pues esta es la última unidad que vamos a abordar en este curso es la unidad número cuatro y está titulada como almacén de datos o
+0:08
+8 segundos
+Data Warehouse Ah va a haber muchos conceptos que ustedes ya estuvieron abordando en la presentación de la meta anterior y los vamos a retomar Pero
+0:17
+17 segundos
+ahora con la intención de desarrollarlos prácticamente Entonces vamos a retomar también la meta 2.2 que ustedes ya
+0:26
+26 segundos
+desarrollaron donde tomaban eh todo el marco de de trabajo de Ever simond eh para la toma de decisiones no entonces
+0:34
+34 segundos
+una de las fases que más nos interesa para saber de qué manera vamos a a desarrollar las estructuras que van a
+0:41
+41 segundos
+sostener la información que vamos a recolectar e ir este acumulando en el
+0:49
+49 segundos
+tiempo pues es la de inteligencia no la primera porque en ella ustedes ya han establecido objetivos claves y sobre
+0:56
+56 segundos
+esos objetivos claves que persigue el tomador de decisión en en algún este en alguna de las partes gerenciales de de
+1:05
+1 minuto y 5 segundos
+la organización sea esta operativa este táctica o estratégica han establecido ustedes las
+1:12
+1 minuto y 12 segundos
+métricas o o los indicadores que van a permitir Dar seguimiento a esos objetivos entonces eh La idea es esa no
+1:20
+1 minuto y 20 segundos
+que ustedes eh con base a esa información que ya que ya investigaron que ya detallaron este poderla convertir
+1:28
+1 minuto y 28 segundos
+en un dar Warehouse con el dataset que ya que ya tienen este poder luego sobre
+1:36
+1 minuto y 36 segundos
+ese Data eh Warehouse eh extraer los los datos que queremos ver representados
+1:43
+1 minuto y 43 segundos
+visualmente a través de algún indicador específico no O indicadores diversos generar un un control de Mando un Data
+1:50
+1 minuto y 50 segundos
+Perdón un dashboard que le sirva al tomador de decisiones como un sistema de soporte de decisiones muy bien jóvenes
+1:58
+1 minuto y 58 segundos
+entonces damos a esta última parte adelante muy bien entonces eh buscamos
+2:08
+2 minutos y 8 segundos
+en esta unidad pues hacer un Data Warehouse y un Data Warehouse va a ser esa ese repositorio lógico que va a
+2:17
+2 minutos y 17 segundos
+contener estructuras de datos que fueron modeladas con base a los objetivos claves que nosotros definimos
+2:26
+2 minutos y 26 segundos
+previamente con las partes interesadas no entonces ya con conocemos Qué es eh lo que estoy persiguiendo de información
+2:35
+2 minutos y 35 segundos
+que necesito tener conocimiento de ella y darle un seguimiento hacer un monitoreo de de esa información para
+2:44
+2 minutos y 44 segundos
+poder generar las acciones precisas y las estrategias necesarias para conducir
+2:52
+2 minutos y 52 segundos
+a la organización hacia esos objetivos y ya sabemos que existen las fuentes de datos y y ahora que que vamos hacer que
+3:01
+3 minutos y 1 segundo
+si que si tenemos diversas fueres de datos del cual se va a componer este pues ese sistema de soporte de
+3:08
+3 minutos y 8 segundos
+decisiones de alguna manera tengamos que centralizar todo eso que que está
+3:15
+3 minutos y 15 segundos
+disperso ahorita no en bases de datos distintas entonces para ello Es que sirve un Data Warehouse Entonces el Data
+3:23
+3 minutos y 23 segundos
+Warehouse o el almacén de datos lo que va a hacer es integrar información de múltiples Fuentes para facilitar la toma
+3:30
+3 minutos y 30 segundos
+de decisiones no el poder procesar los datos de manera adecuada de de forma que
+3:36
+3 minutos y 36 segundos
+al al momento de generar un indicador o una métrica pues este sean sean confiables no sean certeras sean
+3:45
+3 minutos y 45 segundos
+consistentes sean íntegras este y podamos o bien el tomador de decisiones pueda confiar plenamente en que la información
+3:53
+3 minutos y 53 segundos
+obtenida pues realmente es de utilidad y es confiable este Cuáles son las características principales de estos
+4:00
+4 minutos
+Data Warehouse Bueno pues son sistemas eh utilizados principalmente como el objetivo final es generar reportes y
+4:08
+4 minutos y 8 segundos
+análisis de datos con diferentes este niveles de de profundidad no eh Y vamos a ver más adelante Qué tecnologías de
+4:16
+4 minutos y 16 segundos
+procesamiento se utilizan y cuáles son las que vamos a generar nosotros está orientados a temas específicos Por qué Porque nacen de objetivos claves como
+4:25
+4 minutos y 25 segundos
+como lo dijimos no O sea no tienen un propósito disperso y a ver qué sale No es voy a hacer este dar a Warehouse
+4:33
+4 minutos y 33 segundos
+porque tengo un interés específico en atender estas necesidades de mi
+4:40
+4 minutos y 40 segundos
+organización no y quiero crecer hacia ciertos lugares y necesito llegarme de información que me permita este pues no
+4:48
+4 minutos y 48 segundos
+tomar decisiones con los ojos cerrados sino más bien con base a lo que sucede internamente en mi organización e
+4:56
+4 minutos y 56 segundos
+incluso poder incluir este entos externos no datos del exterior que cruzados con los eventos internos pues
+5:05
+5 minutos y 5 segundos
+pudieran Mostrarme un camino más más claro no Entonces es integrado por qué Porque se requieren eh es es un proceso
+5:14
+5 minutos y 14 segundos
+sistémico ahorita lo vamos a ver el marco de trabajo para el desarrollo este y mantenimiento de un Data Warehouse
+5:21
+5 minutos y 21 segundos
+entonces necesitamos integrar distintas tipos de técnicas de tecnologías para darle un tratamiento específico a cada
+5:29
+5 minutos y 29 segundos
+una de sus etapas es variable en el tiempo porque este va a ir incrementando
+5:36
+5 minutos y 36 segundos
+este tanto valor y conocimiento conforme vayamos capturando más y más información
+5:43
+5 minutos y 43 segundos
+en el tiempo Okay Se toma una fotografía hasta un momento dado Pero este es un proceso iterativo o sea hago un corte
+5:51
+5 minutos y 51 segundos
+hoy esa información se integra al dara Warehouse y posteriormente periódicamente pues puedo ir integrando
+6:00
+6 minutos
+más y más información del mismo tipo hacia esa estructura ya definida no y no es volátil por qué Porque la información
+6:07
+6 minutos y 7 segundos
+va a generar persistencia no la estamos almacenando e en un nivel de de granularidad no tan detallado como lo
+6:16
+6 minutos y 16 segundos
+hacemos en las bases de datos relacionales que ahí si yo este Necesito saber datos muy específicos de un
+6:25
+6 minutos y 25 segundos
+cliente este pues a ese nivel de de gránulo fino puedo conocer la información pero a nivel de un Data
+6:32
+6 minutos y 32 segundos
+Warehouse ya no me interesa conocer tanto el detalle sino más bien los patrones y comportamientos tendencias
+6:39
+6 minutos y 39 segundos
+entre otros no entonces cambia si el enfoque este ambos son necesarios pero
+6:46
+6 minutos y 46 segundos
+ambos resuelven eh ambos me refiero a las bases de datos relacionales y a los Data Warehouse resuelven problemas muy muy distintos no entonces la no
+6:55
+6 minutos y 55 segundos
+volatilidad se refiere a la parte de que la información sigue siendo persistente se sigue almacenando no es algo que voy
+7:02
+7 minutos y 2 segundos
+a tomar voy a procesar y lo voy a desechar no es algo que va a permanecer porque me pudiera interesar en el tiempo hacer estos cruces de información de de
+7:11
+7 minutos y 11 segundos
+lo actual a fechas específicas anteriores entonces pues se requiere contar con ese historial no con ese
+7:19
+7 minutos y 19 segundos
+histórico muy bien Bueno Seguimos avanzando Bueno pues ahora podemos
+7:28
+7 minutos y 28 segundos
+observar esta parte parte del el marco de trabajo para la construcción eh de un Data Warehouse entonces eh decíamos en
+7:36
+7 minutos y 36 segundos
+la parte anterior que era un proceso sistémico por qué Porque se requieren de distintas actividades y y funciona de
+7:44
+7 minutos y 44 segundos
+forma iterativa o sea tiene un regreso no es que llegue un punto y ya se termina sino que constantemente Se está
+7:51
+7 minutos y 51 segundos
+actualizando y modificando y haciendo cosas que se ajusten a las necesidades del negocio en ese momento Entonces el
+7:59
+7 minutos y 59 segundos
+primer paso por eso aquí la estrellita aquí es identificar esas necesidades de negocio que ustedes ya lo hicieron con
+8:06
+8 minutos y 6 segundos
+el marco de de eh Simon no donde decían eh la primer fase este o la primera
+8:14
+8 minutos y 14 segundos
+etapa que hay que abordar es la inteligencia porque en la inteligencia voy a a estar con las personas que lo operan con las personas con las partes
+8:24
+8 minutos y 24 segundos
+interesadas que son Quiénes tienen esta visión este pues más más general o más
+8:31
+8 minutos y 31 segundos
+amplia y que ve su negocio en un punto y que sabe en la situación en la que se encuentra pero que necesita tener
+8:38
+8 minutos y 38 segundos
+elementos para poder ir moviendo piezas que hagan que su negocio avance hacia
+8:44
+8 minutos y 44 segundos
+allá entonces iniciamos en esta parte y seguimos como lo vimos también en la en
+8:52
+8 minutos y 52 segundos
+la fase inteligencia pues la parte de y diseño la identificación de las fuentes No si existen las fuentes de datos es
+9:00
+9 minutos
+decir si ya este hay sistemas de información basados en computadora que hagan dicho registro pues es mucho más
+9:07
+9 minutos y 7 segundos
+fácil si no existe no es imposible pero hay que generar estos mecanismos de automatización y de y de interacción con
+9:17
+9 minutos y 17 segundos
+el humano para poder recoger esa información y poderla tener disponible para posteriores actividades entonces en
+9:26
+9 minutos y 26 segundos
+esta eh fase donde se identifican las fuentes pues vamos a ver una organización Generalmente tiene
+9:34
+9 minutos y 34 segundos
+distintos departamentos no hay muchas actividades que se generan dentro de la organización para poder llevar a cabo su
+9:41
+9 minutos y 41 segundos
+operación y para lograr Pues los objetivos que se establece tanto en su misión como en su visión entonces pues
+9:49
+9 minutos y 49 segundos
+cada departamento va generando información específica toda la información en su conjunto pues construye la historia de lo que es la
+9:57
+9 minutos y 57 segundos
+Organización en Sí pero pues no lo podemos trabajar todo eh Generalmente no se trabaja todo de manera tan integrada
+10:05
+10 minutos y 5 segundos
+sino que este pues hay información eh que se trabajan en diversas bases de datos Aunque toda su composición pues
+10:14
+10 minutos y 14 segundos
+forme parte de la misma organización no entonces podemos decir pues tengo el departamento de ventas que va a tener su base de datos donde lleve todas las
+10:22
+10 minutos y 22 segundos
+ventas y control de clientes este eh Por ejemplo el departamento de compras el
+10:30
+10 minutos y 30 segundos
+que va a tener a todos los proveedores inventarios este seguimiento de de esas órdenes de compra tenemos al
+10:38
+10 minutos y 38 segundos
+departamento de de cobro que aunque Existen los clientes pues alguien genera la venta pero otra persona se encarga de
+10:46
+10 minutos y 46 segundos
+de cobrar y tenemos el departamento de producción quien se encarga de generar el producto o el servicio que voy a que
+10:54
+10 minutos y 54 segundos
+voy a ofrecer no Entonces se hacen estas de manera natural se busca que como hay
+11:02
+11 minutos y 2 segundos
+actividades o funciones o roles muy específicos que determinan ese esa que funciona como un límite pues
+11:11
+11 minutos y 11 segundos
+para decir bueno para no estar haciendo todos eh o estar revueltos entre actividades pues mejor delimitamos con
+11:18
+11 minutos y 18 segundos
+base a roles y funciones Y de esa misma manera se generan esas bases de datos que parecieran que son islas de información porque hasta este punto no
+11:27
+11 minutos y 27 segundos
+las tenemos comunicadas ahí sistemas de información que permit mayor comunicación como los rp SAP pero pues también tienen objetivos específicos
+11:36
+11 minutos y 36 segundos
+todos los sistemas se se se generan o se desarrollan con base a a objetivos que se persiguen en el momento
+11:44
+11 minutos y 44 segundos
+dado no no podemos o no se tiene aún un sistema eh de propósito super general que n más adaptes dos tres detalles y ya
+11:52
+11 minutos y 52 segundos
+funcione todo de manera muy coordinada entonces para ello Es que eh nacen estos Data Warehouse no entonces decimos bueno
+12:00
+12 minutos
+eh cada una de estas bases de datos funciona como un silo de datos que atiende necesidades específicas para su
+12:10
+12 minutos y 10 segundos
+organización entonces este se van generando estos datos de manera independiente Aunque en su conjunto
+12:17
+12 minutos y 17 segundos
+formen parte de la organización y posteriormente Tratamos de conectarlas de alguna manera a través de procesos
+12:25
+12 minutos y 25 segundos
+periódicos y automatizados como son las técnicas de et no de extracción transformación y
+12:32
+12 minutos y 32 segundos
+cara Entonces estos procesos periódicos este pueden ser tanto software
+12:39
+12 minutos y 39 segundos
+específicos que estemos ejecutando periódicamente este añadidos a un Job eh
+12:47
+12 minutos y 47 segundos
+configurado en nuestras bases de datos para que periódicamente no sé por semana por mes por día determinada hora se
+12:57
+12 minutos y 57 segundos
+estén corriendo para este hacer la recogida de todo lo que aquí hay dependiendo de cómo hayamos estructurado
+13:06
+13 minutos y 6 segundos
+nuestro dara Warehouse este se tomará cierta información o datos que son necesarios para llenar ese Data
+13:14
+13 minutos y 14 segundos
+Warehouse y y se estará llevando hasta hasta ese repositorio central no Entonces esta parte del etl es lo que
+13:23
+13 minutos y 23 segundos
+nos va a permitir configurar esa programación no decir Ah okay eh Ya tengo identificado a mis Fuentes eh Ya
+13:30
+13 minutos y 30 segundos
+sé hemos diseñado el Data Warehouse con base a los a los este datos que tenemos
+13:37
+13 minutos y 37 segundos
+disponibles y con base a las necesidades de negocio y las preguntas claves que se han hecho y los indicadores y métricas
+13:46
+13 minutos y 46 segundos
+que ya hemos establecido para este pues porque de aquí lo vamos a obtener no entonces aquí se establece toda esa eh
+13:53
+13 minutos y 53 segundos
+Pues como programación lógica para poder eh generar esos procesos automatizados y periódicos de extracción
+14:02
+14 minutos y 2 segundos
+de datos Y este inserción en su nuevo repositorio centralizado que va a ser su dara Warehouse no por eso o por esta
+14:11
+14 minutos y 11 segundos
+razón aquí se se mantiene como un este un bucle o un ciclo iterativo porque va a estar periódicamente analizando Qué
+14:19
+14 minutos y 19 segundos
+hay de nuevo y se lo va a traer a través de las instrucciones aquí definidas distintas apis este ya sea por
+14:26
+14 minutos y 26 segundos
+bacheo este Generalmente los dar wareh no no tienen un objetivo de funcionamiento en línea sino más bien
+14:35
+14 minutos y 35 segundos
+hace cortes de información periódicos no entonces este pero sí se puede automatizar como les digo podemos
+14:42
+14 minutos y 42 segundos
+utilizar este programación a través de de de Procedimientos almacenados como los que ustedes ya utilizaron en bases
+14:51
+14 minutos y 51 segundos
+de datos en el curso de bases de datos no relacionales Y eso se establece en una tarea eh periódica dentro del mismo
+14:59
+14 minutos y 59 segundos
+servidor el cual se va a estar ejecutando Pues según Los criterios que hayan establecidos y una vez que esto
+15:06
+15 minutos y 6 segundos
+hace la tarea de de ingesta es decir eh tomo de aquí proceso o o hago la
+15:13
+15 minutos y 13 segundos
+extracción hago la transformación y y la y la carga Pues ya sería en esta parte
+15:20
+15 minutos y 20 segundos
+no que es el el repositorio centralizado o el almacén de datos el cual vamos a ver más adelantito con unos ejemplos eh
+15:28
+15 minutos y 28 segundos
+Muy básicos que hay dos tipos de modelos tenemos Este es el modelo estrella que es un modelo totalmente desnormalizar se
+15:37
+15 minutos y 37 segundos
+usan también lo que hemos visto en base a datos relacionales este tablas Entonces vamos a tener tablas pero aquí
+15:45
+15 minutos y 45 segundos
+tiene un enfoque de tablas de hechos y tablas de dimensiones donde las dimensiones funcionan básicamente como
+15:52
+15 minutos y 52 segundos
+catálogos y los hechos pues va registrando todos los eventos que se dieron en un en un tiempo en un periodo
+15:59
+15 minutos y 59 segundos
+dado no y ya luego se unen se generan esas relaciones y esto eh da soporte a toda la extracción que se va haciendo
+16:07
+16 minutos y 7 segundos
+Durante este proceso en esta parte entonces aquí este pues almacenamos la información ahora el hecho de que son
+16:16
+16 minutos y 16 segundos
+tablas desnormalizar pues buscan un propósito de no eh tener que hacer Tanto proceso de de
+16:25
+16 minutos y 25 segundos
+transformación de datos Pero pues tiene sus ventajas y desventajas que ya veremos más adelante no entonces Este modelo estrella es desnormalizar pero
+16:33
+16 minutos y 33 segundos
+también tenemos un modelo copo de nieve que ese es un modelo eh Pues relacional que básicamente también se utiliza eh eh
+16:42
+16 minutos y 42 segundos
+tablas de hechos y dimensiones Pero estas sí tienen reglas las reglas de normalización no que veíamos en bases de datos relacionales donde Buscamos que no
+16:50
+16 minutos y 50 segundos
+haya dependencias parciales ni transitivas y que todo dato sea atómico dentro de ella no este y con base a esto
+17:01
+17 minutos y 1 segundo
+se genera la este los reportes que vayamos
+

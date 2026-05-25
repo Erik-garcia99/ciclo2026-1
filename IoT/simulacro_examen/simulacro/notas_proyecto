@@ -1,0 +1,39 @@
+
+la nueva funcionalidad indica que medinate comandos temporarizar, en algun momento del dia se deben de prender o apagar un led, se prednde en un momento y se apaga en otro momento del dia 
+
+este recurso se puede hbailitar o deshabiltar, osea en el caso que si se asigno in tuempo para prender el led y despues se evni la cancelacion entonces el encender el led en el tiempo no ocurrira porque el recurso esta deshabilitado.
+
+
+okay, creo que al parecer como el la trama va a capturar los minutos transcurridos no sera como quiero que se apague a las 12:30 del dia, si no se tiene resolucion en minutos tomando como referencia las 00:00 (hh:mm) entonces si quiero prender un led a las 12:30 del dia, la trama recibira 750 -> 12*(60) + 30 --> entonces desde la media noche han transurcrio 750 minutos
+
+casos especiales, en el caso que no sera aceptable el establecer el tiempo podria ser 0, porque no se pede empezar una temporarizacion para 0 minutos
+
+
+
+
+
+-------------------como vamos a contar el timepo que pasa?, 
+
+--en primero no puedo estar pregunte y pregunte a la API, que hora es?, ya es hora?, que hora es, ya es hora?, eso no es lo mas eficiente por lo que tengo en mente es 
+mediante timer relizar un conteo, primero debebo de calcular cuando es que se desea relizar el prender y el apagar el led, 
+
+entonces llevo un contador que lo que hara es contar desde el momento que se recibe la hora, entonces lo que se hace es relziar el conteo, cuando este conteo se complete es cunao relaizar ua verificacion, preguntamos a la API si es hora, y debemos de verificar s es hora si falta o nos pasamos. 
+
+
+--> entonces en cuanto llegue que se hbailita la temporarizacion no puedo inciar a contar, porque son comandos diferentes, primero se le india al micro que se preparre que un comando para prder el led y apagarlo en una hora de dia puede llegar, cunado se idnice habiltar entoncs debemos de activar algo, que inidique que esta habilitado este recurso, para en el caso de querere establecer antes de habilutar mandara un NACK porque primero se debe de habilytar el recurso. 
+
+
+--- el valor del timepo es el que quepa den 32 bytes 
+
+--> algo que se es que cunado llegue l deshabitacion debo de matar a todas las tareas a la de encender y prender el led y establecer que esa opcion esta deshabiltadada,
+
+
+
+
+
+
+----------------------------------------------------------
+
+
+--> nuevos recursos asignaos a la union de recursos 
+

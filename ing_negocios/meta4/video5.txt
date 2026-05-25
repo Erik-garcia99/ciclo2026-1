@@ -1,0 +1,337 @@
+entonces seguimos eliminando aquellos este atributos o aquellas columnas que consideremos no no deban ir en la tabla
+0:09
+9 segundos
+de hechos entonces dijimos vamos a secarnos con Vento ID fecha producto ID cliente ID vamos a eliminar este cliente
+0:18
+18 segundos
+vamos a eliminar región vamos a eliminar cantidad digimos que le vamos a dejar precio unitario lo
+0:26
+26 segundos
+vamos a eliminar y total de ventas con solamente estas nos vamos a quedar
+0:32
+32 segundos
+Entonces vamos a verificar que el tipo de dato que contiene este cada cada columna entonces
+0:40
+40 segundos
+aquí también se observa e pues la distribución de datos que tenemos dice que hay 100
+0:47
+47 segundos
+datos que el valor mínimo registrado es 10 que el valor máximo es 150 que el promedio 70 que esta es su desviación
+0:56
+56 segundos
+estándar Okay entonces aquí le damos clic y en a ver en transformar aquí en esta
+1:05
+1 minuto y 5 segundos
+parte que dice Any column y viene el tipo de dato entonces aquí le damos clic extendemos la lista para ver las
+1:13
+1 minuto y 13 segundos
+opciones y esta la vamos a cambiar a a un valor en lugar de que sea un valor entero eh numérico lo vamos a hacer
+1:20
+1 minuto y 20 segundos
+decimal Okay okay Entonces este ya cambió aquí se observa que ha cambiado aquí por ejemplo que este es entero Se
+1:27
+1 minuto y 27 segundos
+observa este 1 2 3 es un número entero este que es un número con decimales un 1.2 Se observa en la
+1:36
+1 minuto y 36 segundos
+adjunto al nombre del del este de la columna Entonces está
+1:44
+1 minuto y 44 segundos
+es correcto es correcto Es correcto que producto ID sea así tenemos aquí
+1:51
+1 minuto y 51 segundos
+observamos que es un tipo fecha y es correcto también y este que es entero Entonces ya tenemos de afinidad nuestra
+1:59
+1 minuto y 59 segundos
+tabla la de hecho que es esta no Entonces ahora nos volvemos a regresar a la tabla origen para ir generando cada una de nuestras
+2:08
+2 minutos y 8 segundos
+dimensiones entonces la primera dimensión que vamos a crear pues es la dimensión del producto Okay que esta tabla lo que va a hacer pues es
+2:15
+2 minutos y 15 segundos
+describir los productos que hemos vendido Okay entonces va nuevamente duplicamos la
+2:21
+2 minutos y 21 segundos
+tabla original dup duplicate Okay este la
+2:31
+2 minutos y 31 segundos
+nombramos rename y le vamos a poner dim producto a toda dimensión la vamos a
+2:39
+2 minutos y 39 segundos
+llamar Din a toda tabla central la vamos a llamar fact De hecho Okay entonces si
+2:46
+2 minutos y 46 segundos
+esta Va a sostener el producto entonces eh puedo dar también por ejemplo tengo la seleccionada primer columna y Quiero
+2:54
+2 minutos y 54 segundos
+borrar varias pues entonces le doy clic al botón control e este y voy
+3:01
+3 minutos y 1 segundo
+seleccionando varias columnas entonces voy a borrar también cliente
+3:09
+3 minutos y 9 segundos
+eh Y todo lo demás solamente dejo a la categoría que es la que está este junto
+3:16
+3 minutos y 16 segundos
+con el el producto no O sea que es la que categoriza el producto que si se fijan aquí ya podemos observar la
+3:23
+3 minutos y 23 segundos
+desnormalización cuando nosotros aplicamos este eh una normalización nosotros podríamos decir ah el producto
+3:32
+3 minutos y 32 segundos
+es identificado por su clave primaria que va a ser el ID producto o el producto ID pero también podría haber
+3:39
+3 minutos y 39 segundos
+una dependencia transitiva con categoría además de qué categoría podría ser un catálogo específico para evitar estas
+3:46
+3 minutos y 46 segundos
+redundancias que se observan Okay y ahí es donde podemos crear una relación de
+3:52
+3 minutos y 52 segundos
+este de un a n por ejemplo con Ajá de un a n con categoría donde este muchos
+4:00
+4 minutos
+productos pueden ser parte de de una categoría no o una categoría puede tener muchos productos pero este modelo
+4:07
+4 minutos y 7 segundos
+estrella como este es desnormalizar entonces me permite tener toda la información que corresponde al producto
+4:15
+4 minutos y 15 segundos
+en específico Entonces ya he seleccionado todas las columnas este que requiero para este dim producto entonces
+4:23
+4 minutos y 23 segundos
+simplemente le doy un clic derecho y le digo remover columnas Entonces ya solamente me quedo con estas que correspond
+4:30
+4 minutos y 30 segundos
+producto me regreso a la tabla origen y ahora voy a llamar al cliente Entonces le vamos a dar un duplicar otra vez clic
+4:38
+4 minutos y 38 segundos
+derecho duplicar le renombró renombrar y le escribimos dim
+4:47
+4 minutos y 47 segundos
+cliente entonces aquí me voy a quedar con todo lo que tenga que ver con el cliente no Entonces vamos a eliminar esto esto esto Esto me quedo con el
+4:56
+4 minutos y 56 segundos
+cliente me quedo con el cliente y con la región
+5:04
+5 minutos y 4 segundos
+vamos a borrar la cantidad del precio unitario y el total de la v la
+5:15
+5 minutos y 15 segundos
+eliminamos Okay y y nos vamos otra vez acá a la tabla origen y le damos
+5:24
+5 minutos y 24 segundos
+duplicar para hacer el siguiente la siguiente dimensión muy bien entonces antes de continuar a
+5:31
+5 minutos y 31 segundos
+hacer una siguiente dimensión observamos que el precio unitario es el único que hasta ahorita ha quedado fuera ya tenemos la dimensión de producto que es
+5:40
+5 minutos y 40 segundos
+el el producto el su ID su descriptor y su categoría ya tenemos al cliente que
+5:48
+5 minutos y 48 segundos
+tiene su ID el la descripción del cliente y la región a la que pertenece Y también en Fac ventas pues
+5:57
+5 minutos y 57 segundos
+tenemos lo que es las las foráneas y algunos descriptivos como la fecha o
+6:03
+6 minutos y 3 segundos
+estas medidas o totalizacion es como la cantidad y total de ventas pero vemos Que en la datas set de origen hay
+6:13
+6 minutos y 13 segundos
+una hay un campo que se llama precio unitario que en todo caso este pues siguiendo la la información que nos
+6:21
+6 minutos y 21 segundos
+decía este que que todo tabla de hecho contiene datos numéricos o métricas entonces pues precio unitario pud a
+6:29
+6 minutos y 29 segundos
+considerarse como una métrica Okay entonces Cómo recupero en la tabla de hechos de de fac ventas ese dato si yo
+6:38
+6 minutos y 38 segundos
+ya lo eliminé Bueno aquí en en pasos aplicados del lado derecho de la ventana este se se observa como una secuencia de
+6:47
+6 minutos y 47 segundos
+actividades que ya hemos realizado previamente o pudiéramos determinarlo como un tipo linaje que conserva información previa antes de aplicar
+6:56
+6 minutos y 56 segundos
+alguna actividad no algún proceso entonces para ello este si yo Quiero recuperar
+7:02
+7 minutos y 2 segundos
+este algo de lo que había antes de aplicar esta el remove de columnas Entonces yo borro Este paso para que se
+7:12
+7 minutos y 12 segundos
+regrese al Estado anterior y nuevamente pueda decidir Con qué me quedo no Entonces vamos a borrar todos los
+7:19
+7 minutos y 19 segundos
+descriptivos porque ya dijimos también que todo lo que brinda descripción o contexto pues va a formar parte de una
+7:26
+7 minutos y 26 segundos
+dimensión Entonces lo borro y voy a dejar lo que es cantidad precio unitario
+7:33
+7 minutos y 33 segundos
+y total probablemente se me había saltado esta parte del precio unitario por la cuestión de que ya tenemos un campo calculado o derivado de la
+7:42
+7 minutos y 42 segundos
+multiplicación de estos dos perdón pero este para para no dejar
+7:49
+7 minutos y 49 segundos
+este pues el el campo fuera pues lo seleccionamos todos estos los removemos y ahora sí tengo este pues mi tabla de
+7:57
+7 minutos y 57 segundos
+hechos que conserva todos los los los foráneos que son estos ventas ID producto ID cliente ID este este dato de
+8:06
+8 minutos y 6 segundos
+de fecha que lo vamos a a utilizar ahorita en un momentito para generar una nueva dimensión y este pues los los las
+8:15
+8 minutos y 15 segundos
+métricas o los cálculos previamente generados Okay entonces es la manera en que podemos nosotros hacer recuperación
+8:22
+8 minutos y 22 segundos
+de de datos o o de formatos o de algo que anteriormente se conservaba de alguna manera
+8:30
+8 minutos y 30 segundos
+y que este por error lo no lo no lo agregué aquí no entonces eh nuevamente
+8:38
+8 minutos y 38 segundos
+esto lo habíamos cambiado a a un tipo de dato que
+8:46
+8 minutos y 46 segundos
+fuera que fuera que fuera entero no no perdón que
+8:53
+8 minutos y 53 segundos
+fuera doble Entonces aquí le vamos a dar aquí le sobre los números le damos clic
+9:02
+9 minutos y 2 segundos
+y lo cambiamos a decimal number entonces el precio unitario también lo vamos a cambiar a decimal number eh la cantidad
+9:10
+9 minutos y 10 segundos
+la vamos a dejar numérico eh este los los foráneos también los dejamos en numérico la fecha como tipo fecha y
+9:18
+9 minutos y 18 segundos
+ahora sí ya estamos completos Okay entonces vamos a pasar vamos a ver qué otra este transformación vamos a
+9:26
+9 minutos y 26 segundos
+realizar Muy bien pues otra transformación adecuada e importante pues es la
+9:33
+9 minutos y 33 segundos
+de de tiempo porque este es un es una dimensión fundamental porque cuando queremos realizar este análisis
+9:42
+9 minutos y 42 segundos
+temporales este como ventas por trimestre año mes día este es mucho más fácil pues tener generada una tabla o
+9:51
+9 minutos y 51 segundos
+una dimensión de este tipo pero esto no lo vamos a hacer en Power query lo vamos a hacer en bi en la opción de dax entonces esta tabla la vamos a eliminar
+10:01
+10 minutos y 1 segundo
+porque no la vamos a utilizar aá le damos delete clic derecho eh delete Y le
+10:08
+10 minutos y 8 segundos
+decimos que sí la borre entonces acá en file en la parte superior izquierda dice file Entonces le damos clic a Close and
+10:16
+10 minutos y 16 segundos
+apply para que se guarden los cambios y se va a
+10:22
+10 minutos y 22 segundos
+regresar a al al Power query y estamos viendo que nos está creando la tabla de
+10:29
+10 minutos y 29 segundos
+hechos y sus dimensiones no se conservó la la la dimensión o la tabla origen que podemos aquí ocultarla para que no sea
+10:38
+10 minutos y 38 segundos
+visible este en en la parte de de la vista de reportes este y que solamente se
+10:47
+10 minutos y 47 segundos
+observen estas no Entonces ahora vamos a hacer una tabla en la dimensión de tiempo porque
+10:55
+10 minutos y 55 segundos
+es importante el tiempo Bueno pues el tiempo es importante porque este nos va a permitir hacer eh
+11:03
+11 minutos y 3 segundos
+reportes o análisis de las ventas por diferentes perspectivas del tiempo no en
+11:10
+11 minutos y 10 segundos
+años en trimestres en meses o en días entonces Eh pues ya nos regresamos acá a
+11:17
+11 minutos y 17 segundos
+la a la parte de de Power bi dijimos que no lo íbamos a hacer en en Power query esta eh tabla origen está
+11:26
+11 minutos y 26 segundos
+eh deshabilitada Para que no lo puedan ver usuarios bueno más bien para que no se trabaje sobre ella como dijimos aquí
+11:34
+11 minutos y 34 segundos
+en en el reporte y solamente tener estas tres no Entonces vamos a crear ahora una
+11:41
+11 minutos y 41 segundos
+nueva tabla desde aquí desde Power query entonces para realizar esto nos venimos a Table Tools y vamos a darle clic aquí
+11:49
+11 minutos y 49 segundos
+a New Table entonces la nueva tabla que queremos generar se va a llamar dim tiempo entonces este dim tiempo va a
+11:58
+11 minutos y 58 segundos
+contener Eh pues estas dimensiones o perspectivas del tiempo que me van a permitir pues hacer eh distintos tipos
+12:05
+12 minutos y 5 segundos
+de reportes Entonces vamos a llamar dim tiempo y vamos a utilizar lenguaje dax para este poder construir
+12:14
+12 minutos y 14 segundos
+Eh pues estos estos Campos que me van a ayudar a manejar el tiempo no entonces aquí eh Pues dax básicamente te ofrece
+12:22
+12 minutos y 22 segundos
+un lenguaje como si fuera sql este o cualquier otro lenguaje de programación que te ofrece cierta funciones las cuales tú puedes mandar
+12:31
+12 minutos y 31 segundos
+llamar y enviarle ciertos parámetros y se procesa y produce algo en este caso vamos a utilizar la función calendar
+12:38
+12 minutos y 38 segundos
+aquí se observa este y nos pide Eh pues fechas para para hacer el cálculo Entonces en
+12:47
+12 minutos y 47 segundos
+este caso eh además de enviarle las fechas quiero que haga un proceso interno que me traiga las fechas
+12:54
+12 minutos y 54 segundos
+mínimas este a partir de fact ventas que es nuestra tabla de hechos y
+13:02
+13 minutos y 2 segundos
+aquí ya nos muestra los campos que tiene fac fechas Perdón fac ventas entonces Simplemente agarro la fecha este cierro
+13:09
+13 minutos y 9 segundos
+el paréntesis para decirle traite la mínima y hasta la máxima no O sea gename un calendario una estructura de las
+13:18
+13 minutos y 18 segundos
+fechas que hay entre el periodo que va desde esta fecha de inicio como dice aquí regresa una tabla con una columna
+13:27
+13 minutos y 27 segundos
+de todas las fechas en entre el inicio y el fin no entonces de esta tabla de hechos voy a ver cuál es la la fecha
+13:34
+13 minutos y 34 segundos
+menor y ahora este pues hago lo mismo lo voy a copiar y pegar para hacer la fecha final entonces
+13:42
+13 minutos y 42 segundos
+la fecha final tendría que ser la mayor Max y cierro paréntesis para que se genere este pues
+13:51
+13 minutos y 51 segundos
+esta columna le vamos a dar le vamos a dar este clic aquí en la en la palomita para que se ejecute o se
+14:00
+14 minutos
+genere la instrucción y aquí tengo esta esta Ah nueva tabla que es producto de ese
+14:10
+14 minutos y 10 segundos
+cálculo por eso se observa como esta esta calculadora aquí o esta sub operación para decir que esta
+14:17
+14 minutos y 17 segundos
+columna pues ha sido producida a través del cálculo de esto de este de esta instrucción no pero pues también quiero
+14:26
+14 minutos y 26 segundos
+generar este agregar otras columnas ya columnas más específicas que me van a ayudar a a a manipular La información
+14:34
+14 minutos y 34 segundos
+entonces ahora vamos a crear una que sea de año sobre esta misma tabla que estamos trabajando Entonces solamente aquí en column Tools le vamos a dar New
+14:43
+14 minutos y 43 segundos
+column click y aquí me va a permitir generar una nueva columna entonces aquí le vamos
+14:50
+14 minutos y 50 segundos
+a cambiar el nombre le vamos a poner año
+14:58
+14 minutos y 58 segundos
+igual an

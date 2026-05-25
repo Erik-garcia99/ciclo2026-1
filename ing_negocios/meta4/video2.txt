@@ -1,0 +1,335 @@
+muy bien y como les decía pues una vez que ya tenemos la estructura eh de datos definida según el modelo que mayor nos
+0:09
+9 segundos
+convenga este pues es cuando ya podemos trabajar sobre el desarrollo de un
+0:16
+16 segundos
+sistema para Sopor generar nuestro dashboard con diferentes indicadores kpis métricas eh información
+0:26
+26 segundos
+desagregadas eh etcétera no entonces ahí utilizamos herramientas de análisis y toma de decisiones eh la herramienta que
+0:33
+33 segundos
+nosotros estamos vamos a utilizar para hacer este trabajo nos va a permitir realizar este desde la
+0:42
+42 segundos
+transformación de los datos este la construcción de nuestro repositorio centralizado y la generación de de
+0:50
+50 segundos
+nuestros datos en un en en indicadores de tipo eh dasboard okay muy bien Bueno y como se observa
+0:58
+58 segundos
+Pues hay eh puntos o etapas cíclicas como es la parte de de estar evaluando
+1:05
+1 minuto y 5 segundos
+de forma periódica eh los nuevos eh registros o la nueva información que se ha estado dando este se extrae a través
+1:14
+1 minuto y 14 segundos
+de estos procesos periódicos y automatizados definidos en programas
+1:20
+1 minuto y 20 segundos
+básicamente este y se eh De aquí pues se pasa para acá para estar Estableciendo
+1:29
+1 minuto y 29 segundos
+este la actualización de esta nueva información al al dato centralizado básicamente es agregación de nuevos
+1:37
+1 minuto y 37 segundos
+datos extraídos de este proceso y este pues aquí también no podemos vamos a poder estar accediendo a Nueva
+1:44
+1 minuto y 44 segundos
+información conforme periódicamente esto se vaya actualizando entonces la parte del etl que vamos a trabajar es
+1:51
+1 minuto y 51 segundos
+básicamente partiendo desde el punto yo ya tengo mi fuente de datos no voy a hacer el proceso de de de recolección
+1:59
+1 minuto y 59 segundos
+periódica porque no lo trabajamos ahorita este de manera sobre bases de datos sino más bien hicimos una investigación de una base de datos que
+2:07
+2 minutos y 7 segundos
+ya existiera en este caso es el Data wareh Perdón es el el dataset de cago que cada quien investigó y y y bajó y
+2:16
+2 minutos y 16 segundos
+sobre ese dataset que vamos a cargar en la herramienta de Power este bi o t que
+2:23
+2 minutos y 23 segundos
+la la herramienta que desean utilizar yo lo las demostraciones que voy a hacer van a ser a través de de
+2:30
+2 minutos y 30 segundos
+de Power bi no entonces una vez cargado ahí hacemos te brinda este herramientas
+2:38
+2 minutos y 38 segundos
+para que tú puedas hacer una extracción específica o sea como es una una base de
+2:44
+2 minutos y 44 segundos
+datos o un dataset que está pues plano básicamente no hay este restricciones de integridad referencial ni mucho menos O
+2:53
+2 minutos y 53 segundos
+sea no no es una base de datos de relacional Más bien es un es es una hoja eh en formato Generalmente en
+3:02
+3 minutos y 2 segundos
+SB que trae integrado muchísima información o sea trae integrada ya todas las fuentes requeridas Entonces
+3:09
+3 minutos y 9 segundos
+vamos a buscar la manera a través de esas herramientas que ofrece la la la el software de de Power bi Cómo
+3:18
+3 minutos y 18 segundos
+hacer una extracción específica que nos ayude a lograr un modelo y sobre ese modelo Entonces ya hacemos la la la
+3:28
+3 minutos y 28 segundos
+construcción visual de nuestros indicadores Okay muy bien Bueno pues
+3:35
+3 minutos y 35 segundos
+continuamos entonces pues hay distintas arquitecturas que que nos van a a permitir generar un Data Warehouse el
+3:43
+3 minutos y 43 segundos
+que nosotros vamos a manejar aquí pues es totalmente centralizado no y es una simulación totalmente académica porque
+3:49
+3 minutos y 49 segundos
+en la vida real pues se trabaja con pues se les conoce también como granjas de servicio o de servidores donde tú tienes
+3:58
+3 minutos y 58 segundos
+una una específica para tus bases de datos un servidor específico para tus bases de datos relacionales Otras donde
+4:07
+4 minutos y 7 segundos
+después de hacer el procesamiento van y generan un Data Warehouse donde se centraliza todo es in situ este y se
+4:15
+4 minutos y 15 segundos
+está procesando para fines específicos no pero también sabemos que existen los servicios en la nube también podemos
+4:23
+4 minutos y 23 segundos
+hacer integración híbrida de servicios dentro de la organización en un estatus físico con algo virtual no este incluso
+4:32
+4 minutos y 32 segundos
+dentro de la organización tenemos eh supercomputadoras las cuales podemos virtualizar totalmente Y es de manera interna no estamos trabajando con
+4:40
+4 minutos y 40 segundos
+servicios en la nube pero sí con con virtualización de recurso este de Hardware y softw bueno más bien de
+4:47
+4 minutos y 47 segundos
+Hardware para establecer pues n cantidades de servicios no y de servidores que trabajan dentro de la organización Pero bueno pues vamos a ver
+4:56
+4 minutos y 56 segundos
+de qué arquitecturas son las más utilizadas en la en la definición de los Data Warehouse entonces básicamente la arquitectura pues va a establecer lo que
+5:05
+5 minutos y 5 segundos
+es el diseño estructural y funcional es Cómo se definen estos Data Warehouse para recopilar integrar almacenar y
+5:13
+5 minutos y 13 segundos
+acceder a los datos que vienen de otras fuentes no entonces la más simple y la tradicional pues es la monolítica o
+5:22
+5 minutos y 22 segundos
+centralizada que básicamente pues es un repositorio central que almacena toda la información consolidada Entonces estos repositor
+5:30
+5 minutos y 30 segundos
+este por lo general están dentro de la organización en un servidor este específico que está trabajando para esta
+5:38
+5 minutos y 38 segundos
+función entonces también tenemos los este arquitecturas que van por capas entonces puede ser que que yo trabaje mi
+5:47
+5 minutos y 47 segundos
+dara Warehouse de forma centralizada pero empiezo a hacer divisiones de tareas entonces estas divisiones de
+5:53
+5 minutos y 53 segundos
+tareas tienen que ver con este pues tengo una base de datos que es para que lo utilizo de manera integral o
+6:01
+6 minutos y 1 segundo
+intermedia como un intermediario para generar el el preprocesamiento de los datos que ahora sí lo voy a almacenar de
+6:09
+6 minutos y 9 segundos
+manera persistente entonces en esta staging Area lo que hago pues son datos que se van a estar sobrescribiendo No
+6:16
+6 minutos y 16 segundos
+porque se utiliza de manera intermedia para este procesar y garantizar que lo que llegue a nuestro servidor de Data
+6:25
+6 minutos y 25 segundos
+Warehouse centralizado pues sea realmente correcto que no vaya a haber ning una ninguna
+6:31
+6 minutos y 31 segundos
+situación errónea no o algún dato algún detalle que pudiera presentarse lo estamos tratando de este de poder
+6:40
+6 minutos y 40 segundos
+combatir en este punto entonces las ods que se encuentran aquí abajito que también es otro tipo de base de datos
+6:48
+6 minutos y 48 segundos
+representa una Capa intermedia para datos operativos pues como los datos operativos generalmente se van dando en
+6:56
+6 minutos y 56 segundos
+el en el tiempo o sea pues son más dinámicos Por así decirlo porque es la operación diaria de nuestra organización
+7:04
+7 minutos y 4 segundos
+ese pues establece esta Capa intermedia para ir capturando ciertas periodicidad de información para decir Ah okay Hasta
+7:13
+7 minutos y 13 segundos
+aquí punto y se integra hasta aquí punto y se integra Y así sucesivamente Pues el la el Data
+7:20
+7 minutos y 20 segundos
+Warehouse que es la la el almacén completo de los históricos y las capas segmentadas para consultas específicas
+7:28
+7 minutos y 28 segundos
+que son dar a mar entonces imagínense que es pues una fotografía de algo específico que me interesa eh mantener
+7:37
+7 minutos y 37 segundos
+aquí esto Para qué se utilizan el Data Warehouse va a ser el repositorio completo donde se va a centralizar la
+7:45
+7 minutos y 45 segundos
+información o los datos que yo recupere de distintas Fuentes entonces tengo muchas Fuentes o tengo muchos Hilos de
+7:53
+7 minutos y 53 segundos
+datos este y los trato de integrar en un solo almacén con un procesamiento que se
+8:00
+8 minutos
+realiza para que queden sobre las estructuras de manera adecuada Okay pero también en las organizaciones que se ven
+8:10
+8 minutos y 10 segundos
+este con requerimientos de generar esos Data Mars Generalmente Son son organizaciones bastante grandes donde
+8:19
+8 minutos y 19 segundos
+quiere decir que que que su nivel de transacción este pues es bastante fuerte o sea
+8:26
+8 minutos y 26 segundos
+están continuamente generando nuevos datos en el Data Warehouse que van a ser
+8:33
+8 minutos y 33 segundos
+explotados para diferentes auditorios o para diferentes clientes o para diferentes usuarios entonces si yo
+8:42
+8 minutos y 42 segundos
+coloco un trabajo intensivo de recopilación de datos y lo que tenga que hacer para que lleguen correctos al Data
+8:51
+8 minutos y 51 segundos
+Warehouse y además el mismo Data Warehouse se está accediendo para explotar la información en los sistemas
+8:58
+8 minutos y 58 segundos
+de soporte iones en esta conversión de de de datos crudos en datos ya agrupados
+9:05
+9 minutos y 5 segundos
+o resumidos en indicadores en capí en en este pues en alguna métrica pues se
+9:13
+9 minutos y 13 segundos
+vuelve bastante pesado el trabajo para para un solo servidor o servicio entonces se busca hacer un balance de
+9:21
+9 minutos y 21 segundos
+cargas para si ya se tienen las audiencias bien definidas No si ya sabemos que hay un grupo de gente que va
+9:28
+9 minutos y 28 segundos
+a estar con consultando este muy fuertemente para marketing otra para producción otro para
+9:35
+9 minutos y 35 segundos
+eh seguimiento de clientes recompensas etcétera entonces mejor lo que hago es que no compitan por recursos ni
+9:44
+9 minutos y 44 segundos
+infraestructura mejor le genero una infraestructura específica a cada quien para que la respuesta de procesamiento
+9:51
+9 minutos y 51 segundos
+de la información este y su y el manejo de su sistema de soporte de decisiones
+9:58
+9 minutos y 58 segundos
+pues sea lo más ágil y brinde la información de manera adecuada que no se cuelgue que no se este que no sea un
+10:05
+10 minutos y 5 segundos
+sistema que se crache en un momento dado por falta de recurso por competencia del mismo no entonces eh estas eh Data Mars
+10:13
+10 minutos y 13 segundos
+pues vienen representando como unos mini Data Warehouse pero su objetivo es simplemente extraer solamente una parte
+10:20
+10 minutos y 20 segundos
+de toda la integración que se tiene en el Data Warehouse para que lo procese cada uno cada una de las audiencias
+10:28
+10 minutos y 28 segundos
+específicas que tiene la organización y poder agilizar utilizar mejor nuestros recursos este y evitar problemas de de
+10:36
+10 minutos y 36 segundos
+procesamiento en un momento dado no entonces esa es la manera en como en muchas organizaciones también Sobre todo como les digo las que son grandes y las
+10:45
+10 minutos y 45 segundos
+que tienen una generación de datos intensivos pues se maneja no se organiza a través de diferentes capas donde cada una de estos
+10:54
+10 minutos y 54 segundos
+repositorios pues representa una función específica este lógicamente para poder
+11:01
+11 minutos y 1 segundo
+brindarle un mejor soporte al sistema de soporte de decisiones que van a que van a con el que van a
+11:10
+11 minutos y 10 segundos
+trabajar y esta misma parte Bueno lo que ahorita comentamos fue la función de las
+11:16
+11 minutos y 16 segundos
+capas en en un en una infraestructura de de dara Warehouse no donde no solamente es es el repositorio centralizado sino
+11:25
+11 minutos y 25 segundos
+que se distribuyen distintas tareas para que este pueda haber una mayor agilidad eficiencia desempeño etcétera no lo que
+11:34
+11 minutos y 34 segundos
+ya platicamos ahorita entonces esto también constituye a una eh a una arquitectura distribuida entonces dice
+11:42
+11 minutos y 42 segundos
+los datos se almacenan y se procesan en múltiples sistemas que van a estar trabajando juntos como un todo no entonces el usuario final ni cuenta se
+11:51
+11 minutos y 51 segundos
+va a dar que tenemos esta identificación de repositorios por función o roles ni tampoco se va a dar cuenta de de cómo
+12:00
+12 minutos
+está hecha su integración y que forma parte de una capa de arquitectura distribuida eh ellos lo que van a saber
+12:09
+12 minutos y 9 segundos
+o van a valorar es que tiene muy buen soporte muy buen desempeño este y la pueden ejecutar sin problemas No desde
+12:16
+12 minutos y 16 segundos
+donde manden Llamar a su a sus eh sistema de soporte de decisiones no Entonces dice aquí los Data Mars
+12:24
+12 minutos y 24 segundos
+distribuidos que se derivan del Data Warehouse podrían representar una arquitectura distribuida especialmente si cada dataart es gestionado y
+12:33
+12 minutos y 33 segundos
+consultado de manera independiente que así se realiza por eso es que hacemos dat Mars porque la intención es que cada eh
+12:42
+12 minutos y 42 segundos
+grupo de de partes interesadas que requieran eh soporte eh de decisiones o
+12:49
+12 minutos y 49 segundos
+requiera un sistema de soporte de decisiones este pues tenga de su información específica pues Y luego como
+12:58
+12 minutos y 58 segundos
+ya sabemos Pues hay muchos servicios que podemos contratar que que no requieren que nosotros tengamos de manera física
+13:08
+13 minutos y 8 segundos
+este pues la infraestructura tecnológica que la soporta y necesaria para hacer las eh estos almacenes de datos o estos
+13:17
+13 minutos y 17 segundos
+más pequeños como los datamars o los ods o los Station Este Entonces se da el que podamos utilizar
+13:28
+13 minutos y 28 segundos
+eh infraestructura en la nube No entonces son los Cloud Data Warehouse y ya te ofrecen además de esta infraestructura de almacenamiento
+13:35
+13 minutos y 35 segundos
+centralizado Pues también te ofrecen las herramientas para poderlo gestionar de manera adecuada no entonces algunos de
+13:42
+13 minutos y 42 segundos
+los más conocidos son de de Amazon aws reds eh tenemos snowflake y de
+13:50
+13 minutos y 50 segundos
+Google pues bigquery no Entonces dice el Data Warehouse opera en la nube utilizando servicios escalables y gestionado gestionados con como
+13:59
+13 minutos y 59 segundos
+snowflake eh Google bequer y Amazon red chip entonces y todos estos no son aislados además ustedes pudieran decidir
+14:08
+14 minutos y 8 segundos
+este Qué servicios se quedan de manera local si si ya eh es mejor opción dado que ustedes van a investigar y van a
+14:16
+14 minutos y 16 segundos
+determinar si el costo beneficio de tener algo físico Con respecto algo en
+14:23
+14 minutos y 23 segundos
+la nube es mejor o no y bajo qué condiciones y entonces ustedes pudieran tener una arquitectura híbrida no y
+14:31
+14 minutos y 31 segundos
+totalmente distribuida Okay muy bien Seguimos
+14:38
+14 minutos y 38 segundos
+avanzando bien pues lo anterior eh iba con respecto a lo que lo que son las las
+14:46
+14 minutos y 46 segundos
+la infraestructura que va a sostener la recolección y y la reunión de distintas fuentes de datos en un en un solo
+14:55
+14 minutos y 55 segundos
+almacén centralizado distribuido físico o en cap perdón
+

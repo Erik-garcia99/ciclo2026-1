@@ -1,0 +1,344 @@
+muy bien entonces estábamos viendo a la la parte de la del porcentaje no el cálculo creamos la medida con New
+0:09
+9 segundos
+measure eligiendo la tabla fac ventas para que ahí se cree la medida y veíamos
+0:17
+17 segundos
+entonces la la forma de dividir no la función es dividir y requiere este pues dos atributos no entonces el primer
+0:26
+26 segundos
+atributo es la venta por producto desagregada y el
+0:35
+35 segundos
+siguiente el siguiente atributo perdón el siguiente parámetro es un cálculo
+0:42
+42 segundos
+donde hago la sumatoria pero removiendo los filtros Por qué Porque ya no quiero que sea este por producto sino Quiero el
+0:50
+50 segundos
+contenido general no Entonces para para ello este requiero eh realizar Esa esa
+0:58
+58 segundos
+métrica entonces vuelvo a seleccionar aquí y es este porcentaje de ventas aquí se observa como porcentaje de ventas
+1:06
+1 minuto y 6 segundos
+porque si yo quiero ver ese texto en lugar de este simplemente aquí le damos un un clic en la flechita y le decimos
+1:15
+1 minuto y 15 segundos
+rename for this visual Entonces eso me permite cambiar el nombre de la etiqueta visual en el elemento pero eh acá se
+1:24
+1 minuto y 24 segundos
+conserva como fue generada la la métrica no y lo mismo pasó en total ventas pues
+1:30
+1 minuto y 30 segundos
+acá la métrica dice total ventas este pegado Entonces yo lo lo
+1:38
+1 minuto y 38 segundos
+simplemente lo despegue para porer hacerlo visualmente más atractivo Y ahora cómo generamos esta esta reglas de
+1:46
+1 minuto y 46 segundos
+colores este también Ah bueno aquí no no no aplica la parte de objetivos todavía hasta acá lo vamos a ver pero bueno
+1:55
+1 minuto y 55 segundos
+entonces cómo establecimos estos estos colores para para ello Pues debe de estar seleccionada la la tabla y nos
+2:04
+2 minutos y 4 segundos
+vamos a la parte aquí en visualization tenemos el siguiente icono el primer icono nos va a mostrar todos
+2:12
+2 minutos y 12 segundos
+los elementos visuales y según el elemento visual elegido pues es con lo que vamos a trabajar Respecto a los
+2:18
+2 minutos y 18 segundos
+datos que queremos visualizar ahora cómo establezco reglas para estos contenidos
+2:25
+2 minutos y 25 segundos
+pues para estos elementos que se están mostrando aquí pues nos vamos al este icono dentro también de
+2:33
+2 minutos y 33 segundos
+visualización o visualization que dice form format your visual entonces aquí
+2:40
+2 minutos y 40 segundos
+vamos a elegir la parte de general y está la parte visual y también hay una parte genérica a ver Oh no perdón es en la
+2:49
+2 minutos y 49 segundos
+parte visual en la parte visual tenemos este campo que se llama cell Element entonces aquí nosotros nos va a
+2:58
+2 minutos y 58 segundos
+mostrar tod la serie es por las que podemos generar reglas tengo el producto tengo el total de ventas y tengo el porcentaje yo elegí total de ventas para
+3:07
+3 minutos y 7 segundos
+que me hiciera este como semáforo no entonces aquí Viene un icono de función donde nosotros vamos a poder establecer
+3:14
+3 minutos y 14 segundos
+Esas reglas le damos clic ahí y yo elegí que fuera sobre el background ustedes lo pueden hacer sobre el background sobre
+3:22
+3 minutos y 22 segundos
+eh el font color el un databar eh un icono o pueden usar
+3:30
+3 minutos y 30 segundos
+todos si ustedes quisieran No yo en este caso elegí solamente background colors y funciona de la siguiente manera este hay
+3:38
+3 minutos y 38 segundos
+reglas ya preestablecidas este que son la parte de gradientes y solo va difuminando el
+3:44
+3 minutos y 44 segundos
+color a partir de lo que se evalúe este está lo que son reglas y está lo que es
+3:51
+3 minutos y 51 segundos
+el el valor de campo Entonces yo elegí reglas como para establecer un semáforo
+3:57
+3 minutos y 57 segundos
+no y que aplique solo a a valores y luego dice qué campo eh qué campo es el que vamos a afectar
+4:07
+4 minutos y 7 segundos
+pues es el de El de total ventas o también aquí se puede buscar y se elige no total ventas Entonces qué establecí
+4:16
+4 minutos y 16 segundos
+bueno yo le dije si es mayor o igual a 1500 y y menor o igual a 10,000 ambos números porque Generalmente por defecto
+4:25
+4 minutos y 25 segundos
+viene en porcentaje pero yo aquí no estoy manejando porcentaje Estoy manejando números Entonces le digo que
+4:31
+4 minutos y 31 segundos
+su valor va a ser verde verde intenso Entonces el siguiente Rango si va de
+4:38
+4 minutos y 38 segundos
+1000 a 10000 a menos de 10000 entonces su color va a ser un verde tenue Luego
+4:46
+4 minutos y 46 segundos
+si va de mayor o igual a 500 y menor a 1000 entonces su color será un color
+4:52
+4 minutos y 52 segundos
+amarillo y si va de mayor igual a cero y menor a 500 entonces su valor es rojo Y
+5:00
+5 minutos
+esa es la manera en como creé este este semáforo conforme veo este Eh pues cómo
+5:09
+5 minutos y 9 segundos
+han sido distribuidos y los porcentajes que le corresponden Okay luego viene este esta
+5:17
+5 minutos y 17 segundos
+tarjeta o Card entonces me vengo acá a la parte de visualización elijo esta que dice cart o
+5:25
+5 minutos y 25 segundos
+tarjeta dependiendo del idioma que tengan ustedes Entonces al momento de de insertarlo aquí este ustedes Eh pues
+5:34
+5 minutos y 34 segundos
+pueden poner cualquier campo totalizador En este campo En este caso Perdón aquí se ve activada la métrica de total
+5:42
+5 minutos y 42 segundos
+ventas y una una tarjeta por lo general siempre va a estar mostrando un valor
+5:49
+5 minutos y 49 segundos
+específico y va a ser referente al valor totalizado de algo de algo que Se generó
+5:57
+5 minutos y 57 segundos
+a través de una métrica no en este caso ese algo es nuestro valor total de o la
+6:04
+6 minutos y 4 segundos
+sumatoria total de eh los productos vendidos entonces aquí podemos constatar
+6:11
+6 minutos y 11 segundos
+que tenemos 7,000 eh productos vendidos y el valor total de ventas es 7,000
+6:18
+6 minutos y 18 segundos
+igual no eh Pues a este se le puede cambiar el Generalmente todos los gráficos vienen en
+6:26
+6 minutos y 26 segundos
+eh fondo blanco y y en los textos negros ustedes pueden
+6:33
+6 minutos y 33 segundos
+jugar con estos detalles Bueno aquí también generalmente se pone el nombre del de la métrica o del atributo que
+6:42
+6 minutos y 42 segundos
+utilizan Si se quiere cambiar de nombre y y es lo que se se le sugiere que se haga para que tenga mayor significado
+6:50
+6 minutos y 50 segundos
+para quien vaya a estar visualizando este dashboard y y pues sepa de de con toda certeza De qué se está hablando
+6:57
+6 minutos y 57 segundos
+entonces simplemente rename visual Y ustedes cambian el nombre Okay entonces aquí en la parte
+7:06
+7 minutos y 6 segundos
+general en en la parte format your visual este pues tenemos efectos Entonces yo le puse en efectos lo
+7:15
+7 minutos y 15 segundos
+encendí y le puse un color diferente este le le lo establecí cierta
+7:22
+7 minutos y 22 segundos
+transparencia en la parte de sombra eh lo también lo activé y le puse un color
+7:30
+7 minutos y 30 segundos
+este y ustedes pueden ir jugando con todo esto y dejándolo de la manera en como ustedes les les parezca más
+7:37
+7 minutos y 37 segundos
+atractivo y que pueda ayudar al tomador de decisiones Pues a sentirse más este sentir que tiene un tablero organizado
+7:46
+7 minutos y 46 segundos
+amigable etcétera no entonces Bueno hasta ahí va va ese componente el
+7:54
+7 minutos y 54 segundos
+siguiente componente es un kpi entonces me regreso acá en visualization pero me regreso a la parte de agregar datos a tu
+8:02
+8 minutos y 2 segundos
+a tu visual o a tu elemento visual entonces este kpi es este es este componente o este elemento visual que
+8:11
+8 minutos y 11 segundos
+también se agrega acá entonces aquí me pide tres valores para componer o para
+8:19
+8 minutos y 19 segundos
+constituir o configurar nuestro elemento visual Capi me va a pedir eh el valor el
+8:27
+8 minutos y 27 segundos
+valor sobre el cual va a actuar me va a pedir la tendencia un eje de tendencia que que ese es el que hemos elegido Y
+8:35
+8 minutos y 35 segundos
+ahorita lo vamos a explicar y un objetivo no Cuál es el objetivo que se persigue con ese kpi
+8:44
+8 minutos y 44 segundos
+Okay entonces este kpi si se observa con respecto al total global de ventas y con
+8:51
+8 minutos y 51 segundos
+respecto al a la sumatoria total este de ventas por producto vemos que sí difiere
+8:59
+8 minutos y 59 segundos
+y por qué está pasando esto Bueno pues este kpi no está mostrando la suma total de 7000 porque su configuración lo
+9:07
+9 minutos y 7 segundos
+obliga a centrarse en una representación específica de la tendencia de product ID
+9:14
+9 minutos y 14 segundos
+Nosotros hemos establecido que la tendencia de seguimiento va a ser a través de del product ID y en este caso
+9:22
+9 minutos y 22 segundos
+pues va a seleccionar el valor más destacado del conjunto de datos es decir el más alto o el último como un
+9:29
+9 minutos y 29 segundos
+indicador clave y hemos establecido una métrica de valor del del conjunto O sea
+9:36
+9 minutos y 36 segundos
+qué objetivo se persigue para decir que se está cumpliendo con
+9:43
+9 minutos y 43 segundos
+ese con con ese Este factor de rendimiento no y que se puede contrastar
+9:51
+9 minutos y 51 segundos
+con los verdes que aquí vemos entonces vamos a a desmenuzar un poquito más esto
+9:57
+9 minutos y 57 segundos
+a ver aquí le puedo dar clic y y le digo muéstramelo como una tabla aquí en los tres puntitos le damos clic y le digo
+10:05
+10 minutos y 5 segundos
+muéstramelo como una tabla para poder este determinar un poquito más lo que
+10:11
+10 minutos y 11 segundos
+estamos viendo acá entonces básicamente este kpi está calculando una sumatoria
+10:19
+10 minutos y 19 segundos
+total de ventas que si se observa aquí en Fac ventas este kpi está conformado
+10:25
+10 minutos y 25 segundos
+por este valores tendencias y objetivos y la parte de valores trae consigo a
+10:33
+10 minutos y 33 segundos
+este total de ventas con filtro vamos a ver de qué de qué va Ah aquí lo que pasaba es que si yo
+10:42
+10 minutos y 42 segundos
+elegía un valor distinto a al más bien si me iba a la parte no
+10:49
+10 minutos y 49 segundos
+global sino a la parte específica ahorita me voy Bueno me regreso de una vez
+10:59
+10 minutos y 59 segundos
+aquí si yo me si yo elegía este 1 me simplemente me ponía Blank no no
+11:07
+11 minutos y 7 segundos
+daba más información entonces lo único que hice fue generar un este un atributo
+11:16
+11 minutos y 16 segundos
+calculado donde le dijera si es Blank entonces regrésame este la Bueno más bien si la
+11:24
+11 minutos y 24 segundos
+sumatoria de de de total ventas es blan Este Entonces cámbiamelo por el valor
+11:31
+11 minutos y 31 segundos
+cero si no entonces cámbiamelo por el valor que le corresponde entonces eh
+11:38
+11 minutos y 38 segundos
+debido al al product ID Este voy a regresar acá a este a esta eje de
+11:46
+11 minutos y 46 segundos
+tendencias la configuración eh de la tendencia se va a ir sobre el valor más
+11:55
+11 minutos y 55 segundos
+Ah de mayor significado o quien haya cumplido con el el objetivo establecido Entonces esto se puede confirmar al ver
+12:04
+12 minutos y 4 segundos
+esta tabla adjunta no donde cada producto tiene un valor agregado de ventas y donde solamente los significativos pues van a corresponder
+12:13
+12 minutos y 13 segundos
+al este al último elemento establecido no Entonces es una como configuración específica que se realiza sobre el kpi
+12:22
+12 minutos y 22 segundos
+cuando hace el análisis de de la tabla base Bueno aquí me pone todo en cero porque
+12:31
+12 minutos y 31 segundos
+yo elegí un solamente un un registro Pero si ya eh elijo la totalidad de él
+12:40
+12 minutos y 40 segundos
+simplemente me vengo acá a show Table y ahora sí ya ya puedo obtener toda la información
+12:48
+12 minutos y 48 segundos
+este generada y aquí vemos el objetivo 20 para todos es de 100 o sea todos
+12:54
+12 minutos y 54 segundos
+tendrían que haber cumplido solamente hay dos que cumplen dos eh dos tipos de producto y son estos dos
+13:03
+13 minutos y 3 segundos
+elementos los que se muestran acá que es como si fuera el tipo de tendencia central no aquí es donde se observan y
+13:11
+13 minutos y 11 segundos
+todos los demás están fuera de esa tendencia establecida como representativa o con mayor desempeño es
+13:18
+13 minutos y 18 segundos
+por eso que quedan fuera y aquí nos dicen Bueno pues no no cumple con el requerimiento salvo esta no esta y esta
+13:26
+13 minutos y 26 segundos
+pero este no logra eh establecerla como parte del indicador
+13:32
+13 minutos y 32 segundos
+porque el kpi elige el último máximo establecido pero al elegir el total ahí
+13:39
+13 minutos y 39 segundos
+sí me pone dos elementos de tendencia que son los que podemos visualizar acá no es el e y el J los que cumplen y los
+13:49
+13 minutos y 49 segundos
+demás van decayendo en el tiempo Okay bueno entonces esa sería la forma en
+13:55
+13 minutos y 55 segundos
+Cómo podemos este generar un kpi que nos va a estar
+14:01
+14 minutos y 1 segundo
+representando ese valor de desempeño representativo y y lo mismo acá podemos
+14:08
+14 minutos y 8 segundos
+cambiar el rename for visual para darle un nombre que le haga sentido al tomador de
+14:15
+14 minutos y 15 segundos
+decisiones Okay ahora viene el el hacer este gráfico que también como les digo cada
+14:24
+14 minutos y 24 segundos
+componente va relacionado con el anterior o todos ayudan a explicar este para interpretar adecuadamente cada
+14:32
+14 minutos y 32 segundos
+uno de los elementos entonces para este pues he utilicé este Line shart que básicamente me dice Cuál va a ser tu
+14:41
+14 minutos y 41 segundos
+valor sobre el eje de las x que va a describir los puntos que acá se se correspondan y el eje de las y que van a
+14:50
+14 minutos y 50 segundos
+ser el detalle de la información no entonces acá yo puse a a Din producto es su descriptor
+14:59
+14 minutos y 59 segundos
+por eso palo
+

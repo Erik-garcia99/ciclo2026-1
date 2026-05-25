@@ -1,0 +1,65 @@
+
+slide 1: el problema: el problema es que los pequeniso negocios, negocios que toda colonia tiene, desde la tienda de abarrarotes, ferreteria, etc. no sabes, no conocen al 100% de la mercancia que tienen, los inventarios en muchas ocaciones se realizan con papel, algunos cuentan con algun software que puede que ayuden en este proceso, pero este tipo de software operan y dan respuestan por lo que pasa por caja o hasta que el personal realiza el inventario manualmente, dandose cuente que fue victima de robo hormiga, en estas operaciones el error humnao esta en cada paso y en cada paso se va acumulando 
+
+
+slide 2: segmento de mercado: nuestro principal cliente, como se menciono es el emprendedor pequenio a mediano, los cuales no son tan expertos en tecnologia, mexico cuenta con cerca de 1.2 millones de este tipo de establecieminetos, entre el nicho que mas se ceuntra presente son abarrotes, minisupers, farmacias independientes, ferreterias, estos son algunos de los negocios que mas abundan y de los cuales muchos tienen mercancia de alto valor, 
+
+slide 3: propuesta de valor: el sistema sera principalmente una aplicacion movil, como se menciono el sismtea va dirigido a personal que no convive mucha con tecnoloiga mas alla de su celular, el sistema movil es lo suficiente simple y descriptivo para que el usuario no se sienta frustado sobre cosas tecnicas, el sistema fisicamente cuenta con 2 placas de desarrollo, una celda de carga y un modulo que traduce esa carga enviado en pulsos electricos en pulsos digitales los culaes se pueden interpretar. 
+
+
+el sistema cuenta con los sigueintes funcionalidades clave, como el inventario automatico, al tener fisicamente el producto encima de el, el sistema sabe a todo movento cunado y cuanto producto se ha retirado de su estante, tiene un monitorea constante, cada dia genera un reporte diario de los movimientos que se guardan, por si es necesario consultarlos, 
+
+el principal atractivo es la deteccion del robo hormiga, mediante algoritmos que toman en cuenta, la cantidad de retiro, el horario, puede determinar si se trata de un robo hormiga, el sistema no lo detiene que mantiene informado y pretende que el duenio tenga mas atencion con el fin de reducirlo, 
+
+sugerencia con IA, el sismtea aprendera del negocio, aprende sus tendencias, sobre la rotacion del producto, el sistema con estos datos dara sugerencias sobre en tal estaciones suguiere tener mas stock de ciertos productos o menos stock, mover este prodcuto junto a este, dar sugerencias para que las perdidas sea las minimas o la ganancia la maxima. el usaurio no habla con un bot, si no que hay un apartado donde aparecen esas sugerecias
+
+modo auto stock: en cada producto se puede tener el correo o numero telefonico del proveedor, al detectar un humbral el cual se le dice al programa si baja de este humbra mi stock esta bajo entonces, para siempre tener stock de los productos mas importantes el sistema en automatico solicita, con la cantidad necesario para abasterse. 
+
+modo offline: en el caso que el sistema se quedase sin internet puede seguir operando, guardando todod la interaccion con el mundo real, internamente, una vez que el sistema detecte que el wifi haya llegado entonces empezara a enviar los datos poco a poco hasta estar de vuelva al dia. 
+
+reportes automatico, general PDF, Excel listos para un analisis mas profesional o solo para detectar como va el negocio. 
+
+pug and play: el sistema solo sera necesario ponerlo a la luz y en un instante estara trabajando, lo unico mas dificil sera configurar el nombre con el que se identificara el nuevo nodo y el sistema esta preparado para operar. 
+
+
+slide 4: ventaja competitiva: 
+
+ utiliza codigos o escaner, por lo que es un ahorro en dispositivos, aparte de operacion, no es necesario el manualmnte registrar cada producto, el sistema lleva el conteo tanto cunado se agrega nuevo producto como cunado este se retira mediante el peso 
+
+el sistema puede operar aun sin internet, durante el periodo sin internet el usuario no podra intereactuar con el sistema, claro, pero el sistema aun sigue registrando los retiros y detectando irregugalidades 
+
+trazabilidad, en el caso de una anomalia, el sistema mediante un mapa de calor dara fecha y hora en que algo que registro el sistema fue sospechozo, asi el personal no tendra que adivinar la hora o ver toda la grabacion, soo centrarse cerca de la hora y fecha que la aplicacion indica 
+
+precio accesible para PyMEs, un sismtepa que completo puede rondar los 3,000 pesos mexicanos, que si se hacen la cuenta, en lo que aproxmandamente un negocio puede perder por robos hormigas o un mal inventario puede aacender maas que eso, en 1 o 2 meses se recuperaria la inversion y el negocio tendra mas control 
+
+multi-sucrusal, el cliente mediante su aplicacion puede ver lo que esta pasando en todas sus sucursales, puede tener tantas como el cliente desee, lo ideal es 1 nodo master por sucrusal y nodos esclavos o que sean necesarios 
+
+IA in tecnisismo: las sugerenciaas son en un contexto que cualquier persona pueda entenderlo, no genrea cosas tecnicas, sugerencias con sentido que alguina persona pueda darserlo pero en este caso el sistema tiene todo el conetexto  esta sugerencia surgui depues de analizar varios escenarios dandonos el que mejor resultados dara al usuario 
+
+
+slide: 5: anlisis de competencia:  en el mercado hay pocos sistemas que compiten directamente con nuestro producto y menos en el mercado dirigido, existen companias que comercializan productos que realizan algo parecido, pero son producto muy caros los cuales pueden rondar desde lo 800 hasta los 5,000 dolares, para un comerciante esto es un costo imposible, aqui es en donde entrea RackIQ con un producto que cuesta menos de 150 dolares y 8 dolares al mes de operacion,  
+
+
+slide 6: modelo de negocio:
+Tres fuentes de ingreso. Hardware: vendemos el nodo físico a $3,200 MXN con margen del 52%. SaaS recurrente: desde $299 MXN al mes por sucursal con alertas, reportes y sugerencias de IA. Y servicios de instalación y soporte. Para un cliente con 3 nodos, el año 1 representa $13,200 MXN, y del año 2 en adelante $3,600 MXN anuales sin costo de hardware.
+
+
+
+slide 8: 
+Tres fases. Primero validamos en 3 a 5 negocios conocidos para generar casos de éxito reales. Después canvasing en zonas comerciales de Tijuana, marketing en TikTok e Instagram con demos en vivo — el producto es muy visual, la gente ve el peso cambiar en tiempo real. Y a largo plazo, alianzas con distribuidores que quieren datos de consumo de sus propios clientes
+
+
+slide 9: viabilida financiera 
+el costo del dispotivo fisico rondara los 1500 pesos contanto las tarjetas, fuentes de poder, celdas, cases, modulos de lectrua, etc.. 
+
+el cual sera vendido en 3500 pesos dejando un margen bruto de hardware del 53%, si es la primera compra, el nodo vendra con los 5 estantes sin costo, pero cada estante individual seria un cosot de 350 pesos
+
+se tiene nodos seceundarios, los cuales solo cuentan con 1 placa de desarrollo y la capacidad de los 5 estantes, con un costo de 2200 pesos, 
+
+
+del lado del software se tiene un paquete de planes donde se tiene un plan free trial, donde esta lo minimo pero lo indispensable, tenemos el plan pro el cual tiene un cosot de 299 pesos al mes, el cual tiene alertas, reportes con mucho mas detalle y la sugerecias IA, el plan business cuenta con multi-sucrusal, analisitca avanzada, este modelo es un ingreso recurrengo y seguro, 
+
+En SaaS, con el plan Pro a $299 pesos al mes, al mes 6 con solo 8 clientes ya tenemos $2,392 pesos de ingreso recurrente. Al mes 12 con 35 clientes llegamos a $10,465 pesos mensuales. Y al mes 24 con 130 clientes son $38,870 pesos al mes recurrentes, con un costo cloud de apenas $2,400 pesos. El modelo es rentable desde el primer cliente."
+
+
+

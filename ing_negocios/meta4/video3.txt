@@ -1,0 +1,335 @@
+Muy bien pues la anterior era las arquitecturas o que eh permitiría el
+0:06
+6 segundos
+almacenamiento centralizado de los datos que se recolectan de diferentes Fuentes y vimos que sus arquitecturas van desde
+0:15
+15 segundos
+la este tradicional o centralizada hasta aquellas híbridas que permiten eh
+0:22
+22 segundos
+distribución que permiten este eh que que esté físicamente o que esté eh
+0:30
+30 segundos
+virtualmente en la nube o tener ciertos servicios en la nube y ciertos servicios de manera local no Entonces eso es con
+0:38
+38 segundos
+respecto a la a la forma en cóm eh se almacenaría o recolectar los datos ahora vamos a ver las tecnologías que una vez
+0:47
+47 segundos
+que ya se tiene el el los datos recolectados e integrados en una sola en
+0:56
+56 segundos
+un solo almacenamiento que es el Data Warehouse eh este o los datamart en su en su dado caso este Pues ahora hay que
+1:05
+1 minuto y 5 segundos
+ver De qué manera extraemos los datos de ahí para poderlos mostrar visualizados en indicadores capis en
+1:14
+1 minuto y 14 segundos
+métricas que den respuesta los objetivos clave que se han definido con las partes interesadas y que puedan formar o
+1:23
+1 minuto y 23 segundos
+constituir la base de lo que es el un sistema de soporte de decisiones no Entonces para estas tecnolog ías de se
+1:31
+1 minuto y 31 segundos
+les conoce como tecnologías de procesamiento de datos para business intelligent o inteligencia de negocio y estas son tecnologías que se basan en
+1:40
+1 minuto y 40 segundos
+herramientas olap o estas online analytical processing estas han sido diseñadas para habilitar el análisis
+1:47
+1 minuto y 47 segundos
+multidimensional este de grandes volúmenes de datos entonces estas tecnologías este permiten a las
+1:55
+1 minuto y 55 segundos
+organizaciones transformar datos en conocimiento útil facilitando la toma de decisiones estratégicas Y operativas entonces aquí ya nos desprendemos un
+2:04
+2 minutos y 4 segundos
+poco de lo que es el el este las consultas de datos a través de sql de
+2:11
+2 minutos y 11 segundos
+lenguaje sql para pues ver otras otras técnicas o otras formas de de poder acceder a estos datos de poder generar
+2:20
+2 minutos y 20 segundos
+este ciertas medidas ciertos cálculos etcétera y vamos a ver que la parte de de Power bi que es donde yo voy a estar
+2:28
+2 minutos y 28 segundos
+desarrollando eh los ejemplos pues son bastante amigables No bastante fáciles
+2:35
+2 minutos y 35 segundos
+este e intuitivas incluso para usuarios no técnicos obviamente conociendo pues este Eh pues cómo se utiliza no de
+2:43
+2 minutos y 43 segundos
+manera adecuada pero no no necesitan a lo que voy es que no necesita ser un una persona un ingeniero en sistemas o un
+2:52
+2 minutos y 52 segundos
+ingeniero en software un ingeniero en computación para poderlo utilizar siempre y cuando pues sepa encontrar las
+3:00
+3 minutos
+las opciones adecuadas y me refiero a la explotación de los datos una vez que estos ya están constituidos en un Data
+3:06
+3 minutos y 6 segundos
+Warehouse porque para la para gener el dara Warehouse y toda la infraestructura el llenado y todo lo que ya vimos en su
+3:14
+3 minutos y 14 segundos
+marco de trabajo pues ahí sí se requiere conocimientos este técnicos para poder desarrollar Okay entonces con el primero
+3:23
+3 minutos y 23 segundos
+que vamos a iniciar es el el enfoque rolap que es un relational online Eh
+3:31
+3 minutos y 31 segundos
+processing entonces básicamente este roll app pues es una un enfoque este
+3:37
+3 minutos y 37 segundos
+basado en olap pero que este que utiliza pues como Por así decirlo pues bases de
+3:45
+3 minutos y 45 segundos
+datos relacionar o más más que bases de datos relacionales tiene un enfoque relacional sobre las nuevas estructuras
+3:52
+3 minutos y 52 segundos
+y modelos que vamos a utilizar que aquí se observa no Entonces si ustedes lo observan ustedes que ya han trabajado con bases de datos y que las han
+4:00
+4 minutos
+diseñado Pues estamos viendo básicamente tablas este y que están relacionadas entre sí no por integridad referencial
+4:09
+4 minutos y 9 segundos
+Entonces lo único que podemos decir es que estas tablas este pues ya no son conocidas simplemente
+4:18
+4 minutos y 18 segundos
+por HM por la entidad que la representan en sí sino más bien hay un enfoque donde te dice eh todo el detalle generado de
+4:27
+4 minutos y 27 segundos
+eventos o o de registros que sean han hecho van a formar parte de una tabla de hechos y la información detallada para
+4:35
+4 minutos y 35 segundos
+poderla conocer es decir aquí hay puras claves y algunos H hechos específicos No pero si yo quiero darle más sentido y
+4:43
+4 minutos y 43 segundos
+significado a esa información pues entonces tendría que eh relacionarme a a las dimensiones que van a contener Por
+4:52
+4 minutos y 52 segundos
+así decirlo como un catálogo descriptivo de esos hechos generados no es muy es un enfoque muy parecido al de basado
+5:00
+5 minutos
+datos relacionalos salvo que el de las relacionales pues este lleva como ese seguimiento operativo de lo que se
+5:08
+5 minutos y 8 segundos
+genera específicamente en cada uno de los hilos de la diseñados en la organización y este es un enfoque
+5:15
+5 minutos y 15 segundos
+integral no tomo todos los hilos o los hilos Silos de datos que me interesan para resolver esa esos
+5:23
+5 minutos y 23 segundos
+objetivos claves y los integro en en esta Estructura No entonces eh Para ello se utilizan las eh los los modelos
+5:33
+5 minutos y 33 segundos
+basados en dimensiones como como lo mencioné y que pueden ser de tipo estrella o que o que pueden ser de tipo copo de nieve donde el de estrella es
+5:42
+5 minutos y 42 segundos
+totalmente desnormalizar y el de copo de nieve este lleva una Eh pues las reglas de normalización para evitar
+5:50
+5 minutos y 50 segundos
+dependencias parciales o transitivas y este y pues se utiliza pues las mismas
+5:57
+5 minutos y 57 segundos
+reglas de normalización para generar eh dichos dichas estructuras no Entonces dice que es ideal para organizaciones
+6:06
+6 minutos y 6 segundos
+con grandes volúmenes de datos que ya tienen bases de datos relacionales robustas no O sea ya tengo las fuentes y las quiero explotar de cierta manera
+6:15
+6 minutos y 15 segundos
+necesito integrar no no solamente lo que tiene mi mi base de datos es suficiente sino que necesito integrar datos de
+6:22
+6 minutos y 22 segundos
+otras bases datos dentro de mi misma organización y la solución pues es un Data Warehouse no entonces aquí este
+6:29
+6 minutos y 29 segundos
+Pues a manera de de ejercicio académico lo vamos a hacer con los Data perdón con los dataset o con el dataset que ya
+6:37
+6 minutos y 37 segundos
+extrajeron ustedes de cago o de otro repositorio de de datos públicos
+6:45
+6 minutos y 45 segundos
+y este y podemos utilizar hacer una pues una simulación o poder generar estos
+6:52
+6 minutos y 52 segundos
+estos pasos este que vendrían siendo una réplica escalable totalmente hacia volum
+6:59
+6 minutos y 59 segundos
+de datos más grandes no como los que se trabajan en las organizaciones okay
+7:06
+7 minutos y 6 segundos
+continuamos Entonces tenemos molap entonces en molap bueno anterior Aquí tengo que pues los que
+7:15
+7 minutos y 15 segundos
+trabajan muy bien con rolap es Power bi t y los servicios de mysql server perdón
+7:24
+7 minutos y 24 segundos
+sql no perdón es Microsoft sql y luego tenemos los molap que es
+7:31
+7 minutos y 31 segundos
+multimedia online analytic processing entonces dice los datos se almacenan en cubos multidimensionales
+7:39
+7 minutos y 39 segundos
+preprocesador el rendimiento de las consultas y permite análisis extremadamente rápidos pero requiere un almacenamiento adicional y procesamiento
+7:48
+7 minutos y 48 segundos
+previo y también maneja otro lenguaje este para el el poder hacer la extracción de la información y
+7:55
+7 minutos y 55 segundos
+básicamente pues como se observa aquí tenemos eh distintas dimensiones del cubo donde cada uno de sus lados
+8:03
+8 minutos y 3 segundos
+almacenará información específica pero que toda esa información en cada uno de sus lados al
+8:10
+8 minutos y 10 segundos
+final del día puede relacionarse no Entonces como aquí se observa en el ejemplo dice pues tengo productos que están organizados por geografía o
+8:20
+8 minutos y 20 segundos
+regiones y en el tiempo tan tenido tal comportamiento llámelo ustedes ventas compras este solicitudes requerimientos
+8:27
+8 minutos y 27 segundos
+lo que sea no entonces cada uno de sus lados puede ser enlazados a través de estos eh lenguajes por ejemplo para sql
+8:36
+8 minutos y 36 segundos
+server se maneja mdx que es un lenguaje similar al sql pero que permite el manejo de de
+8:47
+8 minutos y 47 segundos
+multidimensional que es el híbrido es la parte que me va a permitir manejar tanto cubos de información como este modelos
+8:56
+8 minutos y 56 segundos
+relacionales o modelos este basados en dimensiones como es hechos y y y
+9:04
+9 minutos y 4 segundos
+dimensional pero este y me brinda ese soporte no para ello es ambas tienen esta funcionalidad que es
+9:12
+9 minutos y 12 segundos
+Oracle spas y myq perdón Microsoft sql no para la parte cubos es análisis
+9:20
+9 minutos y 20 segundos
+Services para la parte cubos y también para la parte de modelos de estrella o copo de nieve no Entonces cuál la
+9:29
+9 minutos y 29 segundos
+ventaja que ofrece olap Pues que combina lo va va a combinar como herramienta lo mejor de rolap y de molap entonces dice
+9:38
+9 minutos y 38 segundos
+que almacena los datos más detallados en una base de datos relacional rolap Y las agregaciones que es por eso que aquí
+9:46
+9 minutos y 46 segundos
+también se las agregaciones se generan eh capas de agregación de cálculos por
+9:53
+9 minutos y 53 segundos
+eso es que dice aquí es extremadamente rápidos porque yo ya voy a tener incluso registros de información que ya me
+10:01
+10 minutos y 1 segundo
+totalise o me guarde información que a través de índices las las las accedo y rápido puedo mostrarlos no
+10:11
+10 minutos y 11 segundos
+O sea no gasto en ese eh en ese proceso de de preparación para
+10:18
+10 minutos y 18 segundos
+poder generar el cálculo se sino que forma parte de estas Este de estos elementos dentro del cubo entonces eh
+10:28
+10 minutos y 28 segundos
+qué más dice las agregaciones en cubos multidimensionales y Esto va a permitir un balance tanto en el rendimiento como
+10:35
+10 minutos y 35 segundos
+en la flexibilidad en el uso que le quiera dar en un momento dado Okay muy
+10:42
+10 minutos y 42 segundos
+bien y acá vamos a ver algunas este una tabla comparativa dice muestras ventajas
+10:50
+10 minutos y 50 segundos
+desventajas y casos de uso Entonces tenemos con respecto al al modelo de almacenamiento rolab es totalmente
+10:58
+10 minutos y 58 segundos
+relacional donde puede ser normalizado o desnormalizar estrella o cubo o copo de
+11:04
+11 minutos y 4 segundos
+nieve el molap maneja totalmente cubos multidimensionales y la parte híbrida
+11:11
+11 minutos y 11 segundos
+pues que sería olap Pues sería tanto relacional como multidimensional la velocidad de consulta pues es más lento porque se va
+11:20
+11 minutos y 20 segundos
+se tienen que ir haciendo los cálculos en el momento en el que se solicita okay Para rolap en molap como les digo los
+11:29
+11 minutos y 29 segundos
+cálculos son previamente hechos ya están en registros y solamente son accedidos y este pues tiene un nivel intermedio el
+11:38
+11 minutos y 38 segundos
+la escalabilidad para rolap es más alta este porque se pueden ir integrando nuevas dimensiones podemos ir creciendo
+11:46
+11 minutos y 46 segundos
+nuevas tablas de hechos Eh pues es un modelo bastante flexible el molap no está muy
+11:54
+11 minutos y 54 segundos
+determinado muy específico O sea si yo ya ya establecí que la estructura va a guardar C ciertos cálculos con base a
+12:01
+12 minutos y 1 segundo
+cierta población Universo de datos que tengo que estar procesando Pues eso ya no cambia no O sea O tendría que cambiar el cubo específicamente Entonces si es
+12:10
+12 minutos y 10 segundos
+más veloz y es muy rápido pero si es más limitado en su crecimiento en su escalabilidad O tendría que generar otro
+12:17
+12 minutos y 17 segundos
+cubo nuevo no Y en este en la parte híbrida dado que maneja tanto relacional
+12:24
+12 minutos y 24 segundos
+este como multi pues es se considera alta flexible pues tanto eh rolap Como el híbrido es muy flexible y el menos el
+12:34
+12 minutos y 34 segundos
+menos eh flexible vendría siendo molap requerimientos de Hardware relativamente bajos Casi casi pues si si
+12:43
+12 minutos y 43 segundos
+de este Power bi da este soporte pues ya se imaginarán que puede correr hasta en nuestras propias computadoras Entonces
+12:51
+12 minutos y 51 segundos
+los requerimientos no son tan exigentes a diferencia de de de los servicios y requerimientos de de Hardware que que
+13:00
+13 minutos
+solicit molap eso sí y en la de en la de olap este en la híbrida pues ahí sí
+13:07
+13 minutos y 7 segundos
+están más balanceados no Entonces vamos a continuar con el ejemplo práctico hasta aquí ya hemos visto la parte
+13:16
+13 minutos y 16 segundos
+teórica Por así decirlo este de esta última unidad y ahora vamos a ver cómo aplicarlo con aquello que ya hicimos en
+13:24
+13 minutos y 24 segundos
+la meta 2.2 no Y cómo llevarlo algo este que ya se
+13:31
+13 minutos y 31 segundos
+aplique bien y con base al al Marco que ya les les comenté al marco de trabajo
+13:39
+13 minutos y 39 segundos
+para la construcción de un Data Warehouse este y también con base a esta meta 2.2 ustedes ya este aplicaron el
+13:47
+13 minutos y 47 segundos
+marco de trabajo de Ever e Simon para lo que es la pues la generación de del
+13:55
+13 minutos y 55 segundos
+proceso de actividades para la toma de decisiones este pues vamos a a a generar nuestro Data Warehouse para finalmente
+14:03
+14 minutos y 3 segundos
+poder construir o generar un dashboard no que va a representar nuestro sistema de soporte de decisiones entonces con
+14:11
+14 minutos y 11 segundos
+base al marco de trabajo este que ya vimos en la en las diapositivas
+14:18
+14 minutos y 18 segundos
+anteriores el primer paso tenía que ver con la definición de las necesidades del negocio No que ese paso está muy
+14:26
+14 minutos y 26 segundos
+relacionado a lo que veíamos en el marco de la toma de decisiones que es en la fase de inteligencia no Entonces a
+14:33
+14 minutos y 33 segundos
+través de conocer las necesidades del negocio es cómo se establece el objetivo que persigue la construcción del Data
+14:41
+14 minutos y 41 segundos
+Warehouse con base a dichos planteamientos se establecen Los criterios para definir la estructura y
+14:48
+14 minutos y 48 segundos
+los datos que almacenarán eh que se almacenará en este Data Warehouse entonces un ejemplo va a ser este pues
+14:56
+14 minutos y 56 segundos
+yo estuve presentándoles como ejemplo un
+

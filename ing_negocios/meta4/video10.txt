@@ -1,0 +1,317 @@
+1 segundo
+entonces decíamos este aquí tenemos eh la el total de ventas por cada uno de
+0:09
+9 segundos
+los productos y como vemos este pues va muy de la mano a lo que observamos en el detalle de las tablas eh lo que podemos
+0:18
+18 segundos
+observar con las ventas más representativas que son estos dos productos que están también en el detalle marcado en este en verde Y cómo
+0:27
+27 segundos
+van decayendo las ventas de producto este según su su su descripción no entonces de forma global o sea porque se
+0:36
+36 segundos
+está comportando así y es ahí donde el tomador de decisiones pues se le puede dar noción de cómo está funcionando su
+0:43
+43 segundos
+negocio Okay Muy bien Entonces luego tenemos lo que es el el preguntas y
+0:51
+51 segundos
+respuestas que es básicamente un control que está acá que es la q y a y que
+0:58
+58 segundos
+Podemos agregar aá en en nuestro dashboard entonces hay muchas eh por por cuestiones de espacio este pues hay
+1:07
+1 minuto y 7 segundos
+muchas cosas que no hemos Eh observado no pudimos meter en este dashboard sin embargo aquí nos brinda y nos dice sabes
+1:15
+1 minuto y 15 segundos
+que a través del lenguaje natural tú puedes hacer tus propias preguntas acerca del comportamiento de datos y te va a generar de forma automática un
+1:23
+1 minuto y 23 segundos
+visualizador que corresponda o te de respuesta a ello y también te ofrece algunas preguntas con las que tú puedes
+1:29
+1 minuto y 29 segundos
+puedes empezar por ejemplo Cuál es el total de ventas por categoría si le damos clic aquí este pues ya nos dice no
+1:38
+1 minuto y 38 segundos
+Ah okay Este es el gráfico te lo puedo mostrar con un gráfico de barras y te digo la categoría que más vende y que
+1:46
+1 minuto y 46 segundos
+supera las 2000 ventas pues es la categoría 3 seguida de la categoría dos y muy pegada a ella la categoría un no y y ya
+1:55
+1 minuto y 55 segundos
+pues todo esto nos brinda indicios de poder este evaluar
+2:01
+2 minutos y 1 segundo
+eh otros Eh pues hacernos otros tipos de preguntas para ir indagando y que el tomador de decisiones pues pueda ir
+2:09
+2 minutos y 9 segundos
+tomando eh acciones y estrategias específicas para lograr sus objetivos establecidos no entonces
+2:17
+2 minutos y 17 segundos
+también este reacciona a a elegir por ejemplo aquí yo establezco a ver el producto C A qué categoría corresponde
+2:26
+2 minutos y 26 segundos
+Bueno pues a la categoría uno que es de las que menos está vendido entonces
+2:32
+2 minutos y 32 segundos
+Eh no ha logrado tampoco su su su meta esperada de 100 productos y aquí podemos
+2:41
+2 minutos y 41 segundos
+ver que la venta global de esa categoría pues corresponde a a 600 este unidades solamente y aquí se
+2:49
+2 minutos y 49 segundos
+puede observar no entonces todo va muy de la mano si le damos un clic fuera al punto específicamente elegido
+2:58
+2 minutos y 58 segundos
+pues ya podemos regresarlo todo como a lo anterior no que eso es parte lo que nos permite
+3:05
+3 minutos y 5 segundos
+hacer el modelo esta parte del del modelo este estrella no el poder generar
+3:12
+3 minutos y 12 segundos
+este tipo de asociaciones eh o vínculos entre las distintas tablas este pues permite que el el control aquí en en la
+3:22
+3 minutos y 22 segundos
+vista de reporte pues pueda responder este a a ciertos cálculos a partir de sus métricas
+3:30
+3 minutos y 30 segundos
+y al a la al filtro de de algo que elijamos no por ejemplo
+3:36
+3 minutos y 36 segundos
+Aquí he elegido este eh este valor de 100 de otros de los que fueron eh
+3:45
+3 minutos y 45 segundos
+bastante bien desarrollados acá en la parte de de la métrica eh Perdón del kpi
+3:53
+3 minutos y 53 segundos
+Se observa en cero Pero porque el kpi cuando se calcula para obtener el valor más representativo va a elegir el
+4:00
+4 minutos
+sin embargo Acá hay otra información que nos dice Ah okay Si si cumple con la con el total de ventas requeridas y con el
+4:09
+4 minutos y 9 segundos
+objetivo que es 100 y lo alcanza forma parte de la categoría 3 del producto y
+4:15
+4 minutos y 15 segundos
+aquí se observa su punto Okay nos regresamos acá a a los 7000 y Tenemos
+4:22
+4 minutos y 22 segundos
+también el el slicer que me va a ayudar a generar reportes por un periodo
+4:30
+4 minutos y 30 segundos
+establecido no entonces del primero de de enero del 2023 al al 20 de febrero
+4:41
+4 minutos y 41 segundos
+del 2023 este pues se llevaba un total de ventas de
+4:47
+4 minutos y 47 segundos
+3,510 la venta más representativa fue la de 750 que es lo que muestra acá pero está en rojo porque no han logrado
+4:56
+4 minutos y 56 segundos
+alcanzar su objetivo que son los los 1 500 productos vendidos que forman parte
+5:03
+5 minutos y 3 segundos
+de la categoría número tres y que vienen siguen siendo este a esa fecha el
+5:10
+5 minutos y 10 segundos
+producto e y J Pues los que más vendieron y así podemos ir particionando en el tiempo ir viendo la información
+5:20
+5 minutos y 20 segundos
+cómo evoluciona Y hasta qué punto se logra cumplir con el objetivo deseado no que básicamente casi fue casi fue al
+5:29
+5 minutos y 29 segundos
+término del del del periodo en el cual estamos evaluando este este
+5:36
+5 minutos y 36 segundos
+dashboard muy bien este Qué otros componentes se observan aquí pues textos textos para pues brindar más información
+5:44
+5 minutos y 44 segundos
+a manera que también textualmente podamos describir los elementos pues va a ser de ayuda a este a los tomadores de
+5:53
+5 minutos y 53 segundos
+decisiones no Entonces a esta parte la podemos llamar sistema de soporte de decisiones a través de un componente textbox que se encuentra en home en el
+6:01
+6 minutos y 1 segundo
+área de insert y aquí tenemos este textbox lo pegamos aquí y este pues lo he llamado sistema de soporte de
+6:10
+6 minutos y 10 segundos
+decisiones y aquí aquí un subtexto que dice control de Mando acerca del comportamiento de ventas de productos y
+6:18
+6 minutos y 18 segundos
+luego acá Aquí también hemos creado otro texto que ustedes observan Acá podemos
+6:25
+6 minutos y 25 segundos
+utilizar diferentes Fuentes diferentes tamaños colores de texto
+6:32
+6 minutos y 32 segundos
+negritas diferentes alineaciones etcétera También podemos utilizar este
+6:39
+6 minutos y 39 segundos
+viñetas lo que sea que se necesite ahorita sí me me muestra este en rojas
+6:48
+6 minutos y 48 segundos
+por el lo Pues el idioma no eh qué
+6:54
+6 minutos y 54 segundos
+más bueno Esto viene esto es parte de del componente que que ya lo vimos cuando hicimos el rename este del
+7:03
+7 minutos y 3 segundos
+control visual y este también es un un texto Okay entonces es todo lo que hemos agregado acá era lo que les decía este
+7:12
+7 minutos y 12 segundos
+análisis o este control de Mando va específicamente a ventas de por producto pero ustedes pudieran generar un nuevo
+7:20
+7 minutos y 20 segundos
+espacio que tenga que ver con el análisis de los clientes y agregar controles diferentes y elegir pues Pues
+7:29
+7 minutos y 29 segundos
+de las dimensiones y de las tablas de hecho lo que sea necesario para construir otro tipo de perspectiva
+7:38
+7 minutos y 38 segundos
+visual este este tipo de de de servicio se
+7:45
+7 minutos y 45 segundos
+puede publicar en powerb service pero si sí se requiere ahí una licencia o la
+7:51
+7 minutos y 51 segundos
+solicitud para utilizarlo como como estudiante no para poder hacer
+7:58
+7 minutos y 58 segundos
+publicación ahorita nosotros lo vamos a dejar hasta aquí pero s trae todo un sistema integrado para que esto lo puedan publicar en un servicio web y que
+8:06
+8 minutos y 6 segundos
+desde web se ha accedido por los clientes no por los usuarios finales para este pues para que puedan
+8:13
+8 minutos y 13 segundos
+interactuar con con este tipo de de sistema de soporte de decisiones Muy bien espero que les haya servido
+8:21
+8 minutos y 21 segundos
+Eh Pues esta este estos ejemplos para que puedan ustedes construirlos propios Entonces ahora me voy a cambiar a la
+8:29
+8 minutos y 29 segundos
+presentación para ver qué es lo que se espera que ustedes realicen como proyecto final Okay pues el proyecto final dice lo siguiente con base al
+8:39
+8 minutos y 39 segundos
+desarrollo en su meta 2.2 en la fase de inteligencia van a realizar lo siguiente el primer paso Pues como ya lo vimos en
+8:47
+8 minutos y 47 segundos
+cuando abordamos la parte teórica pues es la definición de las necesidades que tiene el negocio Y eso ustedes ya lo hicieron en la fase inteligencia en la
+8:56
+8 minutos y 56 segundos
+meta 2.2 que desarrollaron como equipo entonces van a elegir por lo menos dos objetivos que ya previamente fueron
+9:03
+9 minutos y 3 segundos
+definidos en esta fase en esta meta sobre y va a ser sobre los cuales van a desarrollar su sistema de soporte de
+9:11
+9 minutos y 11 segundos
+Decisiones El Paso dos van a aplicar la este la técnica de extracción
+9:18
+9 minutos y 18 segundos
+transformación y carga como lo vimos en los ejemplos para que puedan construir su modelo estrella entonces con base al dataset sobre el cual estuvieron
+9:26
+9 minutos y 26 segundos
+trabajando en la meta 2.2 van a desarrollar su modelo estrella cumpliendo las reglas descritas en este paso Quienes no utilicen Power bi pueden
+9:35
+9 minutos y 35 segundos
+utilizar el modelador de maql Community Services o cualquier otro modelador que les permita realizar un modelo de este
+9:43
+9 minutos y 43 segundos
+tipo que ya vimos que no son más que tablas que van a estar asociadas pero que que cambia que ahora hay una tabla
+9:51
+9 minutos y 51 segundos
+que centraliza todas las las los eventos que se llama tabla de hechos y que se va a conectar como a ciertos catálogos que
+9:59
+9 minutos y 59 segundos
+son desnormalizacion en bases de datos
+10:07
+10 minutos y 7 segundos
+relacionales ahora para generar el paso tres pues van a generar cálculos y medidas dax entonces van a realizar por
+10:15
+10 minutos y 15 segundos
+lo menos una columna calculada en alguna tabla donde ustedes decidan y dos medidas en dax Que obviamente pues van a
+10:23
+10 minutos y 23 segundos
+ser medidas que van a tener que utilizar ustedes para generar sus elementos visuales Y ya teniendo todo eso pues el paso
+10:32
+10 minutos y 32 segundos
+cuatro es desarrollar el sistema de soporte de decisiones donde deberán realizar un sistema de soporte de decisiones y los visualizadores
+10:40
+10 minutos y 40 segundos
+obligados a utilizar son tablas capis q y a Y slicer entonces además de
+10:48
+10 minutos y 48 segundos
+estos que son obligados ustedes van a tener que agregar dos más los que elijan que sean de su interés ahora qué van a
+10:57
+10 minutos y 57 segundos
+a Cuáles son los requerimientos de entrega Bueno pues deberán desarrollar un informe técnico donde vayan mostrando
+11:04
+11 minutos y 4 segundos
+Punto por punto y lo vayan explicando y desarrollando por ejemplo definir las necesidades del negocio Entonces se eligieron los siguientes objetivos
+11:13
+11 minutos y 13 segundos
+porque van a ayudar a la organización a medir monitorear y controlar y ahí ya pues explan ustedes su explicación paso
+11:20
+11 minutos y 20 segundos
+dos aplicar la técnica de etl para construir el modelo estrella entonces las transformaciones y divisiones de las
+11:27
+11 minutos y 27 segundos
+tablas realizadas fueron explicar por qué Y para qué Mostrar el modelo esquema completo ya con sus asociaciones o
+11:36
+11 minutos y 36 segundos
+vínculos entre tablas Como se muestra en el video paso tres general cálculos y medidas dax deberán explicar la
+11:44
+11 minutos y 44 segundos
+necesidad de las columnas calculadas y las medidas dax dónde se utilizarán Y cómo apoyarán en el desarrollo de su
+11:52
+11 minutos y 52 segundos
+sistema de soporte de decisiones paso cuatro eh desarrollar el sistema de soporte de decisiones deberán construir un Dash o control de mando con los
+12:01
+12 minutos y 1 segundo
+visualizadores requeridos y los que ustedes eligieron en el documento describirán su utilidad y la forma de
+12:08
+12 minutos y 8 segundos
+interpretarlo Finalmente El Paso cinco son las conclusiones como equipo de trabajo y deberán llegar a conclusiones respecto al desarrollo de este sistema
+12:16
+12 minutos y 16 segundos
+de soporte de decisiones Entonces el documento deberá contener una portada como página principal la cual contendrá su matrícula
+12:24
+12 minutos y 24 segundos
+y nombre completo de los miembros del equipo el desarrollo del documento deberá iniciar con subtítulos de cada
+12:32
+12 minutos y 32 segundos
+paso a realizar la última página deberá Mostrar las referencias Si las hubiera de las fuentes de información en las que
+12:39
+12 minutos y 39 segundos
+se estuvieron apoyando para realizar dicha actividad el formato del documento debe ser PDF y la fecha de vencimiento
+12:46
+12 minutos y 46 segundos
+será el 2 de diciembre hasta las 11:59 de la noche también no lo puse aquí pero también espero que me suban este pues el
+12:56
+12 minutos y 56 segundos
+archivo generado en Power bi o en W cualquiera que sea eh la herramienta que
+13:02
+13 minutos y 2 segundos
+hayan utilizado para generar su proyecto final entonces pues Hemos llegado al final jóvenes Muchísimas gracias Espero
+13:11
+13 minutos y 11 segundos
+que este curso les haya sido de de utilidad les les genere una noción amplia de lo que se espera eh en los
+13:20
+13 minutos y 20 segundos
+negocios y las necesidades de información que tienen y cómo estas tecnologías nos permiten ayudar al
+13:28
+13 minutos y 28 segundos
+tomador de de decisiones a como a resumir toda esa visión general del comportamiento de su organización de las
+13:36
+13 minutos y 36 segundos
+necesidades que hay y de cómo pueden ellos monitorear controlar sus objetivos Para ir trabajando sobre las estrategias
+13:45
+13 minutos y 45 segundos
+y las acciones que se requieran para lograr esas metas que ellos están establecido Muchísimas gracias jóvenes y
+13:53
+13 minutos y 53 segundos
+cualquier duda comentario escríbanlo por favor en el Foro de dudas ahí estaré dando seguimiento que tengan una
+14:00
+14 minutos
+excelente semana Bye bye

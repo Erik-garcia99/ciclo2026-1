@@ -1,0 +1,378 @@
+1 segundo
+entonces sobre este eh este esta fecha que hemos calculado para la tabla dim
+0:08
+8 segundos
+tiempo este ahora hacemos nuevas columnas entonces dijimos en column Tools dice New column se agrega la
+0:16
+16 segundos
+columna y me permite establecer el nuevo nombre del campo que se va a llamar año el cual lo vamos a traer de dim tiempo
+0:25
+25 segundos
+que es esta misma tabla y de date Okay entonces le da damos aquí clic en la
+0:31
+31 segundos
+palomita y solamente me va a extra Ah perdón y me y me falta aquí agregar la
+0:38
+38 segundos
+función que me va a permitir extraer solamente el el año de de toda la fecha
+0:45
+45 segundos
+que que contiene date Okay entonces se recalcula le dimos enter Y pues ya me
+0:52
+52 segundos
+trae el año que corresponde creamos otra este otra columna la cual la vamos a llamar
+1:01
+1 minuto y 1 segundo
+mes y le lo vamos a traer vamos a extraer el mes Este pero con el con un
+1:09
+1 minuto y 9 segundos
+formato definido entonces utilizamos la la función format y mandamos Llamar a
+1:15
+1 minuto y 15 segundos
+tiempo mandamos Llamar a date coma y le vamos a decir que quiero extraer el
+1:25
+1 minuto y 25 segundos
+mes esto debe de ir entre comillas Okay le damos
+1:32
+1 minuto y 32 segundos
+enter y me trae el mes pero el nombre no este nos va a devolver el el establecer este formato estamos diciendo que
+1:40
+1 minuto y 40 segundos
+queremos que nos regrese el nombre del mes que le corresponde Okay agregamos otra
+1:49
+1 minuto y 49 segundos
+columna para Podemos agregar Incluso traernos el mes numérico puces podemos
+1:54
+1 minuto y 54 segundos
+decirle número borramos el nombre de la columna por default le decimos número
+2:03
+2 minutos y 3 segundos
+mes y le decimos mandamos llamada a la función mon y luego a la tabla dim de la fecha
+2:13
+2 minutos y 13 segundos
+completa damos enter y se genera el número ahora queremos
+2:20
+2 minutos y 20 segundos
+este que nos devuelva el trimestre al que corresponde Entonces lo vamos a llamar
+2:27
+2 minutos y 27 segundos
+trimestre trimestre vamos a llamar Eh bueno lo vamos a hacer de la siguiente manera para agregar el
+2:36
+2 minutos y 36 segundos
+trimestre correspondiente pero al cuarto específico le agregamos una q pero para concatenar este el valor numérico que
+2:45
+2 minutos y 45 segundos
+nos devuelva la función con con la q no para saber a qué cuarto de mes de perdón
+2:53
+2 minutos y 53 segundos
+de de trimestre o periodo corresponde eh ese ese ese MS Okay entonces agregamos
+3:02
+3 minutos y 2 segundos
+un unperson me ver aquí agregamos el erson para hacer la
+3:10
+3 minutos y 10 segundos
+concatenación le escribimos la función quarter para que extraiga el trimestre
+3:16
+3 minutos y 16 segundos
+de la tabla tiempo de la columna date y damos click enter y ya sabemos que enero
+3:25
+3 minutos y 25 segundos
+corresponde al cuarto número un este ahora vamos aaer el día nuevamente hacemos una
+3:33
+3 minutos y 33 segundos
+columna y le llamamos
+3:37
+3 minutos y 37 segundos
+día le decimos igual a day a day abrimos
+3:46
+3 minutos y 46 segundos
+paréntesis y le decimos este la tabla dim tiempo date cerramos paréntesis y
+3:55
+3 minutos y 55 segundos
+damos click y ya tenemos los días okay Entonces ya tenemos la tabla
+4:02
+4 minutos y 2 segundos
+generada y ahora pues vamos a ver cómo terminar de construir el modelo para
+4:09
+4 minutos y 9 segundos
+construir el modelo ahora ya tenemos las tablas hechas las dimensiones específicas que fueron en este caso
+4:17
+4 minutos y 17 segundos
+fueron calculadas a través de funciones dax y estas ya eran Campos establecidos Este pero ahora qué es lo que vamos a
+4:25
+4 minutos y 25 segundos
+hacer Pues nos vamos a ir a la vista modelo porque en la vista modelo pues tenemos que relacionar las dimensiones
+4:32
+4 minutos y 32 segundos
+con la tabla de hechos y aquí está la la que hemos calculado Entonces cómo lo hacemos por
+4:39
+4 minutos y 39 segundos
+ejemplo son todos tenemos la tabla de hechos la cual se relaciona
+4:46
+4 minutos y 46 segundos
+eh la el producto ID se va a relacionar con
+4:53
+4 minutos y 53 segundos
+el producto ID de este de Din producto no Entonces tenemos
+5:00
+5 minutos
+este desde la tabla fa ventas el producto ID a la tabla Din producto que
+5:08
+5 minutos y 8 segundos
+es a través de su ya primaria no que es producto ID y dice que es su
+5:15
+5 minutos y 15 segundos
+cardinalidad es de muchos a muchos y que la
+5:22
+5 minutos y 22 segundos
+este que la dirección es en ambos lados ahora Aquí hay una inconsistencia no s está diciendo que
+5:31
+5 minutos y 31 segundos
+Eh pues que la cardinalidad de muchos a muchos pudiera va va a afectar este el
+5:38
+5 minutos y 38 segundos
+contenido de que estoy queriendo relacionar porque una dimensión aún cuando no es es bueno
+5:46
+5 minutos y 46 segundos
+más bien aún cuando es desnormalizar lo que sí no debería tener redundancia porque s va a funcionar como un tipo catálogo aunque tenga más datos
+5:55
+5 minutos y 55 segundos
+que en un momento dado pueda afectar la la dependencia o la transitividad pero como esta No no
+6:03
+6 minutos y 3 segundos
+es tan relevante aquí como en las bases de datos relacionales que haya dependencia o transitividad es porque
+6:11
+6 minutos y 11 segundos
+estas no son bases de datos transaccionales este almacén de datos es exclusivamente para explotar eh los
+6:18
+6 minutos y 18 segundos
+datos Y analizarlos desde diferentes perspectivas Entonces no va a haber este anomalías como veíamos en las bases de
+6:26
+6 minutos y 26 segundos
+datos en el diseño de base de datos relacionales cuando se presentaban anomalías de actualización de eliminación o de o de inserción Por qué
+6:36
+6 minutos y 36 segundos
+Porque no es objetivo su objetivo no es estar eh obteniendo transacciones su objetivo básicamente es este
+6:44
+6 minutos y 44 segundos
+proporcionar concentrar datos y que nosotros podamos manipularlos entonces eh dado este esta esta cuestión nosotros
+6:54
+6 minutos y 54 segundos
+necesitamos eh quedarnos con datos únicos para esta llave primaria Entonces vamos a darle Cancelar y nos vamos a ir
+7:03
+7 minutos y 3 segundos
+a aquí a la vista de tabla para volvernos a cambiar a Power query en Home le vamos a dar transform Data este
+7:12
+7 minutos y 12 segundos
+y le damos otra vez clic a transform Data para que nos lleve a Power query y vamos a elegir de dim producto
+7:21
+7 minutos y 21 segundos
+vamos a elegir e aquellos que son datos únicos No Entonces le vamos a dar A ver vamos a
+7:30
+7 minutos y 30 segundos
+dar clic aquí no a remove other columns No aquí remove
+7:40
+7 minutos y 40 segundos
+duplicates Entonces vamos a a a a eliminar aquellos registros duplicados entonces ahorita tengo 100 registros
+7:48
+7 minutos y 48 segundos
+pero pues debería de quedarme solamente con los primeros 10 que son los que representan a los datos únicos que tiene
+7:57
+7 minutos y 57 segundos
+este que tiene esta tabla no vamos a a regresarnos aquí le lo eliminé de los
+8:05
+8 minutos y 5 segundos
+pasos aplicados para regresarnos acá y le voy a dar clic aquí y vamos a
+8:13
+8 minutos y 13 segundos
+ver conteo aquí debería decirnos Cuántos son datos únicos máximo uno a distinct
+8:21
+8 minutos y 21 segundos
+distin es es la cuando ustedes recordarán que hacen consultas con sql
+8:29
+8 minutos y 29 segundos
+Pues de Select si nosotros queremos conocer los datos únicos que tiene una columna le agregamos la palabra o la
+8:37
+8 minutos y 37 segundos
+instrucción distinct y ya luego el nombre de la columna de la cual Quiero obtener datos distintos o sea los datos
+8:45
+8 minutos y 45 segundos
+únicos Por así decirlo este pues aquí se pueden observar que son 10 Entonces si es correcta la operación que me Está realizando si yo le doy aquí clic
+8:53
+8 minutos y 53 segundos
+derecho nuevamente y le digo que me remueva duplicados entonces solamente me quedo con 10 con 10 elementos Okay o 10
+9:02
+9 minutos y 2 segundos
+registros ahora acá en dim cliente este pues yo le voy a dar clic derecho a
+9:10
+9 minutos y 10 segundos
+bueno primero vamos a conocer Cuántos datos distintos tengo tengo 20 por lo tanto tendría que quedarme con 20 tuplas
+9:18
+9 minutos y 18 segundos
+entonces le vamos a dar un clic derecho y le decimos remove duplicates Y
+9:26
+9 minutos y 26 segundos
+sí me quedó con 20 este tuples entonces aquí no hay tanto problema por el detalle porque en realidad Cómo se
+9:34
+9 minutos y 34 segundos
+fueron presentando los hechos Pues esa es la la tarea de la tabla de hechos Aquí van a estar todo el el el
+9:41
+9 minutos y 41 segundos
+desagregado todos los eventos aquí se observa 100 columnas pero aquí estos que tienen esa función descriptiva o
+9:50
+9 minutos y 50 segundos
+contextual pues me quedo solamente con ella no con con aquellos datos que realmente se representan de manera
+9:58
+9 minutos y 58 segundos
+única muy bien entonces nuevamente le damos aquí clic a este botón para que se cierre y aplique la la transformación
+10:06
+10 minutos y 6 segundos
+que acabamos de hacer nuevamente y ya me pone todo en palomita y nuevamente nos vamos acá al modelo entonces en el
+10:14
+10 minutos y 14 segundos
+modelo pues elijo el producto ID y lo relaciono con el producto ID de de la
+10:22
+10 minutos y 22 segundos
+dimensión entonces acá ya me dice sabes queé pues ya no hay ese ese esa ventanita error podemos observar que la
+10:30
+10 minutos y 30 segundos
+cardinalidad va de muchos a uno y que la dirección del del filtrado cruzado Pues es de tipo simple no y que se hacen que
+10:40
+10 minutos y 40 segundos
+se hagan activas Okay entonces pues que nos va a permitir la cardinalidad de muchos
+10:48
+10 minutos y 48 segundos
+a uno pues Esto indica que un producto del lado de la dimensión este pues puede estar
+10:56
+10 minutos y 56 segundos
+relacionado con muchos productos del lado de la tabla de hechos eh el la dirección del filtro cruzado lo
+11:05
+11 minutos y 5 segundos
+que va a hacer es asegurar que todos los filtros que se apliquen a la dimensión se propaguen de
+11:12
+11 minutos y 12 segundos
+manera adecuada a la tabla de hechos Okay y que no sea al revés que esto es lo ideal y lo que buscamos en el modelo
+11:20
+11 minutos y 20 segundos
+estrella y hacer activa la relación pues es este se da por defecto porque es lo
+11:27
+11 minutos y 27 segundos
+que estamos buscando no que que ya quede generada le damos salvar y ya podemos ver que hay una una
+11:37
+11 minutos y 37 segundos
+relación entre ellas entonces Tenemos también la dimensión del cliente y hacemos exactamente el mismo paso
+11:44
+11 minutos y 44 segundos
+tenemos el cliente Bueno lo propagamos acá a cliente ID y también como ya
+11:51
+11 minutos y 51 segundos
+previamente hicimos la el tratamiento o la transformación eliminando duplicados pues ya no tenemos el problema de que
+12:00
+12 minutos
+nos mencionaba al al Un inicio no cuando teníamos información redundantes entonces ahorita ya se puede generar correctamente nos dice que la tabla eh
+12:09
+12 minutos y 9 segundos
+de de hecho se va a relacionar al mismo campo en la tabla del cliente que su cardinalidad va a ser de muchos a uno y
+12:18
+12 minutos y 18 segundos
+que este pues la dirección de filtros para que pueda propagarse el modelo pues va a ser simple este pues le damos salvar
+12:26
+12 minutos y 26 segundos
+también y vamos a ir con la del tiempo entonces esta debería tener una Déjenme
+12:34
+12 minutos y 34 segundos
+pues la de date bueno encontramos que es tenemos date pero vamos a regresarnos aquí a las
+12:42
+12 minutos y 42 segundos
+tablas porque un formato muy diferente al que tiene la tabla de hechos si yo abro
+12:49
+12 minutos y 49 segundos
+tabla de hechos Tengo este
+12:54
+12 minutos y 54 segundos
+formato Y si hablo eh la de tiempo tengo otro formato distinto entonces pues
+13:04
+13 minutos y 4 segundos
+vamos a ver si podemos cambiar el formato Okay aquí le vamos a poner una
+13:10
+13 minutos y 10 segundos
+fecha corta es bueno aquí es esto no me vine a a la vista en Tablas me fui a a
+13:19
+13 minutos y 19 segundos
+fac ventas en fecha el campo fecha que se observa aquí en la parte superior
+13:27
+13 minutos y 27 segundos
+tenemos la herramienta de columnas extendemos el el combobox y elegimos
+13:36
+13 minutos y 36 segundos
+short short date Okay Entonces ahora me voy a ir a dim tiempo me voy a elegir
+13:44
+13 minutos y 44 segundos
+date y voy a a estandarizar también a un short a un short date para estar manejando el el mismo tipo de dato y que
+13:53
+13 minutos y 53 segundos
+no haya Aunque no me me hace referencia un error pues vale más tener mismo este tipo de datos no entonces otra vez me me
+14:02
+14 minutos y 2 segundos
+regresé acá al modelo a la vista de modelo le di click del lado izquierdo en esta cintilla le di clic a modelo vista
+14:10
+14 minutos y 10 segundos
+modelo este vengo a la tabla de hechos selecciono fecha y de fecha este lo
+14:17
+14 minutos y 17 segundos
+arrastro hasta date de de tiempo y aquí este vamos a cambiar solamente
+14:26
+14 minutos y 26 segundos
+la vamos a ver si cambiamos la cardinalidad es es importante que
+14:32
+14 minutos y 32 segundos
+cambiemos la cardinalidad a de de muchos a uno no porque este para una misma
+14:42
+14 minutos y 42 segundos
+fecha eh como hicimos nosotros esta e dimensión de tiempo a partir de la
+14:49
+14 minutos y 49 segundos
+función calendar donde mandamos una fecha inicial o fecha final no hay datos repetidos Entonces no hay una fecha exclusiva Aquí sí se repiten muchas
+14:58
+14 minutos y 58 segundos
+fechas para una muy bien entonces como les comentaba la cardinalidad debía ser de muchos a
+15:07
+15 minutos y 7 segundos
+uno por qué porque la la tabla de dimensión de tiempo la construimos basadas en una función dax calendar
+15:16
+15 minutos y 16 segundos
+donde le dábamos una fecha inicial y una fecha final entonces eh Esa H esa función lo que nos va a regresar Es
+15:25
+15 minutos y 25 segundos
+todas las fechas que hay eh organizada o sea más bien Perdón no se van a repetir las fechas sino va de un día a otro
+15:33
+15 minutos y 33 segundos
+hasta que llega al límite establecido no de un punto inicial hasta el liente establecido entonces aquí no va a haber redundancia ya de origen sin embargo ha
+15:42
+15 minutos y 42 segundos
+la tabla de hechos sí puede ser que el día primero de enero Se realizaron muchísimas transacciones Entonces esta fecha va a estar repitiéndose
+15:50
+15 minutos y 50 segundos
+constantemente entonces de aquí viene muchos por eso es many to to One porque
+15:56
+15 minutos y 56 segundos
+de la tabla de hechos vienen muchos Eh muchas fechas repetidas pero en la
+16:03
+16 minutos y 3 segundos
+dimensión tiempo que es el el catálogo Por así decirlo Pues solamente hay una fecha que describe a dicha fecha no y el
+16:11
+16 minutos y 11 segundos
+sentido queremos que sea simple que queremos que cualquier cambio realizado aquí se propague hacia arriba Okay le
+16:19
+16 minutos y 19 segundos
+damos salvar y ahora sí pues ya tenemos nuestra nuestra nuestro modelo esta
+16:27
+16 minutos y 27 segundos
+parte pues no la vamos a utilizar de hecho Aquí está eh la tabla origen está HM escondida no se va a poder utilizar
+16:35
+16 minutos y 35 segundos
+en la parte del modelado Okay entonces ya hecho eso ahora vamos a ver cómo generar
+16:44
+16 minutos y 44 segundos
+este cómo generar algunos reportes a partir de esto
+

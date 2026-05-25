@@ -1,0 +1,7 @@
+-Wno-frame-address
+-mlongcalls
+-fno-builtin-memcpy
+-fno-builtin-memset
+-fno-builtin-bzero
+"-specs=/home/dmrx/Documents/ciclo2026-1/IoT/laboratorio/lab-taller14_temporizador_led/build/specs/picolibc.specs"
+-fno-rtti

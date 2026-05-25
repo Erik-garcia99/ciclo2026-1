@@ -1,0 +1,353 @@
+Bueno pues como les comentaba El ejemplo está basado en aquel ejemplo que les di cuando hicieron el la meta 2.2 que tenía
+0:08
+8 segundos
+que ver con este la venta al al pormenor entonces eh
+0:16
+16 segundos
+Me he basado en los siguientes objetivos clave entonces ejemplo el propósito pues es identificar el problema que va a
+0:23
+23 segundos
+resolverlo siguiente monitorear ventas de una tienda Okay entonces en este caso ustedes tomarían lo que ya hicieron en
+0:31
+31 segundos
+la fase de inteligencia para tratar de hacer la construcción de de su dara
+0:38
+38 segundos
+Warehouse en un inicio con base es objetivos claves planteados este y y ya luego el desarrollo su dasb entonces
+0:46
+46 segundos
+dice preguntas claves pues determinar Qué tipo de análisis se necesitan Entonces qué productos se venden más y
+0:54
+54 segundos
+cuáles son las tendencias mensuales no Okay entonces ese es el primer paso Y ustedes ya lo tien realizado en
+1:02
+1 minuto y 2 segundos
+este en su en su documento de la meta 2.2 Entonces vamos a ver cómo se aplica esto en en Power bi Entonces les pido
+1:12
+1 minuto y 12 segundos
+que abran su Power bi desktop y sigan los ejemplos Okay Enton ya que tienen abierto su este
+1:20
+1 minuto y 20 segundos
+Power bi Eh pues lo que vamos a hacer Es irnos a un reporte en blanco no vamos a crear un nuevo reporte y ahí ya nos va a
+1:29
+1 minuto y 29 segundos
+dar todas las herramientas necesarias para este poder cargar nuestra fuente de datos este trabajar la tabla o generar
+1:39
+1 minuto y 39 segundos
+nuevas tablas generar el modelo generar Pues un montón de cosas hasta llegar a a
+1:45
+1 minuto y 45 segundos
+la construcción de de nuestro dashboard Okay entonces bueno el primer paso es
+1:51
+1 minuto y 51 segundos
+plank report o reporte en blanco okay Y aquí ya nos va a decir este pues que puedo agregar
+2:00
+2 minutos
+este pues los datos que voy a utilizar para mis distintas fuentes de datos entonces aquí le doy en get dara en la
+2:09
+2 minutos y 9 segundos
+parte superior como observan y aquí podemos eh Buscar directamente si si ya sabemos el tipo de extensión que tiene
+2:18
+2 minutos y 18 segundos
+nuestro archivo si es una hoja de Excel o si es un ssb si tuviéramos incluso la base de datos este podemos acceder a
+2:27
+2 minutos y 27 segundos
+través de sql no eh Y pudiendo ser también Maya sql distintas Fuentes hay
+2:35
+2 minutos y 35 segundos
+Tenemos aquí como lo que vimos el molap Este es un conector hacia servicios de análisis Services de de sql server
+2:43
+2 minutos y 43 segundos
+entonces este me va a permitir conectarme un cubo de datos si lo tuviéramos disponible no entonces aquí eh Bueno mi archivo es un scb Entonces
+2:52
+2 minutos y 52 segundos
+le voy a dar aquí click incluso Por ejemplo si nosotros
+2:59
+2 minutos y 59 segundos
+tuviéramos Eh muchas tablas que todas simulando que cada tabla fuera una fuente de datos específica le damos
+3:07
+3 minutos y 7 segundos
+click aquí en more y le damos clic en folder entonces Eh Esto me va a traer todo los datos que
+3:16
+3 minutos y 16 segundos
+se encuentren o o todos los archivos que se encuentren dentro de un folder en nuestro caso o ahorita mi caso es un
+3:24
+3 minutos y 24 segundos
+archivo ssb Entonces le voy a dar conectar y me dice que busque mi archivo ssv Entonces estos son otros datos que
+3:33
+3 minutos y 33 segundos
+yo tengo este otra información que yo tengo en una carpeta que se llama práctica pude haber tomado esto pero el
+3:40
+3 minutos y 40 segundos
+archivo que requiero pues se encuentra acá en Download no y se llama daret ventas le vamos a dar
+3:50
+3 minutos y 50 segundos
+abrir y me dice que se está conectando y aquí ya me hace una demostración
+3:58
+3 minutos y 58 segundos
+de este de de los registros que tengo no que ya que
+4:05
+4 minutos y 5 segundos
+ya estuve trabajando No es ese proceso que les decía en el marco de trabajo este Cuando hacemos ahora sí que todo
+4:13
+4 minutos y 13 segundos
+desde cero que ya hemos identificado los hilos de de de datos este en la parte de
+4:21
+4 minutos y 21 segundos
+etl o de extracción transformación y carga este pues se programa específicamente en archivos batch que
+4:28
+4 minutos y 28 segundos
+van a estar corriendo eh periódicamente que son programados dentro del mismo sistema de bases de datos relacionales entonces ahorita nos hemos saltado todo
+4:36
+4 minutos y 36 segundos
+eso Porque este vamos a trabajar directamente con el archivo que ya descargamos
+4:42
+4 minutos y 42 segundos
+desde este desde cago o desde otro repositorio que nos ofrece archivos eh
+4:50
+4 minutos y 50 segundos
+Para análisis gratuitos no entonces eh Bueno pues ya viendo eso me podemos observar que este es la información que
+5:00
+5 minutos
+tengo eh de de de los datos que han sido acumulados entonces puedo ver que manejó
+5:08
+5 minutos y 8 segundos
+ventas su fecha eh productos su ID el nombre del producto la categoría en la
+5:15
+5 minutos y 15 segundos
+que se clasifica dicho producto el cliente que probablemente me compró este producto el nombre del cliente la región
+5:22
+5 minutos y 22 segundos
+en donde está tanto el cliente como el producto como donde se realizó la la venta la cantidad de del producto
+5:30
+5 minutos y 30 segundos
+solicitado por dicho cliente el precio unitario y el total de ventas entonces puedo observar todo esto me da acceso a
+5:39
+5 minutos y 39 segundos
+transformar los datos Y me da acceso a a cargar los datos directamente si yo le doy cargar vamos a seguir manejando
+5:48
+5 minutos y 48 segundos
+trabajando en el contexto de eh Power bi si yo le doy transformar datos eh se conecta lo que se llama Power query que
+5:56
+5 minutos y 56 segundos
+es otra herramienta que me va a ayudar a hacer trans informaciones de la información o de los datos que ahí tengo
+6:03
+6 minutos y 3 segundos
+Okay entonces en un inicio vamos a probar esta parte y ya luego vemos cómo nos vamos a al hacer la transformación
+6:12
+6 minutos y 12 segundos
+no Entonces le vamos a dar load para que se cargue entonces dice que bueno pues está
+6:22
+6 minutos y 22 segundos
+haciendo la carga no no esperamos unos minutitos
+6:30
+6 minutos y 30 segundos
+en lo que hace la carga dice que se cargaron 100 registros entonces acá del lado de lado
+6:39
+6 minutos y 39 segundos
+izquierdo Tengo este permítanme del lado izquierdo tengo esta
+6:47
+6 minutos y 47 segundos
+estas iconos eh uno que es para el la la vista de reporte que es esta parte que vamos a ver un poquito más adelante y
+6:56
+6 minutos y 56 segundos
+tenemos la vista de tablas entonces la vista de tabla amente Pues acá me muestra el dataset y aquí tengo lo que
+7:05
+7 minutos y 5 segundos
+son este los atributos de dicha tabla no Entonces me dice que
+7:11
+7 minutos y 11 segundos
+eh lo que son numéricos como cantidad cantidad precio unitario total
+7:19
+7 minutos y 19 segundos
+de ventas ustedes los van a observar con un con un símbolo eh de sumatoria o básicamente los que son e numérico no
+7:28
+7 minutos y 28 segundos
+incluso hasta el cliente se los puedes contar los puedes sumar puedes hacer eh algún tipo de cálculo sobre ellos los datos que son más descriptivos pues ahí
+7:36
+7 minutos y 36 segundos
+ya no ya no me pone ninguna información al respecto muy bien entonces una vez que
+7:44
+7 minutos y 44 segundos
+hemos cargado los datos como ya lo vimos este en nuestra herramienta de Power bi Pues el siguiente paso va a ser
+7:52
+7 minutos y 52 segundos
+aplicar la técnica de extracción transformación y carga para construir el modelo estrella pero antes de hacerlo
+8:01
+8 minutos y 1 segundo
+pues Qué es un modelo estrella un modelo estrella como bien observan pues es el diseño de base de datos dimensionales
+8:08
+8 minutos y 8 segundos
+utilizando en Bueno es muy utilizado en sistemas de Data warehousing y en business intelligence Entonces esto nos
+8:15
+8 minutos y 15 segundos
+va a permitir organizar los datos en dimensiones donde una de esas dimensiones son tablas de hechos que es
+8:23
+8 minutos y 23 segundos
+la tabla central como se observa en el esquema la cual va a contener datos numéricos o incluso son métricas algún
+8:30
+8 minutos y 30 segundos
+tipo de cálculo Cómo son las ventas los ingresos y las cantidades y este va a incluir llaves foráneas que va a ser eh
+8:38
+8 minutos y 38 segundos
+estas conexiones a a tablas de de Dimensión no donde cada una de las
+8:46
+8 minutos y 46 segundos
+tablas de Dimensión este pues son las estructuras que van a almacenar la información que describen a estas tablas
+8:54
+8 minutos y 54 segundos
+de hechos Entonces es el lo que va a brindar el contexto a esos datos por ejemplo productos clientes tiempos va a
+9:02
+9 minutos y 2 segundos
+ser a nivel detalle y son totalmente desnormalizar quiere decir que cada una de las tablas además de tener ese
+9:11
+9 minutos y 11 segundos
+contexto descriptivo como fuera un catálogo también va a contener otras columnas esa misma tabla que pudieran representar pues cualquier otro tipo de
+9:19
+9 minutos y 19 segundos
+información que complemente a la tabla de hechos pero este pues se hace énfasis que son desnormalizar Porque al
+9:27
+9 minutos y 27 segundos
+observarlas pudiéramos encontrar que hay esas dependencias transitivas o parciales con la llave con la llave
+9:35
+9 minutos y 35 segundos
+primaria no Entonces dice que esta llave Perdón esta tabla de hechos que es la central se conecta a múltiples tablas
+9:43
+9 minutos y 43 segundos
+dimensionales y es por ello O de ahí la analogía de que este pues su modelo es un típico modelo de estrellas no porque
+9:52
+9 minutos y 52 segundos
+tenemos un centro y cada una de las puntas ha sido conectada a una de las dimensiones que va a tratar de explicar
+10:00
+10 minutos
+o dar significado a los datos eh almacenados en en la tabla de hos Okay ahora vamos a ver cómo hacer esto con el
+10:09
+10 minutos y 9 segundos
+ejemplo que estamos manejando Okay me cambio a Power bi Okay entonces aquí ya estamos en de
+10:18
+10 minutos y 18 segundos
+nuevo en en la tabla que habíamos cargado previamente y ahora lo que queremos es hacer una transformación
+10:24
+10 minutos y 24 segundos
+entonces aquí en Home tenemos esta en el área de de queries tenemos este icono que dice transformar datos Entonces
+10:33
+10 minutos y 33 segundos
+nosotros ya estamos eh acá en en el en el módulo de la vista de tabla de la
+10:40
+10 minutos y 40 segundos
+tabla que cargamos previamente este veo todos sus datos acá me dice que son 100 registros los que tiene este dataset y
+10:49
+10 minutos y 49 segundos
+ahora nos vamos a ir a transformar datos para pues hacer la transformación necesaria del modelo
+10:56
+10 minutos y 56 segundos
+de del modelo estrella Okay entonces le damos clic aquí para que se extiendan las opciones y elegimos transformar
+11:09
+11 minutos y 9 segundos
+dat entonces acá eh Bueno pues podemos observar primero lo siguiente nuevamente nos Abre este dataset eh ventas que fue
+11:18
+11 minutos y 18 segundos
+la tabla que cargamos previamente acá en la parte superior ustedes observan que dice power query editor Entonces esta es
+11:25
+11 minutos y 25 segundos
+la parte que esta es otra herramienta dentro de Power bi que nos va a ayudar hacer las transformaciones necesarias entonces una vez que nosotros abrimos la
+11:34
+11 minutos y 34 segundos
+tabla no podemos observar lo siguiente este nos brinda información por cada
+11:41
+11 minutos y 41 segundos
+columna HM de la composición de sus datos con respecto a el valor que
+11:49
+11 minutos y 49 segundos
+aportan Pues por así decir si los datos observados claramente son numéricos no se ve ningún valor faltante como esta
+11:57
+11 minutos y 57 segundos
+parte de empty pues me dice dice que no hay valores faltantes que del 0% si hubiera A lo mejor un carácter
+12:04
+12 minutos y 4 segundos
+especial un dato que hiciera ruido este eh Probablemente lo lo va a catalogar en
+12:12
+12 minutos y 12 segundos
+errores Entonces ustedes como analistas tendrían con base a esos porcentajes que aquí presente tendrían que tomar la
+12:19
+12 minutos y 19 segundos
+decisión si conservan esa columna o si conservan esos registros o o si
+12:26
+12 minutos y 26 segundos
+intercambian o o establecen un valor por defecto un cero Por así decirlo todos los valores ceros encontrados van a corresponder a datos erróneos pero
+12:35
+12 minutos y 35 segundos
+quiero conservar el registro porque solamente esa columna es el único la única columna que tiene este datos eh
+12:43
+12 minutos y 43 segundos
+clasificados como erróneos o vacíos y hemos decidido que el valor que aporta el renglón o toda la tupla porque ya
+12:52
+12 minutos y 52 segundos
+saben que aunque sea se afecte solamente un un una columna si yo quisiera eliminar el yo no puedo eliminar
+13:00
+13 minutos
+solamente el renglón de esa columna tendría que eliminar el renglón que cubre porque es una tupla completa que cubre a todas las columnas no entonces
+13:08
+13 minutos y 8 segundos
+ahí tomamos decisiones eh lo conservamos o continuamos entonces eh Bueno pues este
+13:16
+13 minutos y 16 segundos
+es un indicador este nos nos ayuda a a ver rápidamente este Cuáles son aquellas columnas que pudieran estar presentando
+13:25
+13 minutos y 25 segundos
+problemas y empezar a generar estrategias de este que quiero mantener o que quiero quitar Okay entonces lo lo
+13:34
+13 minutos y 34 segundos
+que vamos a hacer es como bien lo vimos ahorita en el en la información de la de la diapositiva que presenté para este
+13:42
+13 minutos y 42 segundos
+nuevo paso Pues es que queremos generar un modelo de estrella entonces Este modelo de estrella requiere que nosotros
+13:50
+13 minutos y 50 segundos
+tengamos una tabla central que es la tabla de hechos que va a estar compuesta tanto por datos numéricos como por métricas que son ingresos cantidades
+13:57
+13 minutos y 57 segundos
+etcétera este y obviamente la la todas las llaves foráneas no que se van a a
+14:05
+14 minutos y 5 segundos
+convertir más bien que van a permitir Conectarme a las dimensiones que posteriormente voy a hacer que esa es la que va a contener el contexto o
+14:13
+14 minutos y 13 segundos
+significado que le va a brindar al relacionarse con las tablas de hechos Okay entonces yéndonos por eso pues lo
+14:20
+14 minutos y 20 segundos
+que nos conviene es quedarnos con ventas ID que es este es una llave foránea o va
+14:28
+14 minutos y 28 segundos
+a representar una llave temporánea no este producto ID cliente
+14:34
+14 minutos y 34 segundos
+ID nos vamos a quedar también con cantidad y nos vamos a dejar con con
+14:42
+14 minutos y 42 segundos
+total de ventas Okay entonces cómo vamos a hacer eso Bueno pues vamos a a darle clic aquí a sobre
+14:51
+14 minutos y 51 segundos
+la tabla y vamos a duplicarla para quedarnos con lo original porque todavía tenemos que hacer tablas de hechos Perdón dimensiones entonces para no
+14:59
+14 minutos y 59 segundos
+perderla Entonces le damos aquí en duplicate o duplicar esta la podemos renombrar y la podemos llamar este hecho
+15:09
+15 minutos y 9 segundos
+Bueno Generalmente por convención o para mantener un orden a las tablas de hechos se les llama
+15:16
+15 minutos y 16 segundos
+p y el nombre que describe a ese hecho pues le vamos a llamar ventes okay Entonces esta es la tabla de hechos que
+15:24
+15 minutos y 24 segundos
+va a conservar las ventas Entonces vamos eliminando todo aquello que no consideremos que deba de ir en la tabla de hechos en este caso yo voy a dejar la
+15:32
+15 minutos y 32 segundos
+fecha venta ID eh producto ID esta parte que es descriptiva la voy
+15:40
+15 minutos y 40 segundos
+a eliminar este la la vamos a dar clic derecho y le decimos remove eh nos vamos a
+15:49
+15 minutos y 49 segundos
+la categoría tampoco la quiero y también la vamos a remover
+
