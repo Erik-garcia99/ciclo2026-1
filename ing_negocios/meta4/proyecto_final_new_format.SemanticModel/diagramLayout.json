@@ -1,0 +1,88 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 173.46886254606679,
+        "y": 100.56165944699524
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 773.1947609362677,
+            "y": 421.27895430422132
+          },
+          "nodeIndex": "uae_ecom_fraud_100k",
+          "nodeLineageTag": "127c8913-40e8-4f72-ba41-41c6a3f41884",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 5,
+          "expandedHeight": 300
+        },
+        {
+          "location": {
+            "x": 401.76680333836953,
+            "y": 66.3522162166792
+          },
+          "nodeIndex": "Dim_Usuario",
+          "nodeLineageTag": "61721143-1341-498a-8edd-62f86e63f949",
+          "size": {
+            "height": 300,
+            "width": 234
+          },
+          "zIndex": 4
+        },
+        {
+          "location": {
+            "x": 403.50365853106842,
+            "y": 416.84068844900065
+          },
+          "nodeIndex": "Fact_Transacciones",
+          "nodeLineageTag": "1b6f7abd-f787-49d1-918d-f24a92734b2c",
+          "size": {
+            "height": 296,
+            "width": 234
+          },
+          "zIndex": 3
+        },
+        {
+          "location": {
+            "x": 80.1648281402901,
+            "y": 165.25206053606038
+          },
+          "nodeIndex": "Dim_Tiempo",
+          "nodeLineageTag": "ebd8f1f6-da0d-4754-8866-0d4e6bab1c8c",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 2
+        },
+        {
+          "location": {
+            "x": 711.79855600452765,
+            "y": 138.95759357914659
+          },
+          "nodeIndex": "Dim_MetodoPago",
+          "nodeLineageTag": "4c6ed1e3-32d2-4f42-9a9e-e186bd482ed8",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 1
+        }
+      ],
+      "name": "All tables",
+      "zoomValue": 79.553182037699941,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "All tables",
+  "defaultDiagram": "All tables"
+}

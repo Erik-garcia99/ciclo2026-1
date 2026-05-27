@@ -1,0 +1,38 @@
+relationship 7060f435-411b-4f27-bd44-b968ef570a0f
+	joinOnDateBehavior: datePartOnly
+	fromColumn: uae_ecom_fraud_100k.timestamp_utc
+	toColumn: LocalDateTable_5fd9ce2b-920e-4c7f-aead-33e1e3018507.Date
+
+relationship 944fc437-e87e-476a-9990-b04c4b40eedf
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Fact_Transacciones.timestamp_utc
+	toColumn: LocalDateTable_eb9dca62-42cf-4a32-8cda-0a70671c7446.Date
+
+relationship AutoDetected_ecbdb907-9080-430c-b88c-4ed212e2e6a5
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: Fact_Transacciones.transaction_id
+	toColumn: uae_ecom_fraud_100k.transaction_id
+
+relationship d29e85a2-24a8-4778-9501-00fc3f528f41
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Dim_Tiempo.Date
+	toColumn: LocalDateTable_5b029096-b90b-4df4-8390-10876c1fd759.Date
+
+relationship 2803b2a6-3b5f-a441-0e19-709f195c7231
+	fromColumn: Fact_Transacciones.fecha_sola
+	toColumn: Dim_Tiempo.Date
+
+relationship 8af8ddc2-3740-9019-9f73-1c8d1a4d86fd
+	fromColumn: Fact_Transacciones.user_id
+	toColumn: Dim_Usuario.user_id
+
+relationship AutoDetected_53a97ca4-290c-44bc-a73b-65a3cb998fa4
+	fromColumn: uae_ecom_fraud_100k.payment_method
+	toColumn: Dim_MetodoPago.payment_method
+
+relationship AutoDetected_534cb6f9-75f5-48d4-ae75-881b6478b51b
+	isActive: false
+	fromColumn: Fact_Transacciones.payment_method
+	toColumn: Dim_MetodoPago.payment_method
+

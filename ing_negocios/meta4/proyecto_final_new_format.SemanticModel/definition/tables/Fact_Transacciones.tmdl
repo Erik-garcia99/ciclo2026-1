@@ -1,0 +1,121 @@
+table Fact_Transacciones
+	lineageTag: 1b6f7abd-f787-49d1-918d-f24a92734b2c
+
+	column transaction_id
+		dataType: int64
+		formatString: 0
+		lineageTag: d307f222-7b55-4f0c-95f7-82f496e41f17
+		summarizeBy: none
+		sourceColumn: transaction_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column user_id
+		dataType: int64
+		formatString: 0
+		lineageTag: fbbda694-cd2c-4098-9bc7-926a04b845fe
+		summarizeBy: none
+		sourceColumn: user_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column timestamp_utc
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 11acbd7b-df56-40fe-83c5-e7e8c042fac5
+		summarizeBy: none
+		sourceColumn: timestamp_utc
+
+		variation Variation
+			isDefault
+			relationship: 944fc437-e87e-476a-9990-b04c4b40eedf
+			defaultHierarchy: LocalDateTable_eb9dca62-42cf-4a32-8cda-0a70671c7446.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column amount_aed
+		dataType: double
+		lineageTag: 8116755b-cf6d-4d1a-ac58-a13fa0080ec3
+		summarizeBy: sum
+		sourceColumn: amount_aed
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column payment_method
+		dataType: string
+		lineageTag: 1def9fd1-a49d-4e10-a2c6-1cbbced92f79
+		summarizeBy: none
+		sourceColumn: payment_method
+
+		annotation SummarizationSetBy = Automatic
+
+	column items_count
+		dataType: int64
+		formatString: 0
+		lineageTag: fff466ae-932a-438c-a5a3-f478eaabcb62
+		summarizeBy: sum
+		sourceColumn: items_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column avg_item_price
+		dataType: double
+		lineageTag: dc64bea4-46c9-44c7-a2dd-724005b0fec0
+		summarizeBy: sum
+		sourceColumn: avg_item_price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ip_risk_score
+		dataType: double
+		lineageTag: 26f5f2d3-403a-4110-b565-10baec56223d
+		summarizeBy: sum
+		sourceColumn: ip_risk_score
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column is_fraud
+		dataType: int64
+		formatString: 0
+		lineageTag: c05040e2-11d2-4818-98ee-5aab6e8a5d5a
+		summarizeBy: sum
+		sourceColumn: is_fraud
+
+		annotation SummarizationSetBy = Automatic
+
+	column fecha_sola = DATE(YEAR(Fact_Transacciones[timestamp_utc]), MONTH(Fact_Transacciones[timestamp_utc]), DAY(Fact_Transacciones[timestamp_utc]))
+		formatString: General Date
+		lineageTag: f22302e3-ae09-4242-8f53-e722fead7a66
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Fecha_Clave = VALUE(FORMAT(Fact_Transacciones[fecha_sola], "YYYYMMDD"))
+		lineageTag: f90cbe96-d8b1-4759-ae06-4a0a3870c95a
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition Fact_Transacciones = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\erikG\Documents\ciclo2026-1\ing_negocios\meta_2_2\uae_ecom_fraud_100k.csv"),[Delimiter=",", Columns=36, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"transaction_id", Int64.Type}, {"user_id", Int64.Type}, {"timestamp_utc", type datetime}, {"amount_aed", type number}, {"currency", type text}, {"payment_method", type text}, {"device_type", type text}, {"browser", type text}, {"merchant_category", type text}, {"items_count", Int64.Type}, {"avg_item_price", type number}, {"shipping_city", type text}, {"billing_city", type text}, {"shipping_billing_match", Int64.Type}, {"ip_address", type text}, {"ip_risk_score", type number}, {"card_present", Int64.Type}, {"bin_country", type text}, {"card_age_days", Int64.Type}, {"card_country_match", Int64.Type}, {"email_domain", type text}, {"user_prev_chargebacks", Int64.Type}, {"user_is_high_risk", Int64.Type}, {"user_account_age_days", Int64.Type}, {"transactions_last_24h", Int64.Type}, {"transactions_last_1h", Int64.Type}, {"local_hour", Int64.Type}, {"odd_hour", Int64.Type}, {"is_fraud", Int64.Type}, {"fraud_flag_ip", Int64.Type}, {"fraud_flag_mismatch", Int64.Type}, {"fraud_flag_velocity", Int64.Type}, {"fraud_flag_new_account", Int64.Type}, {"fraud_flag_prev_cb", Int64.Type}, {"fraud_flag_odd_hour", Int64.Type}, {"data_source", type text}}),
+				    #"Removed Columns" = Table.RemoveColumns(#"Changed Type",{"shipping_city", "billing_city", "email_domain", "bin_country", "currency", "device_type", "browser", "merchant_category", "shipping_billing_match", "ip_address", "card_present", "card_age_days", "card_country_match", "user_prev_chargebacks", "user_is_high_risk", "user_account_age_days", "transactions_last_24h", "transactions_last_1h", "local_hour", "odd_hour", "fraud_flag_ip", "fraud_flag_mismatch", "fraud_flag_velocity", "fraud_flag_new_account", "fraud_flag_prev_cb", "fraud_flag_odd_hour", "data_source"})
+				in
+				    #"Removed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

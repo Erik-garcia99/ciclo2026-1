@@ -1,0 +1,339 @@
+table uae_ecom_fraud_100k
+	lineageTag: 127c8913-40e8-4f72-ba41-41c6a3f41884
+
+	column transaction_id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 83ce958e-cf62-4bc3-9a61-674a66500e61
+		summarizeBy: none
+		sourceColumn: transaction_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column user_id
+		dataType: int64
+		formatString: 0
+		lineageTag: c369f431-0ad1-4118-a9d1-f00ac90cfdb4
+		summarizeBy: sum
+		sourceColumn: user_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column timestamp_utc
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 3e1a0bae-ac83-4a13-865e-968044bfc7bd
+		summarizeBy: none
+		sourceColumn: timestamp_utc
+
+		variation Variation
+			isDefault
+			relationship: 7060f435-411b-4f27-bd44-b968ef570a0f
+			defaultHierarchy: LocalDateTable_5fd9ce2b-920e-4c7f-aead-33e1e3018507.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column amount_aed
+		dataType: double
+		lineageTag: 5c474879-b01d-4ad8-af2d-cea95da74a6e
+		summarizeBy: sum
+		sourceColumn: amount_aed
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column currency
+		dataType: string
+		lineageTag: 1d4bf86a-dc1d-40bd-a328-ab6f4799e5a2
+		summarizeBy: none
+		sourceColumn: currency
+
+		annotation SummarizationSetBy = Automatic
+
+	column payment_method
+		dataType: string
+		lineageTag: 7728b584-473a-41ab-9e8a-400c9373e85d
+		summarizeBy: none
+		sourceColumn: payment_method
+
+		annotation SummarizationSetBy = Automatic
+
+	column device_type
+		dataType: string
+		lineageTag: d1d1d2aa-fac0-4a5f-912d-4e50defc2825
+		summarizeBy: none
+		sourceColumn: device_type
+
+		annotation SummarizationSetBy = Automatic
+
+	column browser
+		dataType: string
+		lineageTag: 8a5de65a-5cc8-4830-8da8-36841dd74850
+		summarizeBy: none
+		sourceColumn: browser
+
+		annotation SummarizationSetBy = Automatic
+
+	column merchant_category
+		dataType: string
+		lineageTag: 52d97ecd-7bfe-4a1b-8a3b-f93d5e765656
+		summarizeBy: none
+		sourceColumn: merchant_category
+
+		annotation SummarizationSetBy = Automatic
+
+	column items_count
+		dataType: int64
+		formatString: 0
+		lineageTag: 5cb769d8-a180-4b78-8610-b612f0383981
+		summarizeBy: sum
+		sourceColumn: items_count
+
+		annotation SummarizationSetBy = Automatic
+
+	column avg_item_price
+		dataType: double
+		lineageTag: 85890266-408e-4ab7-b14b-1829523e982e
+		summarizeBy: sum
+		sourceColumn: avg_item_price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column shipping_city
+		dataType: string
+		lineageTag: 2d1e7990-62e6-413c-ae25-2d112b36b973
+		summarizeBy: none
+		sourceColumn: shipping_city
+
+		annotation SummarizationSetBy = Automatic
+
+	column billing_city
+		dataType: string
+		lineageTag: 107297cf-ad94-4589-accf-a61024b4c480
+		summarizeBy: none
+		sourceColumn: billing_city
+
+		annotation SummarizationSetBy = Automatic
+
+	column shipping_billing_match
+		dataType: int64
+		formatString: 0
+		lineageTag: de2a11fb-fc2e-41fd-947c-f2b6596cf794
+		summarizeBy: sum
+		sourceColumn: shipping_billing_match
+
+		annotation SummarizationSetBy = Automatic
+
+	column ip_address
+		dataType: string
+		lineageTag: 452f1d6a-f1cc-4708-83b5-667d82eb5c7d
+		summarizeBy: none
+		sourceColumn: ip_address
+
+		annotation SummarizationSetBy = Automatic
+
+	column ip_risk_score
+		dataType: double
+		lineageTag: d4aeb609-afd8-4904-aab8-47d18c8ce9f6
+		summarizeBy: sum
+		sourceColumn: ip_risk_score
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column card_present
+		dataType: int64
+		formatString: 0
+		lineageTag: 722b76db-ab2f-4dc5-8b79-eb00ad0e0de6
+		summarizeBy: sum
+		sourceColumn: card_present
+
+		annotation SummarizationSetBy = Automatic
+
+	column bin_country
+		dataType: string
+		lineageTag: c5c1b8a0-2e5c-4821-aaa7-87f3f3f4857b
+		summarizeBy: none
+		sourceColumn: bin_country
+
+		annotation SummarizationSetBy = Automatic
+
+	column card_age_days
+		dataType: int64
+		formatString: 0
+		lineageTag: 088038d0-c3bb-40d5-a862-6b63e6691a39
+		summarizeBy: sum
+		sourceColumn: card_age_days
+
+		annotation SummarizationSetBy = Automatic
+
+	column card_country_match
+		dataType: int64
+		formatString: 0
+		lineageTag: 33f05e2b-4ebd-4e5a-8846-d88b8499e7d5
+		summarizeBy: sum
+		sourceColumn: card_country_match
+
+		annotation SummarizationSetBy = Automatic
+
+	column email_domain
+		dataType: string
+		lineageTag: dbc5aa66-5362-4511-a59c-13273c723b11
+		summarizeBy: none
+		sourceColumn: email_domain
+
+		annotation SummarizationSetBy = Automatic
+
+	column user_prev_chargebacks
+		dataType: int64
+		formatString: 0
+		lineageTag: 6bcd0a9e-fe3f-4ae0-9f3b-5b95136decf2
+		summarizeBy: sum
+		sourceColumn: user_prev_chargebacks
+
+		annotation SummarizationSetBy = Automatic
+
+	column user_is_high_risk
+		dataType: int64
+		formatString: 0
+		lineageTag: e570f073-d450-45e3-8816-8a397abed2d5
+		summarizeBy: sum
+		sourceColumn: user_is_high_risk
+
+		annotation SummarizationSetBy = Automatic
+
+	column user_account_age_days
+		dataType: int64
+		formatString: 0
+		lineageTag: 0f2be417-21c9-496e-9917-bb335992e885
+		summarizeBy: sum
+		sourceColumn: user_account_age_days
+
+		annotation SummarizationSetBy = Automatic
+
+	column transactions_last_24h
+		dataType: int64
+		formatString: 0
+		lineageTag: 44317444-f12e-40cf-9d3a-8cd88c605e3c
+		summarizeBy: sum
+		sourceColumn: transactions_last_24h
+
+		annotation SummarizationSetBy = Automatic
+
+	column transactions_last_1h
+		dataType: int64
+		formatString: 0
+		lineageTag: 06fc950b-5fad-493c-8657-2dab461e1399
+		summarizeBy: sum
+		sourceColumn: transactions_last_1h
+
+		annotation SummarizationSetBy = Automatic
+
+	column local_hour
+		dataType: int64
+		formatString: 0
+		lineageTag: b9627e20-f868-474a-8c3e-9b86450ca15a
+		summarizeBy: sum
+		sourceColumn: local_hour
+
+		annotation SummarizationSetBy = Automatic
+
+	column odd_hour
+		dataType: int64
+		formatString: 0
+		lineageTag: e8b6facd-9da8-4043-a772-1fa2e6a8a902
+		summarizeBy: sum
+		sourceColumn: odd_hour
+
+		annotation SummarizationSetBy = Automatic
+
+	column is_fraud
+		dataType: int64
+		formatString: 0
+		lineageTag: 18a11f5e-c23f-4178-96d5-af064b72e6f3
+		summarizeBy: sum
+		sourceColumn: is_fraud
+
+		annotation SummarizationSetBy = Automatic
+
+	column fraud_flag_ip
+		dataType: int64
+		formatString: 0
+		lineageTag: 0ed973d4-8669-495c-9058-b961b6fce852
+		summarizeBy: sum
+		sourceColumn: fraud_flag_ip
+
+		annotation SummarizationSetBy = Automatic
+
+	column fraud_flag_mismatch
+		dataType: int64
+		formatString: 0
+		lineageTag: d8b3d415-34d9-44c8-9987-66ea5accb6d0
+		summarizeBy: sum
+		sourceColumn: fraud_flag_mismatch
+
+		annotation SummarizationSetBy = Automatic
+
+	column fraud_flag_velocity
+		dataType: int64
+		formatString: 0
+		lineageTag: b1e97300-472e-4b5a-8d35-51c91fd1c661
+		summarizeBy: sum
+		sourceColumn: fraud_flag_velocity
+
+		annotation SummarizationSetBy = Automatic
+
+	column fraud_flag_new_account
+		dataType: int64
+		formatString: 0
+		lineageTag: 89ed310d-c1c6-4711-b519-9fec0d432342
+		summarizeBy: sum
+		sourceColumn: fraud_flag_new_account
+
+		annotation SummarizationSetBy = Automatic
+
+	column fraud_flag_prev_cb
+		dataType: int64
+		formatString: 0
+		lineageTag: 7d97a84f-f94d-411e-9fc9-76ffc639531b
+		summarizeBy: sum
+		sourceColumn: fraud_flag_prev_cb
+
+		annotation SummarizationSetBy = Automatic
+
+	column fraud_flag_odd_hour
+		dataType: int64
+		formatString: 0
+		lineageTag: f20e9c84-e16b-4995-8e71-1b3378c0eff4
+		summarizeBy: sum
+		sourceColumn: fraud_flag_odd_hour
+
+		annotation SummarizationSetBy = Automatic
+
+	column data_source
+		dataType: string
+		lineageTag: 8f6a76d6-92b6-4065-97f0-65c6c0eb9d9b
+		summarizeBy: none
+		sourceColumn: data_source
+
+		annotation SummarizationSetBy = Automatic
+
+	partition uae_ecom_fraud_100k = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents("C:\Users\erikG\Documents\ciclo2026-1\ing_negocios\meta_2_2\uae_ecom_fraud_100k.csv"),[Delimiter=",", Columns=36, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"transaction_id", Int64.Type}, {"user_id", Int64.Type}, {"timestamp_utc", type datetime}, {"amount_aed", type number}, {"currency", type text}, {"payment_method", type text}, {"device_type", type text}, {"browser", type text}, {"merchant_category", type text}, {"items_count", Int64.Type}, {"avg_item_price", type number}, {"shipping_city", type text}, {"billing_city", type text}, {"shipping_billing_match", Int64.Type}, {"ip_address", type text}, {"ip_risk_score", type number}, {"card_present", Int64.Type}, {"bin_country", type text}, {"card_age_days", Int64.Type}, {"card_country_match", Int64.Type}, {"email_domain", type text}, {"user_prev_chargebacks", Int64.Type}, {"user_is_high_risk", Int64.Type}, {"user_account_age_days", Int64.Type}, {"transactions_last_24h", Int64.Type}, {"transactions_last_1h", Int64.Type}, {"local_hour", Int64.Type}, {"odd_hour", Int64.Type}, {"is_fraud", Int64.Type}, {"fraud_flag_ip", Int64.Type}, {"fraud_flag_mismatch", Int64.Type}, {"fraud_flag_velocity", Int64.Type}, {"fraud_flag_new_account", Int64.Type}, {"fraud_flag_prev_cb", Int64.Type}, {"fraud_flag_odd_hour", Int64.Type}, {"data_source", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+

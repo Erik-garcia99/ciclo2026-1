@@ -172,6 +172,7 @@ void task_resert_esp(void *params);
 
 //----------------------lo que se necesitoa el temporizador 
 
+
 static uint8_t flag_enable_temp = 0; // necesito una varibale que me inidque que se a habilitado el recurso de temp.  
 
 //tareas neceasaris 
@@ -184,6 +185,21 @@ HandleTask_t count_time; //handel para la tarea que cuenta el tempi, en el caso 
 //funcion que reliza la peticion de la hora a la API - parsea y convierte la hora en minutos 
 uint32_t request_time_API(void); //no recibe parametros quiero saber que hora es solicitando a la API 
 
+void format_time_JSON(size_t sec);
+
+typedef struct{
+    //el detalle esta en el tamanio del valor que se 
+	uint64_t time_set_led;
+	uint64_t time_down_led;
+    //en estos arrelgos ira la hora formateada, una vez realizado los calculos se saca la hora en la cual el usuario pretende, quier que se 
+    //predena y se apague en led. 
+    char parse_time_set[3];
+    char parse_time_down[3];
+	
+	//ahora las varibales para llevar el conteo para la comparacion
+}time_t;
+
+time_t time; 
 //funciones para prender y apagar el led, usaremos el led LED 19 para prender o apagar el led, igual sobre este mismo led estara la opcion de prender y apagar led que estaba antes
 void set_led_tmp(void);
 void down_let_tmp(void);
@@ -210,6 +226,10 @@ void app_main(void)
     pwm_init(); 
     //iniciamos con 0
     led_state=0;
+
+    //inciando las miembros de la estrucutura de time 
+    time.time_set_led = 0;
+    time.time_down_led = 0;
 
 
     global_uart.NUM_PORT = UART_MAIN;
@@ -269,6 +289,8 @@ void app_main(void)
     //inicamos con los parametros por defecto
 
     update_setup_cred(DEFAULT_HOST, DEFAULT_PORT, NULL, "HOST_IP");//establecer las credenciales para TCP 
+
+
 
     // es necesario establecer los apuntadores aaprtir de aqui??mmmm
     //flujo princpal de TCP 
@@ -606,30 +628,152 @@ void tcp_process_task(void *params){
                             send_info.op_type = OP_NACK;
                             ret = send_message();
                         }break;
-
-			case enable_tmp :{
-				//si en el recurso H llega el valor 1 inica que se quiere habilitar el recurso 
-				//pero en el caso de que llegue 0 se requiere que se deshabilite 
+						
+						case enable_tmp :{
+							//si en el recurso H llega el valor 1 inica que se quiere habilitar el recurso 
+							//pero en el caso de que llegue 0 se requiere que se deshabilite 
 				
-				if(frame->value[0] != 1 ){
-                   		 //indicamos que entonces se queires deshabilitar el recurso de tmp. 
-		    			//si estaba activo ahora lo apagamos 
-					flag_enable_tmp =0; 
-					//ahora necesitamos apagar el conteo 
-					//
-					vTaskDelte(<nombre de la tarea>); //
-				
-				}
-				else{
-					//en otro caso entonces lo que se solciita es habilitar 
-					flag_enable_tmp =1; //indicamos que ahora el recurso esta activo 
-				
-				}
+							if(frame->value[0] != 1 ){
+								//indicamos que entonces se queires deshabilitar el recurso de tmp. 
+								//si estaba activo ahora lo apagamos 
+								flag_enable_tmp =0; 
+								//ahora necesitamos apagar el conteo, eliminaomos la tarea que se encargaba de llevar el conteo 
+								vTaskDelte(count_time);
+							}
+							else{
+								//en otro caso entonces lo que se solciita es habilitar 
+								flag_enable_tmp =1; //indicamos que ahora el recurso esta activo 
+							}
+						}break; 
+						
+						case set_tmp:{
+							//en este caso se quiere escribir, pero primero antes de escribir e iniciar la tarea primero lo que debemos es verificar que se haya 
+							//habilitado el recurso del temporizador. 
+							
+							if(flag_enable_temp !=1){
+								
+								//quiere decir que no se ha habilitado o se deshablito el recurso, por lo que mandamos un NACK de regreso. 
+								char msg[50];
+								len = snprinf(msg, sizeof(msg), "\r\n no se ha habilitado el recurso -> devolviendo NACK al servidor\n\r");
+								uart_write_bytes(UART_NUM_0, UART_RED , strlen(UART_RED));
+								uart_write_bytes(UART_NUM_0, msg , len);
+								uart_write_bytes(UART_NUM_0, UART_RESET , strlen(UART_RESET));
+							}
+							else{
+								/*
+								pero que debemos de hacer primero antes de empezar a contar?
+								
+								--debemos de verificar que lo que se ingreso sea un valro adecuado, un valor mayor a 0
+								*/
+                                //debo de obtener el total de bytes restante que son los bytes del valor que quedan en el frame 
+                                uint8_t value_len = (frame->len > 5) ? (frame->len - 5) : 0;
 
-					 
-			}break; 
+                                if(value_len > 0){
+                                    int negativo = (frame->value[0] & 0x80) != 0; //se verifica si el numeor recibido es negativo 
+                                    int cero = 1;
+                                    for (int i = 0; i < value_len; i++) {
+                                        if (frame->value[i] != 0) { cero = 0; break; }
+                                    }
 
-                        
+
+                                    if(negativo){
+                                        len = snprintf(buffer, sizeof(buffer), "\r\n ERROR! --> el numero recibido es negativo, opeacion imposible\r\n");
+                                        uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
+                                        uart_write_bytes(global_uart.NUM_PORT, buffer, len);
+                                        uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
+                                    }
+
+                                    else if(cero){
+                                        len = snprintf(buffer, sizeof(buffer), "\r\n ERROR! --> numero es 0, debe ser un numero > 0\r\n");
+                                        uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
+                                        uart_write_bytes(global_uart.NUM_PORT, buffer, len);
+                                        uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
+                                    }
+                                    else{
+                                        //no s un numero negativo ni es 0, por lo que es un numero positivo mayor o igual a 1
+                                        // ahora toca el tomar el tiempo 
+										
+										//entonces ahora la comparativa con el buffer de 32 bytes es algo complicado, pero nos mantendremos con un valor 
+										//de 32 bits que nos puede da 49 dias, la cantidad de segundos que se pueden alamcenar en 32 bits nos da para 49 dias 
+										//entonces creo que es un buen margen. 
+										
+										//ahora no se aplica la funcion que transforma de big endian a little endian que usa el esp32. 
+										//entonces ahora el valor maximo que consideremos que llegue del parte del usuario es de 32 bits 
+										//pero primero debemos de saber de cuanto es el tamanio si es de 16, 32 o de 8 bits en donde viene el valor, para no desperdiciar memoria a lo bruto 
+										
+										//con la opreacion anterior podemos saber de cuantos bytes nos restan. 
+										//antes de decidir, puede cuasar algun problema por lo que lo que hare es un debug, imprmir len que tenemos para saber realmente que esta calculando 
+										
+										len = snprintf(buffer, sizeof(buffer), "\r\n bytes restantes : %u", value_len);
+										uart_write_bytes(UART_NUM_0, UART_GREEN, sizeof(UART_GREEN));
+										uart_write_bytes(UART_NUM_0, buffer, len);
+										uart_write_bytes(UART_NUM_0, UART_RESET, sizeof(UART_RESET));
+                                            
+										//ahora decidimos, verifiamos que tiene value len, si teien 1(8 bits - sin cambio), 
+										//2(16 bits - ntohs) o 4 bytes (32 bits - ntohl) 
+										uint32_t tmp;
+										if(value_len == 2 ){
+											//quedan 2 bytes, un numero de 16 bits 
+											//puede que este sea el mas comun ya que es un gran margen aguanta para 1 dia casi 
+											uint16_t extender = 0;
+											memcpy(&tmp, frame->value, 2);
+                                            extender = ntohs(tmp); // ahora ya tengo los minutos que necesito para relizar el conteo
+                                            format_time_JSON(extender); 
+                                            time.time_set_led =  extender * 1000 //necetio extender a mil los segundos para poder cparar los con milisegundos 
+                                            //del timer que lleva el conteo que son valores que se extienden hasta 4 bits 
+											
+										}
+										else if(value_len == 4){
+											//tiene un valor de 32 bits  - 4 bytes 
+											memcpy(&tmp, frame->value, 4);
+                                            time.time_set_led = ntohl(tmp);
+											
+										}
+										else if(value_len ==  1){
+											//el valor es un valor de 1 byte 
+											time.time_set_led = frame->value[0]; 
+										}
+										else{
+											
+										    //cualquier valor mayor a 4 bytes o menos a 1 byte se ingora, menor que 1 byte pues es un error, creo que esto nunca llegaria 
+										    //mayor a 4 bytes es un valor que no puede se casteado de manera directa es un numero muy grande casi sin sentido 
+                                            len = snprintf(buffer, sizeof(buffer), "\n\rtamanio del numero excede, el vaor maximo debe entrar en 32 bits\n\r")
+                                            uart_write_bytes(UART_NUM_0, UART_RED , strlen(UART_RED));
+								            uart_write_bytes(UART_NUM_0, buffer , len);
+								            uart_write_bytes(UART_NUM_0, UART_RESET , strlen(UART_RESET));
+                                            break; //rompetmos el cclo y esperamos a que vuelva a llegar otro dato por la cola
+                                        }
+										
+										
+                                        //ahora debemos de sacar la hora que se requiere hacer el encendido, esto para comparar con el JSON que nos devolvera la API 
+
+
+
+
+                                        //es 1 por lo que esta habilitado el recurso, entonces lo que sigue es crear y empezar a contar, saber cuando se va a activar el led 
+								        xTaskCreate(task_count_time, "task_count_time", 4098, NULL, 8, &count_time); //apartir de ahora se empieza a contar 
+								
+
+                                    }
+                                }
+                                else{
+                                    char msg[50];
+								    len = snprinf(msg, sizeof(msg), "\r\nERROR! --> no hya suficientes parametros en el frame. \n\r");
+								    uart_write_bytes(UART_NUM_0, UART_RED , strlen(UART_RED));
+								    uart_write_bytes(UART_NUM_0, msg , len);
+								    uart_write_bytes(UART_NUM_0, UART_RESET , strlen(UART_RESET));
+									
+									
+									
+									
+                                }
+
+
+							}
+							
+							
+							
+						}break;
 
                         default: {
                             send_info.op_type = OP_NACK;
@@ -1148,3 +1292,38 @@ esp_err_t validate_pwm(const char *str, uint16_t *out)
     *out = (uint16_t)val;
     return ESP_OK;
 }
+
+
+
+void task_count_time(void *params){
+	
+
+	while(1){
+		
+		
+		
+		
+	}
+
+	
+	
+	
+}
+
+
+
+void format_time_JSON(size_t sec){
+
+    //ahora traigo el valor ya 
+
+    uint8_t horas = sec / 60; // tomamos las horas, la parte entera 
+    uint16_t pre_minutos = horas * 60; 
+    uint8_t minutos = sec - pre_minutos; 
+
+    int len = snprintf(time.parse_time_set, sizeof(time.parse_time_set), "%u:%u",horas,minutos); 
+
+    //ahora tengo en mi estrucutra el fromato de la hora, como la que recibiria desde la API 
+}
+
+
+

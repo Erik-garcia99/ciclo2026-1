@@ -1,0 +1,26 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["uae_ecom_fraud_100k","Fact_Transacciones","Dim_Usuario","Dim_MetodoPago"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table uae_ecom_fraud_100k
+ref table DateTableTemplate_9c268b0f-495e-4b5a-b726-b5b49f28ef69
+ref table LocalDateTable_5fd9ce2b-920e-4c7f-aead-33e1e3018507
+ref table Fact_Transacciones
+ref table LocalDateTable_eb9dca62-42cf-4a32-8cda-0a70671c7446
+ref table Dim_Usuario
+ref table Dim_Tiempo
+ref table LocalDateTable_5b029096-b90b-4df4-8390-10876c1fd759
+ref table Dim_MetodoPago
+
+ref cultureInfo en-US
+
