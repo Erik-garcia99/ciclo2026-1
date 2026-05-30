@@ -1,2 +1,2 @@
-source /home/dmrx/Documents/ciclo2026-1/IoT/laboratorio/lab-taller14_temporizador_led/build/bootloader/gdbinit/symbols
-source /home/dmrx/Documents/ciclo2026-1/IoT/laboratorio/lab-taller14_temporizador_led/build/bootloader/gdbinit/connect
+source C:/Users/dmrx/Documents/ciclo2026-1/IoT/laboratorio/lab-taller14_temporizador_led/build/bootloader/gdbinit/symbols
+source C:/Users/dmrx/Documents/ciclo2026-1/IoT/laboratorio/lab-taller14_temporizador_led/build/bootloader/gdbinit/connect

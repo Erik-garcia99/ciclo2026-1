@@ -1,0 +1,9 @@
+Command: cmake -G Ninja -B C:\Users\dmrx\Documents\ciclo2026-1\IoT\laboratorio\lab-taller14_temporizador_led\build -DPYTHON_DEPS_CHECKED=1 -DPYTHON=C:\Espressif\tools\python\v6.0\venv\Scripts\python.exe -DESP_PLATFORM=1 -DCCACHE_ENABLE=False C:\Users\dmrx\Documents\ciclo2026-1\IoT\laboratorio\lab-taller14_temporizador_led
+Configuration Report               
++---------------------------------+
+|  Parser Version: 1              |
+|  Verbosity: default             |
+|  Defaults policy: sdkconfig     |
+|  Status: Finished successfully  |
+|                                 |
++---------------------------------+

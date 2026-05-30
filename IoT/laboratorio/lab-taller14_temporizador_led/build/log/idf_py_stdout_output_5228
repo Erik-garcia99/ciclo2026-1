@@ -1,0 +1,30 @@
+Command: ninja all
+[1/9] Performing build step for 'bootloader'
+[1/1] C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\dmrx\Documents\ciclo2026-1\IoT\laboratorio\lab-taller14_temporizador_led\build\bootloader && C:\Espressif\tools\python\v6.0\venv\Scripts\python.exe C:/esp/v6.0/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x1000 C:/Users/dmrx/Documents/ciclo2026-1/IoT/laboratorio/lab-taller14_temporizador_led/build/bootloader/bootloader.bin"
+Bootloader binary size 0x6610 bytes. 0x9f0 bytes (9%) free.
+[2/9] No install step for 'bootloader'
+[3/9] Completed 'bootloader'
+[4/9] Building C object esp-idf/main/CMakeFiles/__idf_main.dir/main.c.obj
+C:/Users/dmrx/Documents/ciclo2026-1/IoT/laboratorio/lab-taller14_temporizador_led/main/main.c: In function 'tcp_process_task':
+C:/Users/dmrx/Documents/ciclo2026-1/IoT/laboratorio/lab-taller14_temporizador_led/main/main.c:492:13: warning: variable 'frame_len' set but not used [-Wunused-but-set-variable]
+  492 |     uint8_t frame_len;
+      |             ^~~~~~~~~
+C:/Users/dmrx/Documents/ciclo2026-1/IoT/laboratorio/lab-taller14_temporizador_led/main/main.c: In function 'set_resert_time_task':
+C:/Users/dmrx/Documents/ciclo2026-1/IoT/laboratorio/lab-taller14_temporizador_led/main/main.c:1661:10: warning: unused variable 'msg' [-Wunused-variable]
+ 1661 |     char msg[60];
+      |          ^~~
+C:/Users/dmrx/Documents/ciclo2026-1/IoT/laboratorio/lab-taller14_temporizador_led/main/main.c: In function 'parse_time':
+C:/Users/dmrx/Documents/ciclo2026-1/IoT/laboratorio/lab-taller14_temporizador_led/main/main.c:1912:11: warning: unused variable 'aux' [-Wunused-variable]
+ 1912 |     char *aux = JSON;
+      |           ^~~
+[5/9] Linking C static library esp-idf\main\libmain.a
+[6/9] Generating esp-idf/esp_system/ld/sections.ld
+[7/9] Linking CXX executable simulacro.elf
+[8/9] Generating binary image from built executable
+esptool v5.3.dev2
+Creating ESP32 image...
+Merged 2 ELF sections.
+Successfully created ESP32 image.
+Generated C:/Users/dmrx/Documents/ciclo2026-1/IoT/laboratorio/lab-taller14_temporizador_led/build/simulacro.bin
+[9/9] C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\dmrx\Documents\ciclo2026-1\IoT\laboratorio\lab-taller14_temporizador_led\build && C:\Espressif\tools\python\v6.0\venv\Scripts\python.exe C:/esp/v6.0/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 partition --type app C:/Users/dmrx/Documents/ciclo2026-1/IoT/laboratorio/lab-taller14_temporizador_led/build/partition_table/partition-table.bin C:/Users/dmrx/Documents/ciclo2026-1/IoT/laboratorio/lab-taller14_temporizador_led/build/simulacro.bin"
+simulacro.bin binary size 0xc9c20 bytes. Smallest app partition is 0x100000 bytes. 0x363e0 bytes (21%) free.

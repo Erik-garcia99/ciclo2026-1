@@ -1,4 +1,4 @@
-/* * Data converted from /home/dmrx/Documents/ciclo2026-1/IoT/laboratorio/lab-taller14_temporizador_led/build/esp-idf/mbedtls/x509_crt_bundle
+/* * Data converted from C:/Users/dmrx/Documents/ciclo2026-1/IoT/laboratorio/lab-taller14_temporizador_led/build/esp-idf/mbedtls/x509_crt_bundle
  */
 .data
 #if !defined (__APPLE__) && !defined (__linux__)

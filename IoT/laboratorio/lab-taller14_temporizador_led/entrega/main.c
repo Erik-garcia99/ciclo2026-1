@@ -1,0 +1,1831 @@
+/**
+ * 
+ * @author erik garcia chavez 
+ * @date 2026-06-10
+ * ingenieira en computacion
+ * UABC 
+ * internet de las cosas 
+ * 
+ * 
+*/
+
+/*
+ * SIMULULACRO DE EXAMEN
+ *
+ * establecer el recurso de reset 
+ * 
+ * 
+ *
+*/
+
+/**
+ * 
+ * matricula : 61 31 32 37 35 38 36 33(hex) -> a1275863(ascii)
+ * 
+ */
+
+
+//+++++++++++++++++++++++++++++++librerias
+#include <stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<ctype.h>
+
+//drivers
+#include<driver/uart.h>
+#include<esp_timer.h>
+
+//logs
+#include<esp_log.h>
+#include <esp_err.h>
+
+//wifi
+#include<esp_wifi.h>
+#include<nvs_flash.h>
+#include<lwip/err.h>
+#include<lwip/sys.h>
+
+//librerias  propias
+#include<modules/UART/uart_lib.h>
+#include<modules/WIFI/wifi_lib.h>
+#include<modules/TCP/tcp_lib.h>
+#include"modules/ADC/adc_lib.h"
+#include"modules/PWM/pwm_lib.h"
+#include<global.h>
+
+
+//+++++++++++++++++++++++++++++++++++++++++vairbales globales
+
+static const char *TAG = "MAIN";
+uint8_t led_state;
+//identificacion por la matricula 
+uint32_t user;
+volatile uint8_t login_pending = 0;
+
+//sera de 64 bits porque usare timer para obtener el tiempo 
+static uint64_t reset_state; //este es el que llevara la cuenta desde que se inicio a contar, es la varibale global se deifinira si ya se cumplio o no para el resert 
+static uint8_t time_resert; //variable en donde se guarda en tiempo en el cual se planea realizar resert 
+//inicia el conteo, comparacion de desde cunato se empezo a contar, apra la referencia 
+static uint64_t init_count;
+//conviertie lo qeu se recibcio en timepo para comparar 
+static uint64_t limite_us;
+
+
+//handle con el que podremos eliminar la tarea en caso de ser necesario 
+TaskHandle_t handle_resert_set;
+// TaskHandle_t set_count;
+
+
+//++++++++++++++++ colas 
+//cola para los eventos de UART
+QueueHandle_t uart_event;
+//cola que lleva la informacoin ingresada por recv
+QueueHandle_t tcp_rx_queue;
+//cola que manerjara el flujo de datos de UART 
+QueueHandle_t flow_data_queue;
+
+
+//++++++++++++++++ grupos de eventos. 
+
+EventGroupHandle_t g_tcp_event_group;
+EventGroupHandle_t s_wifi_event_group;
+
+EventGroupHandle_t g_login_event_group;
+
+EventGroupHandle_t g_rst_event;
+
+
+//++++++++++++++++++  estrucutra
+//contiene valores de UART 
+task_uart_port_t global_uart;
+//estucuturua para red 
+esp_wifi_t esp_wifi;
+//estrucutra para parametros de la conexion tcp
+tcp_client_t tcp_client ={0};
+//enum de operacion CP 
+op_type_t op_type;
+//enum de trama bianrio
+action_t action;
+resourse_t resourse;
+//estrucutra de la uncion que agrupa los datos
+send_info_t send_info ={0};
+
+format_request_t format_request ={0};
+//++++++++++++++++++++++++++++funciones
+/**
+ * @brief funcion que se encargara de serparar los tokens ingresador por le usuario
+ * este solo es serparar entre los comandos, mas no extrae los token necesarios 
+ * 
+ * @param line recibe un apuntador a los datos que ingresaron por UART 
+ *
+ * @return regresa la lista de tokens  
+ * 
+*/ 
+char **pasrse_input(char *line);
+//esto es lo mismo pero utilizando otro separados, porque si uso el mismo va a separar todo lo de comandos 
+char **pasrse_input_recv(char *line);
+
+
+
+/**
+ * @brief funcion encargada de actualizar las distittas credencuales mediante comandos 
+ * 
+ * 
+ * @param key donde va el nombre del nuevo SSID o la nueva IP.
+ * @param anchor deberia de ir la contrasenia de la nueva red o el nombre del usuario en caso de ser una red de empresa
+ * @param pswd_ent si este tiene datos es que se actualizara una red de empresa o unversidad, va la contrasenia del usuario
+ * 
+ * @param identificator le dira a la funcion que tiepo de actualizacion sera, puede ser <SSID, HOST_IP, SSID_ENT, MAT>
+ * 
+ * @return ESP_OK si se pudo actualziar 
+ * @return ESP_FAIL si no fue posible 
+ * 
+ * 
+ */
+
+/**
+  * la funcion tratara de ser lo mas general, los parametros que no seran requeridos se les asginara un 0 o NULL 
+  * 
+  */
+esp_err_t update_setup_cred(char *key, char *anchor ,char *pswd_ent,  char *identificator);
+
+void setup_tcp(void);
+
+static int parse_number(const char *str);
+
+//funcion en donde se estara contando 
+// void set_reset_time(void);
+
+uint8_t get_time_current;
+
+//++++++++++++++++++++++++++++++tareas 
+//tarea encargada de recibir el comando por UART 
+void task_cmd_uart(void *params);
+
+//la tarea para realizar el resertn
+
+void task_resert_esp(void *params);
+
+//mantendremos el set como unatarea que necesitamos qeu este coriendo en paralelo 
+ void set_resert_time_task(void *params);
+
+
+//----------------------lo que se necesitoa el temporizador 
+
+
+static uint8_t flag_enable_tmp = 0;
+
+void task_count_time(void *params); 
+
+TaskHandle_t count_time; 
+/*
+* @brief toma los minutos que se le manda a la funcion y calcula la hora y los minutos al cual se pretende llegar, 
+esto lo guarda en la estrucutra en un formato de 8 bits, para relizar la comparacion una vez terminado el timer, la espera, 
+realiza comparacion con la hora traida de la API, esto para relizar la comparacion mucho mas simple que si se dejara en ASCII 
+
+ * @params minutos -> los minutos que seran tranformado a una hora del dia 
+ * @params set flag que me ayuda a identificar si lo que se manda es para la hora de prender el led o de apagar el led
+*/
+void parser_hora(uint32_t minutos, uint8_t set);
+
+char *parse_time(char *JSON);
+
+char **reques_from_API(void);
+
+char *request = NULL;
+char *parse_time_form_API = NULL;
+
+static uint8_t task_created = 0; 
+
+uint64_t time_init_count; 
+uint64_t current_time; 
+
+
+typedef struct{
+	uint64_t time_set_led;
+	uint64_t time_down_led;
+	//para prender
+	uint8_t hora_set_led;
+	uint8_t minuto_set_led;
+	//para apagar 
+	uint8_t hora_down_led;
+	uint8_t minutos_down_led;
+	uint8_t flag_set_led;
+	uint8_t flag_down_led;	
+}timer_led_t;
+
+timer_led_t time_led; 
+
+
+
+
+
+
+void app_main(void)
+{
+    //creamos el grupo de eventos para WIFI 
+    s_wifi_event_group = xEventGroupCreate();
+    g_tcp_event_group= xEventGroupCreate();
+    g_login_event_group = xEventGroupCreate();
+    g_rst_event = xEventGroupCreate();
+
+
+    flow_data_queue = xQueueCreate(10, sizeof(char*));
+    tcp_rx_queue = xQueueCreate(10, sizeof(format_request_t *));
+
+    
+    //inicmaos los GPIO
+    gpio_init();
+    set_adc(ADC_CHANNEL);
+    pwm_init(); 
+    //iniciamos con 0
+    led_state=0;
+
+    //inciando las miembros de la estrucutura de time 
+    time_led.time_set_led = 0;
+    time_led.time_down_led = 0;
+    time_led.flag_set_led = 0;
+    //intencionamnet idnicamos que esta flag ya esta activa, esto lo hacemos para cunado se hace al comparativa en el caso que llegue 
+    //con la opcion de apagar el led pero el led aun no se prende, la bandera que lo indica aun no esta ctiva no rechaze, entonces 
+    //cunado llegue a la comparacion con down, indicara que es false y no entrara, cunado se prendea el led, esta bandera la volvemos a poner en 0
+    //ahora cunado el tiempo llegue ahora si entrara 
+    time_led.flag_down_led = 1; 
+
+    global_uart.NUM_PORT = UART_MAIN;
+    //inicamos UART 
+    uart_init(UART_MAIN,115200, UART_DATA_8_BITS, UART_PARITY_DISABLE, UART_STOP_BITS_1, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE);
+
+    
+    //aqui esta el demon que esta ecuchando a UART 
+    xTaskCreate(task_uart, "task_uart", 4096,&global_uart, 9, NULL);
+
+    xTaskCreate(task_cmd_uart, "task_cmd_uart", 4096, NULL, 8, NULL);
+
+    // xTaskCreate(task_resert_esp, "task_resert_esp", 2048, NULL, 5, NULL);
+    
+    //definimos por defecto pero es varibale por lo que puede ser modificable   
+    //dejemos las varibales externs y todo como este. 
+    // user = 0x001377d7; //a1275863 -> 4 bytes
+    user = 0x001377d7;
+    //configuracion de WIFI
+    esp_err_t ret;
+
+    //vamos a inicar con parametros por defecto 
+    char *ssid_default ="INFINITUMF4AF\0";
+    char *pswd_default = "nFukH34MPW\0";  
+    ret = update_setup_cred(ssid_default, pswd_default, NULL, "SSID");
+
+    
+    if(ret !=ESP_FAIL){
+        uart_write_bytes(UART_MAIN,"\r\n", 2);
+        const char *mssg = "credenciales por defecto inicalizadas\0";
+        uart_write_bytes(UART_MAIN,UART_GREEN, strlen(UART_GREEN));
+        uart_write_bytes(UART_MAIN,mssg, strlen(mssg));
+        uart_write_bytes(UART_MAIN,UART_RESET, strlen(UART_RESET));
+        
+    }
+    else{
+        uart_write_bytes(UART_MAIN,"\r\n", 2);
+        const char *mssg = "no se pudieron actualizar las credenciales\n\0";
+        uart_write_bytes(UART_MAIN,mssg, strlen(mssg));
+    } 
+
+
+    //indicamos como seran los comandos 
+    ESP_LOGI(TAG, "COMANDOS PARA ESTABLECER CARACTERISITRAS");
+    ESP_LOGI(TAG, "SETUP WIFI -> red nomal -> SSID:<nombre_ssid> PSWD:<pasword_red>");
+    ESP_LOGI(TAG, "SETUP TCP CLIENT -> HOST_IP:<host_ip> PORT:<pureto>");
+    //okay, este es la parte de WIFI, por lo primero debemos de poner que va a inicar la conexion 
+    ret = nvs_flash_init();
+    if(ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND){
+        ESP_ERROR_CHECK(nvs_flash_erase());
+        ret = nvs_flash_init();
+    }
+    ESP_ERROR_CHECK(ret);
+
+    ESP_LOGI(TAG, "ESP_MODE_STA");
+    wifi_init_sta();
+    //inicamos con los parametros por defecto
+
+    update_setup_cred(DEFAULT_HOST, DEFAULT_PORT, NULL, "HOST_IP");//establecer las credenciales para TCP 
+
+
+
+    // es necesario establecer los apuntadores aaprtir de aqui??mmmm
+    //flujo princpal de TCP 
+    setup_tcp(); // inicamos todo el proceso del flujo si se conectata o no, y las psoibles flujos. 
+}
+
+
+void task_cmd_uart(void *params){
+
+    char* cmd_receive;
+    esp_err_t ret;
+
+    while(1){
+
+        //esta tarea espera a que se reciban los datos de la tarea que se encarga de monitaorear UART
+        //esta tarea se encargara de ver que entro y seguir con el flujo 
+        if(xQueueReceive(flow_data_queue, &cmd_receive, portMAX_DELAY)){
+
+            //se recibio una cadena con los comandos, por lo que es necesario parsear la cadena en sus diferentes tokens 
+            //se hace uso de esta funcion que tokenisa la cadena y devuvle los comandos si son correctos el programa debe de seguir  
+            char **tokens = pasrse_input(cmd_receive);
+
+            //si no se recibio nada pasa y espera la proxima ingresion de datos. 
+            if(tokens == NULL || tokens[0] == NULL){
+                free(cmd_receive);
+                continue;
+            }
+            
+            //si hubo comandos
+            /**
+             * - en este punto no se sabe que comadnos fueron los que entraron por lo que realizo una copio y asigno un nuevo 
+             * espacio de memoria para el primer comando
+             * 
+             * ---NOTA: los comandos siempre vienen en ORDEN, si no viene en orden no se podra ejecutar  
+             * 
+             * actualmete la variable < tokens >> contiene la sigueinte informacion pro dar un ejemplo con WIFI 
+             * 
+             * ["SSID:INFINIMUN123", "PSWD:123456789"]
+             * 
+             * -> entonces < tmp > trata de sacar el primer comando que se introdujo
+             * -- para saber que comandao es y como seguir con el flujo 
+            */
+            char *cmd_case = strdup(tokens[0]);
+
+            char  *tipo = strtok(cmd_case, ":");
+            //aseuramos que sea el comando y que venga con la contrasenia 
+            if(strcmp(tipo,"SSID") ==0 && tokens[1] != NULL){
+                //en este caso ocurrio un error y es necesario introducir otra red, pero el sismte intento conectarse a la red por defecto 
+
+                //por lo que ahora necesito es serparar la parte que me importa del encabezado del comando 
+                char *ssid = strchr(tokens[0], ':');
+                char *pswd = strchr(tokens[1], ':');
+
+                if(ssid == NULL || pswd == NULL){
+                    ESP_LOGE(TAG,"formato incorrecto. Usa: SSID:<nombre> PSWD:<password>");
+                    goto cleanup;
+                }
+
+                //brincamos ":"
+                ssid++;
+                pswd++;
+                //actualizamos a las nuevas credenciales 
+                ret = update_setup_cred(ssid, pswd, NULL, "SSID");
+                //preparamos el envio de una senial 1 que indica que ya ha
+                if(ret !=ESP_FAIL){
+                    //activamos el bit
+                    xEventGroupSetBits(s_wifi_event_group, WIFI_UPDATE); //evento para WIFI - reinica la conexion 
+                    xEventGroupSetBits(g_tcp_event_group, BREAK_UPDATE_WIFI); //wvento para TCP - cierra todas las conexiones y espera a la conexion de WIFI para estbalcer 
+                    //conexion con el servidor. 
+                }
+                else{
+                    // uart_write_bytes(UART_MAIN,"\r\n", 2);
+                    // const char *mssg = 
+                    // uart_write_bytes(UART_MAIN,mssg, strlen(mssg));
+
+                    ESP_LOGE(TAG, "no se puderon guardar las credenciales WIFI");
+
+                }   
+            }
+            else if(strcmp(tipo,"HOST_IP") == 0 && tokens[1] !=NULL){
+                //comandos HOST_IP:<IP> PORT:<puerto>
+
+                //el procesoe s muy similar 
+                char *host_ip = strchr(tokens[0], ':');
+                char *port = strchr(tokens[1], ':');
+                
+                if (host_ip == NULL || port == NULL) {
+                    ESP_LOGE(TAG, "formato incorrecto. Usa: HOST_IP:<ip> PORT:<puerto>");
+                    goto cleanup;
+                }
+                //brincamos ":" 
+                host_ip++;
+                port++;
+                //actualizamos las credenicales para TCP. 
+
+                ret = update_setup_cred(host_ip, port, NULL, "HOST_IP");
+            
+                if(ret != ESP_FAIL){
+                    //se puderin asignar las credenciales 
+                    xEventGroupSetBits(g_tcp_event_group, UPDATE_TCP);
+                }
+                else{
+                    ESP_LOGE(TAG, "nERROR: no se pudo guardar el nuevo servidor");
+
+                }
+            
+            }
+            //ahora es cuando se procesa los datos ingresados por el usuario "YES" o "NO" indicand que si quiere volver a intentear a establecer una conexion TCP con el servidor
+            //con la esperanza que ya este arriab el servidor. 
+            else{
+                // pude que funcione no estoy muy seguro 
+                //tokens nos va a regresar al menos 2 selemtnos en, uno contendra un valor y otro contendra NULL indicando el final del arreglo 
+
+                //cunado ingresara a esta condiconal
+                /**
+                 * - para la iteracion de la conexion de TCP "YES" o "NO"
+                 * -o cunado se modifique la matricula con la que se loggea 
+                */
+
+                if(strcmp(tipo, "YES") == 0 ){
+                    xEventGroupSetBits(g_tcp_event_group, RETRY_SERVER);//quiere volver a intetnar la conexion con las mismas credenciales 
+                }
+                else if(strcmp(tipo, "NO") == 0){
+                    xEventGroupSetBits(g_tcp_event_group, NO_RETRY_TCP);//haysa aqui llego pa
+                }
+                else{
+                    //se ingreso algo diferente, por lo que sale 
+                    ESP_LOGE(TAG,"ingreso una opcion incorrecta, operacion aborto");
+                }
+            }
+            
+            //con una red para UABC 
+            //con un nuevo usuario
+
+            cleanup:
+            //liberamos tokens 
+            for (int i = 0; tokens[i] != NULL; i++) {
+                free(tokens[i]);
+            }
+            free(tokens);
+            free(cmd_case);
+            free(cmd_receive);
+
+        }
+    }
+}
+
+//este recibe del servidor y procesa lo que recibio
+
+//este debe de recibir como parametros otros elementos
+
+void tcp_process_task(void *params){
+    
+    format_request_t *frame;
+
+    char buffer[120]; //para mostrar mensajes por UART 
+    esp_err_t ret;
+
+    uint8_t frame_len;
+    int len;
+
+
+    while(1){
+
+        //recibira los datos por cola 
+        if(xQueueReceive(tcp_rx_queue,&frame, portMAX_DELAY)){
+
+
+            // ACK: identificador 0x3501 y len != 0xFF
+            if(frame->id == ACK && frame->len != 0xFF){
+
+                    if(login_pending) {
+                        xEventGroupSetBits(g_login_event_group, LOGIN_SUCCESS);
+                        login_pending = 0;
+                    }
+
+                len = snprintf(buffer, sizeof(buffer), "\r\nservidor contesta: ACK\r\n");
+                uart_write_bytes(global_uart.NUM_PORT, UART_GREEN, strlen(UART_GREEN));
+                uart_write_bytes(global_uart.NUM_PORT, buffer, len);
+                uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
+                vPortFree(frame);
+                continue;
+            }
+
+            // NACK: identificador 0x3501 y len == 0xFF
+            else if(frame->id == ACK && frame->len == 0xFF){
+
+                if(login_pending) {
+                    xEventGroupSetBits(g_login_event_group, LOGIN_FAIL);
+                    login_pending = 0;
+                }
+
+                len = snprintf(buffer, sizeof(buffer), "\r\nservidor contesta: NACK\r\n");
+                uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
+                uart_write_bytes(global_uart.NUM_PORT, buffer, len);
+                uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
+                vPortFree(frame);
+                continue;
+            }
+
+            //en otro caso recibimos un comando del servidor (trama CAFE)
+            else if(frame->id == HEADER){
+                frame_len = 0;
+
+                //si llego ahora debemos de ver uqe onda 
+
+                //verificamos que sea para nosotros 
+                if(frame->user != user){
+                    len = snprintf(buffer, sizeof(buffer), "\r\npeticion no para este usuario\r\n");
+                    uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
+                    uart_write_bytes(global_uart.NUM_PORT, buffer, len);
+                    uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
+                    free(frame);
+                    continue;
+                }
+
+                //ahora necesitamos ver que servicio es lo necesario 
+                if(frame->action == read_esp){
+                    switch(frame->resourse){
+                        case led :{
+                            //el estado esta 1 o 0, que solo abarca 1 byte
+                            memcpy(send_info.format_request.value, &led_state, 1);
+                            send_info.format_request.len=1;//solo usamos 1 byte para el led 
+                            send_info.op_type = OP_ACK; //operacion ACK
+                            ret = send_message();
+                            if(ret != ESP_OK){
+                                len = snprintf(buffer, sizeof(buffer), "\r\nERRO AL SER EL ENVIO DEL FRAME\r\n");
+                                uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
+                                uart_write_bytes(global_uart.NUM_PORT, buffer, len);
+                                uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
+                            }
+                            
+                        }break;
+
+                        case adc:{
+                            //adc puede ser un valor de 16 bits 
+                            uint16_t adc_state = read_adc(ADC_CHANNEL);
+                            uint16_t adc_net = htons(adc_state);     
+                            memcpy(send_info.format_request.value, &adc_net, 2);
+                            send_info.format_request.len = 2;
+                            send_info.op_type =OP_ACK;
+                            ret = send_message();
+
+                            if(ret != ESP_OK){
+                                len = snprintf(buffer, sizeof(buffer), "\r\nERRO AL SER EL ENVIO DEL FRAME\r\n");
+                                uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
+                                uart_write_bytes(global_uart.NUM_PORT, buffer, len);
+                                uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
+                            }
+                        }break;
+
+                        case pwm : {
+                            uint16_t duty = pwm_get_duty();
+                            uint8_t pct = (uint8_t)(((uint32_t)duty * 100U) / PWM_MAX);
+                            send_info.format_request.value[0] = pct;
+                            send_info.format_request.len = 1;
+                            send_info.op_type = OP_ACK;
+                            ret = send_message();
+
+                            if(ret != ESP_OK){
+                                len = snprintf(buffer, sizeof(buffer), "\r\nERRO AL SER EL ENVIO DEL FRAME\r\n");
+                                uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
+                                uart_write_bytes(global_uart.NUM_PORT, buffer, len);
+                                uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
+                            }
+                        }break;
+
+                        case resert_esp:{
+                            uint64_t limite_total_us = (uint64_t)time_resert * 1000000ULL;
+                            
+                            uint64_t restante_us = (limite_total_us > reset_state) ? (limite_total_us - reset_state) : 0;
+                            uint8_t segundos = (uint8_t)(restante_us / 1000000ULL);
+                            send_info.format_request.value[0] = segundos;
+                            send_info.format_request.len = 1;
+                            send_info.op_type = OP_ACK;
+                            ret = send_message(); //mandamos 
+                        }break;
+
+                        //ahora el leer < recurso habilitado - set y down del led > 
+                        //va a devolver el total de minutos que el usuario envio 
+
+                        case enable_tmp:{
+                            send_info.op_type = OP_NACK;
+                            send_info.format_request.value[0] = flag_enable_tmp; // mandara 0
+                            send_info.format_request.len = 1;
+                            ret = send_message();
+
+                        }break;
+
+                        case set_tmp:{
+                            if(flag_enable_tmp != 1){
+
+                                len = snprintf(buffer, sizeof(buffer), "\r\nrecurso temporizador no habilitado\r\n");
+                                uart_write_bytes(UART_NUM_0, UART_RED, strlen(UART_RED));
+                                uart_write_bytes(UART_NUM_0, buffer, len);
+                                uart_write_bytes(UART_NUM_0, UART_RESET, strlen(UART_RESET));
+                                send_info.op_type = OP_NACK;
+                                ret = send_message();
+                            }
+                            else{
+
+                                uint32_t minutos = ( time_led.hora_set_led * 60 ) + time_led.minuto_set_led; // (hora * 60 ) + minutos
+                                send_info.op_type = OP_ACK;
+                                memcpy(send_info.format_request.value, &minutos, 4);
+                                send_info.format_request.len = 4;
+                                ret = send_message();
+                            }
+
+
+                        }break;
+
+                        case down_tmp:{
+                            if(flag_enable_tmp != 1){
+                                len = snprintf(buffer, sizeof(buffer), "\r\nrecurso temporizador no habilitado\r\n");
+                                uart_write_bytes(UART_NUM_0, UART_RED, strlen(UART_RED));
+                                uart_write_bytes(UART_NUM_0, buffer, len);
+                                uart_write_bytes(UART_NUM_0, UART_RESET, strlen(UART_RESET));
+                                send_info.op_type = OP_NACK;
+                                ret = send_message();
+                            }
+                            else{
+                                uint32_t minutos = ( time_led.hora_down_led * 60 ) + time_led.minutos_down_led; // (hora * 60 ) + minutos
+                                send_info.op_type = OP_ACK;
+                                memcpy(send_info.format_request.value, &minutos, 4);
+                                send_info.format_request.len = 4;
+                                ret = send_message();
+                            }
+
+                        }break;         
+
+                        default: {
+                            send_info.op_type = OP_NACK;
+                            ret = send_message();
+                        } break;
+                    }
+                    
+                }
+                else if(frame->action == write_esp){
+                    switch(frame->resourse){
+
+                        case led:{
+                            //quiere escribir 
+                            led_state = frame->value[0];
+                            gpio_set_level(OUTPUT_PIN, led_state);
+
+                            memcpy(send_info.format_request.value, &led_state, 1);
+                            send_info.format_request.len = 1;
+                            send_info.format_request.value[0] =led_state ;
+                            send_info.op_type = OP_ACK;
+                            //conestamos a la peticion 
+                            ret = send_message();
+                        }break;
+                        //falta que mande el ACK con el valor estabelcido 
+                        case pwm : {
+                            uint8_t pct = frame->value[0];
+                            if(pct > 100) pct = 100;
+                            uint16_t duty = (uint16_t)(((uint32_t)pct * PWM_MAX) / 100U);
+                            pwm_set_duty(duty);
+                            duty = pwm_get_duty();
+                            pct = (uint8_t)(((uint32_t)duty * 100U) / PWM_MAX);
+                            send_info.format_request.value[0] = pct;
+                            send_info.format_request.len = 1;
+                            send_info.op_type = OP_ACK;
+                            ret = send_message();
+                        }break;
+
+                        case resert_esp:{
+                            //vamos a ecribir el byte que se reibio representan los segundos en los cuales de requieren reinicar la esp 
+                            //establecer el tiempo que queremos que se relice el resert 
+                            time_resert = frame->value[0];//el valor entara en el primero byte del frame porqeu sera un valor de 1 byte 
+                            //ahora lo que sigue es crear la tarea princilapl 
+                            xTaskCreate(task_resert_esp, "task_resert_esp", 2048, NULL, 5, NULL);
+                            //
+                            memcpy(send_info.format_request.value, &time_resert, 1); //sera de 1 byte
+                            send_info.format_request.len = 1;
+                            send_info.op_type = OP_ACK;
+                            ret = send_message();
+                            
+                        }break;
+
+                        case adc: {
+                            len = snprintf(buffer, sizeof(buffer), "\r\noperacion con ADC incorrecta\r\n");
+                            uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
+                            uart_write_bytes(global_uart.NUM_PORT, buffer, len);
+                            uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
+
+                            //enviamos un NACK 
+                            send_info.op_type = OP_NACK;
+                            ret = send_message();
+                        }break;
+						
+						case enable_tmp :{
+							//si en el recurso H llega el valor 1 inica que se quiere habilitar el recurso 
+							//pero en el caso de que llegue 0 se requiere que se deshabilite 
+				
+							if(frame->value[0] != 1 ){
+								//indicamos que entonces se queires deshabilitar el recurso de tmp. 
+								//si estaba activo ahora lo apagamos 
+								flag_enable_tmp =0; 
+								
+								//ahora necesitamos apagar el conteo, eliminaomos la tarea que se encargaba de llevar el conteo 
+								vTaskDelete(count_time);
+								
+								//elimino y reincio todo lo que necesita el sistema del timer para funcionar 
+								
+								time_led.time_set_led = 0;
+								time_led.time_down_led = 0;
+								time_led.flag_set_led = 0;
+								time_led.flag_down_led = 1;
+								time_led.hora_set_led = 0; 
+								time_led.minuto_set_led = 0;
+								time_led.hora_down_led = 0;
+								time_led.minutos_down_led = 0; 
+								task_created = 0;
+								time_init_count = 0;
+
+                                send_info.op_type = OP_ACK;
+                                send_info.format_request.len =1;
+                                send_info.format_request.value[0] = frame->value[0]; //retornamos lo que ingreso 
+                                ret = send_message();
+							}
+							else{
+								//en otro caso entonces lo que se solciita es habilitar 
+								flag_enable_tmp =1; //indicamos que ahora el recurso esta activo
+                                send_info.op_type = OP_ACK; //indiamoca un ACK se pudo habilitar 
+                                send_info.format_request.len = 1;
+                                send_info.format_request.value[0] = 1;
+                                ret = send_message();
+
+							}
+						}break; 
+						
+						case set_tmp:{ 
+
+							if(flag_enable_tmp !=1){
+							
+								char msg[80];
+								len = snprintf(msg, sizeof(msg), "\r\n no se ha habilitado el recurso -> devolviendo NACK al servidor\n\r");
+								uart_write_bytes(UART_NUM_0, UART_RED , strlen(UART_RED));
+								uart_write_bytes(UART_NUM_0, msg , len);
+								uart_write_bytes(UART_NUM_0, UART_RESET , strlen(UART_RESET));
+                                send_info.op_type = OP_NACK;
+                                send_info.format_request.value[0] = 0;
+                                ret = send_message();
+							}
+							else{
+                                uint8_t value_len = (frame->len > 5) ? (frame->len - 5) : 0;
+
+                                if(value_len > 0){
+                                    int negativo = (frame->value[0] & 0x80) != 0; 
+                                    int cero = 1;
+                                    for (int i = 0; i < value_len; i++) {
+                                        if (frame->value[i] != 0) { cero = 0; break; }
+                                    }
+
+                                    if(negativo){
+                                        len =  snprintf(buffer, sizeof(buffer), "\r\n ERROR! --> el numero recibido es negativo, opeacion imposible\r\n");
+                                        uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
+                                        uart_write_bytes(global_uart.NUM_PORT, buffer, len);
+                                        uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
+                                        send_info.op_type = OP_NACK;
+                                        send_info.format_request.value[0] = 0;
+                                        ret = send_message();
+                                    }
+
+                                    else if(cero){
+                                        len = snprintf(buffer, sizeof(buffer), "\r\n ERROR! --> numero es 0, debe ser un numero > 0\r\n");
+                                        uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
+                                        uart_write_bytes(global_uart.NUM_PORT, buffer, len);
+                                        uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
+
+                                        send_info.op_type = OP_NACK;
+                                        send_info.format_request.value[0] = 0;
+                                        ret = send_message();
+                                    }
+                                    else{
+										len = snprintf(buffer, sizeof(buffer), "\r\n bytes restantes : %u", value_len);
+										uart_write_bytes(UART_NUM_0, UART_GREEN, sizeof(UART_GREEN));
+										uart_write_bytes(UART_NUM_0, buffer, len);
+										uart_write_bytes(UART_NUM_0, UART_RESET, sizeof(UART_RESET));
+                                        
+										uint32_t minutos=0;
+										if(value_len == 2 ){
+											
+											uint16_t tmp = 0;
+											memcpy(&tmp, frame->value, 2); 
+											minutos = ntohs(tmp);
+										}
+										else if(value_len == 4){
+                                            
+											memcpy(&minutos, frame->value, 4);
+                                        
+											minutos = ntohl(minutos);
+										}
+										else if(value_len ==  1){
+											
+                                            minutos = frame->value[0];
+											
+										}
+										else{
+											
+                                            len = snprintf(buffer, sizeof(buffer), "\n\rtamanio del numero excede, el vaor maximo debe entrar en 32 bits\n\r");
+                                            uart_write_bytes(UART_NUM_0, UART_RED , strlen(UART_RED));
+								            uart_write_bytes(UART_NUM_0, buffer , len);
+								            uart_write_bytes(UART_NUM_0, UART_RESET , strlen(UART_RESET));
+                                            send_info.op_type = OP_NACK;
+                                            send_info.format_request.value[0] = 0;
+                                            ret = send_message();
+                                            
+                                            break; 
+                                        }
+										char **tokens = reques_from_API(); 
+										uint8_t horas_API = (uint8_t)atoi(tokens[0]);
+										uint8_t minutos_API = (uint8_t)atoi(tokens[1]);
+										
+										uint32_t minutos_from_API = (horas_API * 60) + minutos_API; 
+
+										int32_t minutos_faltantes = minutos - minutos_from_API; 
+										
+										if(minutos_faltantes < 0 ){
+											len = snprintf(buffer, sizeof(buffer), "\r\nHora del dia ya pasada, intente de nuevo\r\n");
+											uart_write_bytes(UART_NUM_0, UART_RED, sizeof(UART_RED));
+											uart_write_bytes(UART_NUM_0, buffer, len);
+											uart_write_bytes(UART_NUM_0, UART_RESET, sizeof(UART_RESET));
+											
+                                            send_info.op_type = OP_NACK;
+                                            send_info.format_request.value[0] = 0;
+                                            ret = send_message();
+											
+                                            break;
+										}
+										else if(minutos_faltantes == 0){
+											len = snprintf(buffer, sizeof(buffer), "\r\nhora solicitada coincide con la hora actual, se requiere un margen, 1 minutos minimo\r\n");
+											uart_write_bytes(UART_NUM_0, UART_RED, sizeof(UART_RED));
+											uart_write_bytes(UART_NUM_0, buffer, len);
+											uart_write_bytes(UART_NUM_0, UART_RESET, sizeof(UART_RESET));
+
+                                            send_info.op_type = OP_NACK;
+                                            send_info.format_request.value[0] = 0;
+                                            ret = send_message();
+										
+                                        }
+										else if(minutos_faltantes > 0 ){
+											uint64_t segundos = (uint64_t)minutos_faltantes * 60; 
+											time_led.time_set_led = segundos * 1000000ULL;											
+											
+											parser_hora(minutos,1);
+
+											if(task_created != 1 ){
+
+                                                xTaskCreate(task_count_time, "count_time", 4098, NULL, 8, &count_time); 
+                                                task_created =1; 
+                                                
+                                            }
+
+                                            time_init_count = 0;
+                                            current_time = 0; 
+                                                
+                                            send_info.op_type = OP_ACK;
+                                            memcpy(send_info.format_request.value, &minutos, value_len);
+                                            send_info.format_request.len = value_len;
+                                            send_info.format_request.value[0] = minutos;
+                                            ret = send_message();
+                                                
+                                            time_init_count =esp_timer_get_time();
+											
+										}
+										
+                                    }
+                                }
+                                else{
+                                    char msg[80];
+								    len = snprintf(msg, sizeof(msg), "\r\nERROR! --> no hya suficientes parametros en el frame. \n\r");
+								    uart_write_bytes(UART_NUM_0, UART_RED , strlen(UART_RED));
+								    uart_write_bytes(UART_NUM_0, msg , len);
+								    uart_write_bytes(UART_NUM_0, UART_RESET , strlen(UART_RESET));
+
+                                    //mandando NACK 
+                                    send_info.op_type = OP_NACK;
+                                    send_info.format_request.value[0]=0;
+                                    ret = send_message();
+                                }
+							}
+							
+						}break;
+
+                        case down_tmp: {
+
+                            if(flag_enable_tmp !=1){
+                                
+                                //quiere decir que no se ha habilitado o se deshablito el recurso, por lo que mandamos un NACK de regreso. 
+                                char msg[80];
+                                len = snprintf(msg, sizeof(msg), "\r\n no se ha habilitado el recurso -> devolviendo NACK al servidor\n\r");
+                                uart_write_bytes(UART_NUM_0, UART_RED , strlen(UART_RED));
+                                uart_write_bytes(UART_NUM_0, msg , len);
+                                uart_write_bytes(UART_NUM_0, UART_RESET , strlen(UART_RESET));
+
+                                //este, si reconoce el frame, el frame viene de manera correcta pero primero es necesario habilitar el recurso
+                                send_info.op_type = OP_NACK;
+                                send_info.format_request.value[0] = 0;
+                                ret = send_message();
+                            }
+                            else{
+                                /*
+                                pero que debemos de hacer primero antes de empezar a contar?
+                                
+                                --debemos de verificar que lo que se ingreso sea un valro adecuado, un valor mayor a 0
+                                */
+                                //debo de obtener el total de bytes restante que son los bytes del valor que quedan en el frame 
+                                uint8_t value_len = (frame->len > 5) ? (frame->len - 5) : 0;
+
+                                if(value_len > 0){
+                                    int negativo = (frame->value[0] & 0x80) != 0; //se verifica si el numeor recibido es negativo 
+                                    int cero = 1;
+                                    for (int i = 0; i < value_len; i++) {
+                                        if (frame->value[i] != 0) { cero = 0; break; }
+                                    }
+
+
+                                    if(negativo){
+                                        len =  snprintf(buffer, sizeof(buffer), "\r\n ERROR! --> el numero recibido es negativo, opeacion imposible\r\n");
+                                        uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
+                                        uart_write_bytes(global_uart.NUM_PORT, buffer, len);
+                                        uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
+                                        //retornando un NACK en parte el formato esta bien pero los datos no lo estan , asi que no es un ACK porque no se pued completar la opreacion 
+
+                                        send_info.op_type = OP_NACK;
+                                        send_info.format_request.value[0] = 0;
+                                        ret = send_message();
+                                    }
+
+                                    else if(cero){
+                                        len = snprintf(buffer, sizeof(buffer), "\r\n ERROR! --> numero es 0, debe ser un numero > 0\r\n");
+                                        uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
+                                        uart_write_bytes(global_uart.NUM_PORT, buffer, len);
+                                        uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
+
+                                        send_info.op_type = OP_NACK;
+                                        send_info.format_request.value[0] = 0;
+                                        ret = send_message();
+                                    }
+                                    else{
+                                        len = snprintf(buffer, sizeof(buffer), "\r\n bytes restantes : %u", value_len);
+                                        uart_write_bytes(UART_NUM_0, UART_GREEN, sizeof(UART_GREEN));
+                                        uart_write_bytes(UART_NUM_0, buffer, len);
+                                        uart_write_bytes(UART_NUM_0, UART_RESET, sizeof(UART_RESET));
+                                            
+                                        //ahora decidimos, verifiamos que tiene value len, si teien 1(8 bits - sin cambio), 
+                                        //2(16 bits - ntohs) o 4 bytes (32 bits - ntohl) 
+                                        uint32_t minutos=0;
+                                        if(value_len == 2 ){
+                                            //quedan 2 bytes, un numero de 16 bits 
+                                            //puede que este sea el mas comun ya que es un gran margen aguanta para 1 dia casi 
+                                            uint16_t tmp = 0;
+                                            memcpy(&tmp, frame->value, 2); 
+                                            minutos = ntohs(tmp);
+                                        }
+                                        else if(value_len == 4){
+                                            //tiene un valor de 32 bits  - 4 bytes 
+                                            memcpy(&minutos, frame->value, 4);
+                                            // format_time_JSON(extender);
+                                            // time_led.time_set_led = (uint64_t)extender * 1000000ULL;
+                                            minutos = ntohl(minutos);
+                                        }
+                                        else if(value_len ==  1){
+                                            //el valor es un valor de 1 byte 
+                                            minutos = frame->value[0];
+                                            // time_led.time_set_led =  (uint64_t)extender * 1000000ULL;
+                                        }
+                                        else{
+                                            
+                                            //cualquier valor mayor a 4 bytes o menos a 1 byte se ingora, menor que 1 byte pues es un error, creo que esto nunca llegaria 
+                                            //mayor a 4 bytes es un valor que no puede se casteado de manera directa es un numero muy grande casi sin sentido 
+                                            len = snprintf(buffer, sizeof(buffer), "\n\rtamanio del numero excede, el vaor maximo debe entrar en 32 bits\n\r");
+                                            uart_write_bytes(UART_NUM_0, UART_RED , strlen(UART_RED));
+                                            uart_write_bytes(UART_NUM_0, buffer , len);
+                                            uart_write_bytes(UART_NUM_0, UART_RESET , strlen(UART_RESET));
+                                            send_info.op_type = OP_NACK;
+                                            send_info.format_request.value[0] = 0;
+                                            ret = send_message();
+                                            
+                                            break; //rompetmos el cclo y esperamos a que vuelva a llegar otro dato por la cola
+                                        }
+                                        
+                                        
+                                        char **tokens = reques_from_API(); //solicito la hora antes de relizar cualquier asignacion y empezar el conteo, esto con el objetivo de saber que hora tengo 
+                                        //para poder saber cuantos tiempo falta de mi hora actual a la hora que se reuqiere el prender el led. 
+                                        
+                                        //convierto las horas y los minutos que etsas en string a entreos, con atoi 
+                                        
+                                        uint8_t horas_API = (uint8_t)atoi(tokens[0]);
+                                        uint8_t minutos_API = (uint8_t)atoi(tokens[1]);
+                                        
+                                        // -> convertismos estas horas y minutos en solo minutos 
+                                        //pero hay un detalle, la API me regresa el valor en formato de 24 horas, entonces, entonces si estamos bien,
+                                        //tecnicamente simepre lahora que actual, la que consulto ahora es menor que la hora en la cual se planea realizar 
+                                        uint32_t minutos_from_API = (horas_API * 60) + minutos_API; //ahora ya tengo el total de minutos que han transucrrido para llegar a es ahora 
+                                        
+                                        //ahora lo que necesito hacer es, calcular cuantos minutos me quedan para llegar a los minutos que el usuario requiere 
+                                        
+                                        //entonces los minutos del usuario en este punto deberian de ser mayor 
+                                        //cambiandos de un valor sin signo a uno con signo esto para ddetectar si el tiempo al que se quiere relizar 
+                                        int32_t minutos_faltantes = minutos - minutos_from_API; // si tengo por ejemplo a las 12:30 -> 750 minutos y son las 10:30 ->  630 
+                                        //me indicniaria que me quedan 120 minutos -> que son 2 horas -> entonces estos 120 minutos por ejemplo es lo que el timer debe de esperar 
+                                        
+                                        
+                                        if(minutos_faltantes < 0 ){
+                                            
+                                            //el uusario dio un hora que ya paso 
+                                            len = snprintf(buffer, sizeof(buffer), "\r\nHora del dia ya pasada, intente de nuevo\r\n");
+                                            uart_write_bytes(UART_NUM_0, UART_RED, sizeof(UART_RED));
+                                            uart_write_bytes(UART_NUM_0, buffer, len);
+                                            uart_write_bytes(UART_NUM_0, UART_RESET, sizeof(UART_RESET));
+                                            //como aun no inicaio nada, entonces salgo del ciclo y se pone de nuevo a esperar que entre el sigueitne comando 
+
+                                            send_info.op_type = OP_NACK;
+                                            send_info.format_request.value[0] = 0;
+                                            ret = send_message();
+                                            
+                                            break;
+                                        }
+                                        else if(minutos_faltantes == 0){
+                                            //se podria dar el caso que la hora sea exacta, los mintuso son exactos, entonces se puede, por lo qye indicamos que se necesita tiempo en futuro minimo 1 minitos 
+                                            
+                                            len = snprintf(buffer, sizeof(buffer), "\r\nhora solicitada coincide con la hora actual, se requiere un margen, 1 minutos minimo\r\n");
+                                            uart_write_bytes(UART_NUM_0, UART_RED, sizeof(UART_RED));
+                                            uart_write_bytes(UART_NUM_0, buffer, len);
+                                            uart_write_bytes(UART_NUM_0, UART_RESET, sizeof(UART_RESET));
+
+                                            send_info.op_type = OP_NACK;
+                                            send_info.format_request.value[0] = 0;
+                                            ret = send_message();
+                                        
+                                        }
+                                        else if(minutos_faltantes > 0 ){
+
+
+
+                                            //ahor cuando de apaga el led, debe de entrar en juego otra condicion, en donde el down debe de ser mayor que el set, 
+
+
+
+
+                                          
+                                            uint64_t segundos = (uint64_t)minutos_faltantes * 60;  // minutos -> segundos   
+
+                                            uint64_t uS_restantes = segundos * 1000000ULL;
+
+                                            // que estoy dicneod aqui, el tiempo que debe desperar paara apagar el led debe de ser mayor que el tiempo que debe de esperar en prenderse 
+                                            if(uS_restantes > time_led.hora_set_led){
+
+                                                time_led.time_down_led = uS_restantes; //entonces podemos asignar el timeoi
+                                            
+                                                parser_hora(minutos,0);
+
+                                                //la tarea se empeiza a contar cunaso se establece prender el led 
+
+                                                send_info.op_type = OP_ACK;
+                                                memcpy(send_info.format_request.value, &minutos, value_len);
+                                                send_info.format_request.len = value_len;
+                                                send_info.format_request.value[0] = minutos;
+                                                ret = send_message();
+                                                    
+                                            }   
+                                            else{
+                                                //en este caso hay una discrepancia en le hora 
+
+                                                len = snprintf(buffer, sizeof(buffer), "\r\nla hora de apago debe ser mayor a la encendido\r\n");
+                                                uart_write_bytes(UART_NUM_0, UART_RED, sizeof(UART_RED));                                            
+                                                uart_write_bytes(UART_NUM_0, buffer, len);
+                                                uart_write_bytes(UART_NUM_0, UART_RESET, sizeof(UART_RESET));
+                                                break;
+
+                                            }                                       
+                                            
+                                        }
+                                        
+                                    }
+                                }
+                                else{
+                                    char msg[80];
+                                    len = snprintf(msg, sizeof(msg), "\r\nERROR! --> no hya suficientes parametros en el frame. \n\r");
+                                    uart_write_bytes(UART_NUM_0, UART_RED , strlen(UART_RED));
+                                    uart_write_bytes(UART_NUM_0, msg , len);
+                                    uart_write_bytes(UART_NUM_0, UART_RESET , strlen(UART_RESET));
+
+                                    //mandando NACK 
+                                    send_info.op_type = OP_NACK;
+                                    send_info.format_request.value[0]=0;
+                                    ret = send_message();
+                                }
+                            }
+
+                        }break;
+
+
+                        default: {
+                            send_info.op_type = OP_NACK;
+                            ret = send_message();
+                        } break;
+                    }
+                }
+
+                else if(frame->action == cancel_resert_esp){
+                    //quiere canelcar el resert de la esp 
+                    //tna solo pasa en que debemos de activar el grupo de eventos que calncela todo 
+                    xEventGroupSetBits(g_rst_event, RST_CANCEL);
+                    send_info.format_request.value[0] = 0;
+                    send_info.format_request.len=1;
+                    send_info.op_type = OP_ACK;
+                    ret = send_message();
+                }
+
+                
+                vPortFree(frame);
+            }
+
+            else{
+                len = snprintf(buffer, sizeof(buffer), "\r\nFORMTAMO INCORRECTO\r\n");
+                uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
+                uart_write_bytes(global_uart.NUM_PORT, buffer, len);
+                uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
+
+                //debemos de enviar un NACK 
+
+                send_info.op_type = OP_NACK;
+                ret = send_message();
+                if(ret != ESP_OK){
+                    len = snprintf(buffer, sizeof(buffer), "\r\nERRO AL SER EL ENVIO DEL FRAME\r\n");
+                    uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
+                    uart_write_bytes(global_uart.NUM_PORT, buffer, len);
+                    uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
+                }
+                free(frame);
+                continue;
+            }
+
+
+            
+        }
+    }
+
+}
+
+
+
+char **pasrse_input(char *line){
+
+    char **tokens = malloc(5 * sizeof(char*));
+    char *token; 
+    int position=0;
+
+
+    token = strtok(line, " ");
+
+    while(token != NULL){
+
+        if(position >= 5 ) break;
+
+        tokens[position++] = strdup(token);
+        
+        token = strtok(NULL, " ");
+    }
+
+    tokens[position] = NULL;
+    
+    
+    return tokens;
+}
+
+
+//creo que esta funcionaba pero para la trama ASCII, pero este separa por ":" entonces me servira, la dejare asi, aunque tiene espacio de mas 
+char **pasrse_input_recv(char *line){
+
+    char **tokens = malloc(7 * sizeof(char*));  
+    char *token; 
+    int position = 0;
+
+    token = strtok(line, ":");
+
+    while(token != NULL){
+        if(position >= 6) break;        
+        tokens[position++] = strdup(token);
+        token = strtok(NULL, ":");
+    }
+
+    tokens[position] = NULL;
+    return tokens;
+}
+
+//actualiza las credencilaes -----> necesita actualicion sobre las varibales de globales --> por referencia 
+//ahora esta conexion sera mediante la estrucuutra para lleva run mejor controky que todo este agrupado en una sola varibale 
+esp_err_t update_setup_cred(char *key, char *anchor ,char *pswd_ent,  char *identificator){
+
+/**
+  * estaba tratando de hacer 2 veces algo que ya hace la tarea. en esta funcion los guiaremos con el cuerto parametro que idnicara que tipo de actualizacion se necesita realizar 
+  * 
+  * 
+*/
+
+    if(strcmp(identificator, "SSID") == 0){
+
+        esp_wifi.ssid =realloc(esp_wifi.ssid, strlen(key)+1);
+        esp_wifi.pswd =realloc(esp_wifi.pswd, strlen(anchor)+1);
+
+        if (esp_wifi.ssid != NULL && esp_wifi.pswd != NULL) {
+            strcpy(esp_wifi.ssid, key);
+            strcpy(esp_wifi.pswd, anchor);
+            esp_wifi.type_connected=0; //conexion normal
+            esp_wifi.user_name="/0";
+            return ESP_OK;
+        } else {
+            uart_write_bytes(UART_MAIN,"\r\n", 2);
+            const char *mssg = "MAIN - no hay memoria para las credenicales\0";
+            uart_write_bytes(UART_MAIN,mssg, strlen(mssg));
+            return ESP_FAIL;
+        }
+
+    }
+    //ahora cunado sea cambiar la IP
+    
+
+    //aqui tenemos un problema, debemos de cambiar el puerto a entero, ya que es lo que se necesita , pero todo resibira 
+    //como caracter pero aqui jacemos la transformacion
+    else if(strcmp(identificator, "HOST_IP") == 0){
+
+        tcp_client.host_ip = realloc(tcp_client.host_ip, strlen(key)+1);
+        if(tcp_client.host_ip != NULL){
+            //la IP esta bien 
+            strcpy(tcp_client.host_ip, key);
+            // strcpy(tcp_client.host_port, anchor);
+            //que que tiene el puerto es anchor por lo que aplicamos atoi
+            
+            int port_number = atoi(anchor);
+            tcp_client.host_port = (uint16_t)port_number;
+            return ESP_OK;
+        }
+
+        else{
+            ESP_LOGE(TAG, "no se pudo asignar memoria para las nuevas llaves");
+            return ESP_FAIL;
+        }
+    }
+
+    
+    return ESP_FAIL;
+
+}
+
+
+void setup_tcp(void)
+{
+    while (1)
+    {
+        esp_err_t ret = tcp_cliente_init();
+        static int n_login = 0;
+        int len;
+
+        if (ret == ESP_OK)
+        {
+            uart_write_bytes(UART_MAIN, UART_GREEN, strlen(UART_GREEN));
+            const char *m = "\r\nconexion con el servidor establecida\r\n";
+            uart_write_bytes(UART_MAIN, m, strlen(m));
+            uart_write_bytes(UART_MAIN, UART_RESET, strlen(UART_RESET));
+
+            // Lanzar tareas de recepción y procesamiento
+            xTaskCreate(recv_task, "recv_task", 4098, NULL, 8, NULL);
+            xTaskCreate(tcp_process_task, "tcp_process_task", 4098, NULL, 8, NULL);
+
+            // ── Autenticación (login) ────────────────────────────────────
+            do_login:
+            if (tcp_client.logged_in != 1)
+            {
+                char n_rety_log[64];
+                len = snprintf(n_rety_log, sizeof(n_rety_log), "intento #%d de login...\r\n", n_login);
+                uart_write_bytes(global_uart.NUM_PORT, n_rety_log, len);
+
+                login_pending = 1;
+                send_info.op_type = OP_LOGIN;
+                send_info.format_request.len = 5;   // user (4) + acción/recurso (1)
+                ret = send_message();
+
+                if (ret != ESP_OK)
+                {
+                    uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
+                    uart_write_bytes(global_uart.NUM_PORT, "\r\nError al enviar login\r\n", 24);
+                    uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
+                    login_pending = 0;
+                    vTaskDelay(pdMS_TO_TICKS(2000));
+                    continue;
+                }
+
+                // Esperar respuesta del servidor (ACK o NACK) máximo 5 segundos
+                EventBits_t bits = xEventGroupWaitBits(g_login_event_group,
+                                                        LOGIN_SUCCESS | LOGIN_FAIL,
+                                                        pdTRUE, pdFALSE,
+                                                        pdMS_TO_TICKS(5000));
+
+                if (bits & LOGIN_SUCCESS)
+                {
+                    tcp_client.logged_in = 1;
+                    uart_write_bytes(global_uart.NUM_PORT, UART_GREEN, strlen(UART_GREEN));
+                    uart_write_bytes(global_uart.NUM_PORT, "\r\nLogin exitoso (usuario autenticado)\r\n", 41);
+                    uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
+                }
+                else if (bits & LOGIN_FAIL)
+                {
+                    tcp_client.logged_in = 0;
+                    uart_write_bytes(global_uart.NUM_PORT, UART_RED, strlen(UART_RED));
+                    uart_write_bytes(global_uart.NUM_PORT, "\r\nLogin fallido (credenciales inválidas o servidor rechazó)\r\n", 58);
+                    uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
+                    vTaskDelay(pdMS_TO_TICKS(3000));
+                    goto do_login;   // reintentar login
+                }
+                else
+                {
+                    // Timeout
+                    login_pending = 0;
+                    uart_write_bytes(global_uart.NUM_PORT, UART_YELLOW, strlen(UART_YELLOW));
+                    uart_write_bytes(global_uart.NUM_PORT, "\r\nSin respuesta del servidor (login timeout)\r\n", 45);
+                    uart_write_bytes(global_uart.NUM_PORT, UART_RESET, strlen(UART_RESET));
+                    vTaskDelay(pdMS_TO_TICKS(3000));
+                    continue;
+                }
+            }
+            // ── Fin login ───────────────────────────────────────────────
+
+            // Crear tarea de keep-alive una sola vez
+            static bool ka_created = false;
+            if (!ka_created)
+            {
+                xTaskCreate(keep_alive_task, "keep_alive_task", 2048, NULL, 6, NULL);
+                ka_created = true;
+            }
+
+            // Esperar eventos que pueden romper la conexión
+            EventBits_t btis = xEventGroupWaitBits(g_tcp_event_group,
+                                                    BREAK_UPDATE_WIFI | UPDATE_TCP | TCP_DISCONNECTED,
+                                                    pdTRUE, pdFALSE, portMAX_DELAY);
+
+            // Cerrar socket y marcar como desconectado
+            if (tcp_client.sock >= 0)
+            {
+                close(tcp_client.sock);
+                tcp_client.sock = -1;
+            }
+            tcp_client.connected = 0;
+            tcp_client.logged_in = 0;
+
+            if (btis & BREAK_UPDATE_WIFI)
+            {
+                wifi_reconnect();
+                continue;
+            }
+
+            if (btis & TCP_DISCONNECTED)
+            {
+                uart_write_bytes(UART_MAIN, UART_YELLOW, strlen(UART_YELLOW));
+                const char *disc = "\r\nconexion perdida. intentando reconectar...\r\n";
+                uart_write_bytes(UART_MAIN, disc, strlen(disc));
+                uart_write_bytes(UART_MAIN, UART_RESET, strlen(UART_RESET));
+
+                int reconectado = 0;
+                for (int i = 1; i <= 5; i++)
+                {
+                    char intento[48];
+                    int tlen = snprintf(intento, sizeof(intento), "reconexion intento %d/5...\r\n", i);
+                    uart_write_bytes(UART_MAIN, intento, tlen);
+                    vTaskDelay(pdMS_TO_TICKS(2000));
+
+                    if (tcp_cliente_init() == ESP_OK)
+                    {
+                        reconectado = 1;
+                        break;
+                    }
+                }
+
+                if (reconectado)
+                {
+                    uart_write_bytes(UART_MAIN, UART_GREEN, strlen(UART_GREEN));
+                    const char *ok = "\r\nreconexion exitosa\r\n";
+                    uart_write_bytes(UART_MAIN, ok, strlen(ok));
+                    uart_write_bytes(UART_MAIN, UART_RESET, strlen(UART_RESET));
+                    tcp_client.logged_in = 0;
+                    xTaskCreate(recv_task, "recv_task", 4098, NULL, 8, NULL);
+                    xTaskCreate(tcp_process_task, "tcp_process_task", 4098, NULL, 8, NULL);
+                    ret = ESP_OK;
+                    goto do_login;
+                }
+
+                // Fallaron los 5 intentos: preguntar al usuario
+                uart_write_bytes(UART_MAIN, UART_YELLOW, strlen(UART_YELLOW));
+                const char *fail_msg =
+                    "\r\nno se pudo reconectar tras 5 intentos.\r\n"
+                    "opciones:\r\n"
+                    "  YES ---> reintentar con las mismas credenciales\r\n"
+                    "  NO  ---> reiniciar ESP\r\n"
+                    "  HOST_IP:<ip> PORT:<puerto> ---> cambiar servidor\r\n"
+                    "  SSID:<ssid> PSWD:<pswd>    ---> cambiar red WIFI\r\n";
+                uart_write_bytes(UART_MAIN, fail_msg, strlen(fail_msg));
+                uart_write_bytes(UART_MAIN, UART_RESET, strlen(UART_RESET));
+
+                xEventGroupClearBits(g_tcp_event_group, RETRY_SERVER | UPDATE_TCP | BREAK_UPDATE_WIFI | NO_RETRY_TCP);
+                EventBits_t user_bits = xEventGroupWaitBits(g_tcp_event_group,
+                                                            RETRY_SERVER | UPDATE_TCP | BREAK_UPDATE_WIFI | NO_RETRY_TCP,
+                                                            pdTRUE, pdFALSE, portMAX_DELAY);
+
+                if (user_bits & NO_RETRY_TCP)
+                {
+                    uart_write_bytes(UART_MAIN, UART_RED, strlen(UART_RED));
+                    const char *bye = "\r\nterminando... reiniciando ESP\r\n";
+                    uart_write_bytes(UART_MAIN, bye, strlen(bye));
+                    uart_write_bytes(UART_MAIN, UART_RESET, strlen(UART_RESET));
+                    vTaskDelay(pdMS_TO_TICKS(1000));
+                    esp_restart();
+                }
+
+                if (user_bits & BREAK_UPDATE_WIFI)
+                {
+                    if (tcp_client.sock >= 0)
+                    {
+                        close(tcp_client.sock);
+                        tcp_client.sock = -1;
+                    }
+                    tcp_client.connected = 0;
+                    wifi_reconnect();
+                }
+                // Para RETRY_SERVER o UPDATE_TCP se continúa el bucle while
+                continue;
+            }
+            // Para UPDATE_TCP simplemente se vuelve a llamar tcp_cliente_init() al inicio del while
+        }
+        else
+        {
+            // Falló la conexión TCP inicial
+            uart_write_bytes(UART_MAIN, UART_YELLOW, strlen(UART_YELLOW));
+            const char *m = "\r\nno se pudo conectar al servidor.\r\n"
+                            "opciones:\r\n"
+                            "  YES ---> reintentar\r\n"
+                            "  NO  ---> reiniciar ESP\r\n"
+                            "  HOST_IP:<ip> PORT:<puerto> ---> cambiar servidor\r\n"
+                            "  SSID:<ssid> PSWD:<pswd>    ---> cambiar red WIFI\r\n";
+            uart_write_bytes(UART_MAIN, m, strlen(m));
+            uart_write_bytes(UART_MAIN, UART_RESET, strlen(UART_RESET));
+
+            xEventGroupClearBits(g_tcp_event_group, RETRY_SERVER | UPDATE_TCP | BREAK_UPDATE_WIFI | NO_RETRY_TCP);
+            EventBits_t bits = xEventGroupWaitBits(g_tcp_event_group,
+                                                    RETRY_SERVER | UPDATE_TCP | BREAK_UPDATE_WIFI | NO_RETRY_TCP,
+                                                    pdTRUE, pdFALSE, portMAX_DELAY);
+
+            if (bits & NO_RETRY_TCP)
+            {
+                uart_write_bytes(UART_MAIN, UART_RED, strlen(UART_RED));
+                const char *bye = "\r\nterminando... reiniciando ESP\r\n";
+                uart_write_bytes(UART_MAIN, bye, strlen(bye));
+                uart_write_bytes(UART_MAIN, UART_RESET, strlen(UART_RESET));
+                vTaskDelay(pdMS_TO_TICKS(1000));
+                esp_restart();
+            }
+
+            if (bits & BREAK_UPDATE_WIFI)
+            {
+                if (tcp_client.sock >= 0)
+                {
+                    close(tcp_client.sock);
+                    tcp_client.sock = -1;
+                }
+                tcp_client.connected = 0;
+                wifi_reconnect();
+            }
+            // Para RETRY_SERVER o UPDATE_TCP se continúa el bucle (reintentará conexión)
+        }
+    }
+}
+
+
+
+void task_resert_esp(void *params){
+
+    uint8_t close_servicios = 1; //un colchon de 1 segundos para cerrar TCP y WIFI 
+    //en esta tarea se mantendra 
+    if (time_resert <= close_servicios) {
+        esp_restart(); // no hay tiempo suficiente ni para el colchon
+    }
+    //convertirmos el timepo en segundos 
+    limite_us = (uint64_t)(time_resert - close_servicios) * 1000000ULL;
+    //creamos la tarea para empeozar a contar 
+    xTaskCreate(set_resert_time_task, "set_resert_time_task", 2048, NULL, 5, &handle_resert_set);
+    //debriamos de esperar a que cancelamos o se completa el resert
+        
+    //un grupo de eventos con un bit para eso 
+    EventBits_t bits = xEventGroupWaitBits(g_rst_event, RST_CANCEL | RST_SUCCESS, pdTRUE, pdFALSE, portMAX_DELAY);
+    //verificamos cual se activo 
+    if(bits & RST_CANCEL){
+        //qioere decir que se canelo el resert 
+        // primero matar la tarea para que no hyana errores 
+        vTaskDelete(handle_resert_set);
+        limite_us=0;
+        time_resert = 0;
+        init_count=0;
+        reset_state=0;
+        vTaskDelete(NULL); //eliminamos esta tarea 
+            // break; //salimos del ciclo a elminar esta tarea hasta que se vuelva a necesitar 
+    }
+    else{
+            
+            //no se cancelo y llego a la cenleacion por lo que se procese a cerrar todas las coneciones etc.. 
+            //eliminamos la tarea 
+        char msg[60];
+        int len = snprintf(msg, sizeof(msg), "\n\rreinciando esp\r\n");
+        uart_write_bytes(UART_NUM_0, msg, len);
+        close(tcp_client.sock);
+        vTaskDelete(handle_resert_set);
+        esp_restart();
+    }
+    //creo que nucna se llega 
+    vTaskDelete(NULL);
+}
+
+void set_resert_time_task(void *params){
+
+    init_count = esp_timer_get_time();
+
+    char msg[60];
+
+    while(1){
+        reset_state = esp_timer_get_time() - init_count;
+
+        // int len = snprintf(msg,sizeof(msg),"resert en : %llu...", reset_state);
+        // uart_write_bytes(UART_NUM_0, UART_YELLOW, strlen(UART_YELLOW));
+        // uart_write_bytes(UART_NUM_0, msg, len);
+        // uart_write_bytes(UART_NUM_0, UART_RESET, strlen(UART_RESET));
+
+        ///ahora asi, dedebemos de verificiar tner 1 o 2 segunso menos, de colchon para realizar cierres 
+
+        if(reset_state >= limite_us){
+            //activamos el bit que inidiq eu se llego al conteio final 
+            xEventGroupSetBits(g_rst_event, RST_SUCCESS);
+        }
+        vTaskDelay(pdMS_TO_TICKS(100));
+    }
+
+}
+
+
+
+void gpio_init(){
+
+    gpio_reset_pin(OUTPUT_PIN);
+    gpio_reset_pin(PWM_LED);
+
+    // led_state = 0;
+
+    gpio_set_direction(OUTPUT_PIN, GPIO_MODE_OUTPUT);
+    gpio_set_level(OUTPUT_PIN, led_state);
+
+    gpio_set_direction(PWM_LED, GPIO_MODE_OUTPUT);
+    gpio_set_direction(PWM_LED, 0);
+}
+
+
+//validacion para modificar valores de los recursos 
+
+static int parse_number(const char *str)
+{
+    if (str == NULL || strlen(str) == 0) return -1;
+
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (!isdigit((unsigned char)str[i])) return -1;
+    }
+
+    return atoi(str);
+}
+
+
+// escenario 1: valor debe ser 0 o 1  (LED, flags, etc.)
+esp_err_t validate_binary(const char *str, uint8_t *out)
+{
+    int val = parse_number(str);
+
+    if (val < 0) {
+        ESP_LOGE(TAG, "no es un numero: '%s'", str);
+        return ESP_FAIL;
+    }
+    if (val < 0 || val > BINARY_MAX) {
+        ESP_LOGE(TAG, "fuera de rango [0-1]: %d", val);
+        return ESP_FAIL;
+    }
+
+    *out = (uint8_t)val;
+    return ESP_OK;
+}
+
+
+esp_err_t validate_pwm(const char *str, uint16_t *out)
+{
+    int val = parse_number(str);
+
+    if (val < 0) {
+        ESP_LOGE(TAG, "no es un numero: '%s'", str);
+        return ESP_FAIL;
+    }
+    if (val > PWM_MAX) {
+        ESP_LOGE(TAG, "fuera de rango [0-8191]: %d", val);
+        return ESP_FAIL;
+    }
+
+    *out = (uint16_t)val;
+    return ESP_OK;
+}
+
+
+void task_count_time(void *params){
+	
+	char **tokens =  NULL;
+    uint8_t hora_API = 0;
+    uint8_t minutos_API = 0;
+
+	while(1){
+
+		current_time = esp_timer_get_time() - time_init_count;
+
+		if(time_led.flag_set_led != 1 && (current_time >= time_led.time_set_led)){
+			tokens = reques_from_API();
+			
+			
+			hora_API =(uint8_t)atoi(tokens[0]); 
+			minutos_API =(uint8_t)atoi(tokens[1]);
+
+            uint32_t actual = hora_API * 60 + minutos_API;
+            uint32_t objetivo = time_led.hora_set_led * 60 + time_led.minuto_set_led;
+
+			
+			if(actual >= objetivo){
+			
+				led_state = 1; 
+				time_led.flag_set_led =1; 
+				time_led.flag_down_led = 0;
+                tokens = NULL;
+                hora_API = 0;
+                minutos_API = 0;
+				gpio_set_level(OUTPUT_PIN, led_state);
+				
+			} 
+			else{
+				uint8_t rest_hour = time_led.hora_set_led - hora_API;
+				uint8_t rest_minutos = time_led.minuto_set_led - minutos_API;
+
+                uint32_t minutos_ajuste = (rest_hour * 60) + rest_minutos; 
+                uint64_t segundos = (uint64_t)minutos_ajuste * 60;
+                time_led.time_set_led = segundos * 1000000ULL;
+			}
+		}
+		else if(time_led.flag_down_led != 1 && (current_time >= time_led.time_down_led)){
+
+            tokens = reques_from_API();
+
+            hora_API =(uint8_t)atoi(tokens[0]); //convierto las horas de ASCII a horas entros 
+            minutos_API =(uint8_t)atoi(tokens[1]);
+
+            uint32_t actual = hora_API * 60 + minutos_API;
+            uint32_t objetivo = time_led.hora_down_led * 60 + time_led.minutos_down_led;
+            
+
+            if(actual >= objetivo){
+
+                led_state = 0;
+                time_led.flag_down_led = 1;
+                time_led.flag_set_led = 0; 
+                tokens = NULL;
+                gpio_set_level(OUTPUT_PIN, led_state);
+                time_led.time_set_led = 0;  
+                time_led.time_down_led = 0;
+                time_led.flag_set_led = 0;
+                time_led.flag_down_led = 1;
+                time_led.hora_set_led = 0; 
+                time_led.minuto_set_led = 0;
+                time_led.hora_down_led = 0;
+                time_led.minutos_down_led = 0; 
+                task_created = 0;
+                time_init_count = 0;
+
+                vTaskDelete(NULL); //entonces elimino la tarea, el proceso se ompleto 
+
+            }
+            else{
+
+                uint8_t rest_hour = time_led.hora_down_led - hora_API;
+                uint8_t rest_minutos = time_led.minutos_down_led - minutos_API;
+                uint32_t minutos_ajuste = (rest_hour * 60) + rest_minutos; 
+
+                uint64_t segundos = (uint64_t)minutos_ajuste * 60;
+
+                time_led.time_down_led = segundos * 1000000ULL;
+            }
+		}
+
+		vTaskDelay(pdMS_TO_TICKS(100));	
+		
+	}
+
+	
+	
+	
+}
+
+
+/*
+
+aqui es en donde podria tener un problema 
+
+*/
+void parser_hora(uint32_t minutos, uint8_t set){
+
+    char buffer[16];
+
+    uint8_t horas = minutos / 60;
+    uint8_t mins = minutos % 60;
+
+    if(set != 1){
+
+        time_led.hora_down_led = horas;
+        time_led.minutos_down_led = mins;
+
+        int len = snprintf(buffer, sizeof(buffer), "\n\rLED DOWN\n\r");
+        uart_write_bytes(UART_NUM_0, buffer, len);
+
+    }else{
+
+        time_led.hora_set_led = horas;
+        time_led.minuto_set_led = mins;
+
+        int len = snprintf(buffer, sizeof(buffer), "\n\rLED SET\n\r");
+        uart_write_bytes(UART_NUM_0, buffer, len);
+    }
+
+    int len = snprintf(buffer, sizeof(buffer),"\n\r%02lu:%02lu\n\r",(unsigned long)horas,(unsigned long)mins);
+
+    uart_write_bytes(UART_NUM_0, buffer, len);
+}
+
+
+
+//esta funcion busca en el JSON la hora y devulve la hora y minutos que se obtuvo cunado se realizo la consulta 
+
+char *parse_time(char *JSON){
+
+    char *aux = JSON;
+
+    char *inicio = strstr(JSON, "\"currentDateTime\":\"");
+    if(inicio == NULL){
+        ESP_LOGE(TAG, "No se encontro currentDateTime");
+        return NULL;
+    }
+
+
+    inicio += strlen("\"currentDateTime\":\"");
+
+
+
+    char *time = malloc(6);
+    strncpy(time, inicio + 11, 5);
+    time[5] = '\0';
+
+
+    return time;
+}
+
+
+
+//esta funcion lo que hara es solciitar por TCP a la API la hora, limpia y separa en token lo que se recibio, lo que debe de dejar es el sigueinte formato ["99", "99"], donde el primero indica la
+//hora y el segundo los minutos, esto con el proposito de que aplique el atoi, de desta froma en varias partes es requerido este formato. 
+char **reques_from_API(void){
+	
+	static uint8_t get_time_flag = 0; //esta vairbale me indicara si se pudo obtener la hora
+	
+	//lo qu hacemos primero es verificar que lo que estemos realizando sea primero el prender el led 
+			
+	//una vez que el tiempo se completo entonces es hora de consultar la hora, transformar el JSON ya se parsea pero tomar los puntos y convertisloa a vairbales 
+	//numericos, para comarar la hora y minutos, 
+			
+	// la logica con lo que solcito a la API la hora, esperas hatsa que tenga un dato, debo de hacerlo funcion, una funcion que regrese, 
+	//me regresa el arreglo de token, entonces regresa un apuntador doble. 
+			
+			
+	do{
+		//este do-while, se debera de ejecutar hasta que se obtenga la hora, pero entonces esto puede traer un retarso en el caso que no se obentga la hora, no se pueda comunicar 
+		//en el momento preciso 
+		request=get_time_tcp();
+		ESP_LOGI(TAG, "time--> %s", request);
+				
+		parse_time_form_API = parse_time(request);
+		ESP_LOGI(TAG,"\nCURRENT TIME---> %s", parse_time_form_API);
+				
+		if(request != NULL && parse_time_form_API != NULL){
+			get_time_flag = 1;
+		}
+		else{
+			vTaskDelay(pdMS_TO_TICKS(30000));
+		}
+	}while(get_time_flag != 1); //se pondra en 1 cunado podramos obtener el tiempo 
+	//una vez que salga debemos de reinicarlo 
+	
+	
+	//prendemos el led, pero antes de prender debemos de verificar que la hora sea cercana, por lo menor igual o mayor, creo que es un punto correcto para la comparacion
+	//con los delays que estoy teniendo puede que sea mayor la hora consultada. 
+			
+	//ahora lo que nececitamos es convertir la hora que nos llego que tiene el formato de 99:99 -> la hora no puede superar las 23 horas y los minutos no supera los 59 minutos 
+	//ahora tengo que tomar lo que me dio el parse time convertilos en numeros y compararlos por separados, es lo que va a pasar. 
+			
+	//entonces necesiro una funcion que relaiza un atoi y separe los elementos, un strtok por el ":"
+			
+	//necesito un apuntador doble 
+	char **tokens =NULL;
+	tokens = pasrse_input_recv(parse_time_form_API); //esta varibale es la que trae la hora << 99:99 >> 
+	//entonces ta funcion lo que hara es regresar un arreglo tokens = ["99", "99"] -> entonces ahora estos lo debemo de convertir en numeros 
+	
+	return tokens;
+}
