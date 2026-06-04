@@ -24,24 +24,31 @@ int main(){
 	
 	//mensaje a encriptar 
 	int len=0;
-	len = strlen(input);
+	
+	input[strcspn(input, "\n")] = '\0';
+	clave[strcspn(clave, "\n")] = '\0';
+
+	len = strlen(input);	
 	
 	printf("len de la cadena orignial: %i\n", len);
-	char *msg_original = (char*)malloc(sizeof(len-1));
+
+	char *msg_original = (char*)malloc(len+1); //reservo memoria de solo el espacio que necesito 
+	char *cadena_cifrada = (char*)malloc(len+1); //reservo memoria del tamanio del mensaje orignial  
+	
 	strcpy(msg_original, input);
 
 	printf("cadena orignial: %s\n", msg_original);
 
 	
-	int len_clave = strlen(clave);
-	char *clave_ofuscada =(char*)malloc(sizeof(len_clave-1));
+	len = strlen(clave);
+	char *clave_ofuscada =(char*)malloc(len+1);
 	strcpy(clave_ofuscada, clave);
 	
 	printf("len de la clave: %i\n", len);
 	printf("cadena clave: %s\n", clave_ofuscada);
 
 
-	char *cadena_cifrada = NULL; 
+	//char *cadena_cifrada = (char*)malloc(); 
 	printf("llamando a ofuscado\n");
 
 	ofuscado(msg_original, clave_ofuscada, cadena_cifrada);
@@ -49,7 +56,12 @@ int main(){
 	//despues vuelve e imrpmirmos 
 	
 
-	printf("clave cifrada: %s", cadena_cifrada);	
+	printf("clave cifrada: %s\n", cadena_cifrada);	
+
+
+	free(msg_original);
+	free(clave_ofuscada);
+	free(cadena_cifrada);
 
 }
 
@@ -59,7 +71,7 @@ int main(){
 void ofuscado(char *cad_original, char *clave, char *cad_resultado){
 
 	
-	printf("\nentro:");
+	printf("\nentro:\n");
 	//como el algorimtos indinca que se aplicara un or del tamanio de la clave pero el mensaje original se puede extender mucho mas 
 	//ocupo un offset en donde me indique 
 	
@@ -67,22 +79,16 @@ void ofuscado(char *cad_original, char *clave, char *cad_resultado){
 	int len_clave = strlen(clave);
 	//el while sera del tamanio del mensaje a encriptar/ofuscar 
 	int len_msg_original = strlen(cad_original);
-	int offset = 0;
 	
-	char *aux = NULL;
-	char *frame_original = NULL;
+	
 
-	while(offset < len_msg_original){
+	for(int i=0 ; i< len_msg_original; i++){
 		
-		memcpy(&frame_original,&cad_original, offset);
-
-		*aux = *clave ^ *frame_original;
-	       	
-		memcpy(&cad_resultado, &aux, offset);
-
-		offset += len_clave;
+		cad_resultado[i] = cad_original[i] ^ clave[i % len_clave];
+		printf("%c", cad_resultado[i]);
 	}
-
+	cad_resultado[len_msg_original] = '\0';
+	
 
 
 	printf("\nsalio");

@@ -1,0 +1,46 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+
+
+uint64_t codificacion(uint32_t username,){
+
+	uint32_t aux= username;
+	uint64_t codificado=0;
+
+	uint8_t offset=24;
+
+	for(int i=0 ; i< 4; i++){
+	
+		// 4 porque son 4 bytes y de estos 4 bytes saldran 32
+		//el formato necesito tomar 1 byte, y de ese byte se necesira realizar un recorrido de bytes y esto 
+		//es 4 veces, 1 vez por cada byte, qiue son 4 en 32 bits 
+		 
+		uint8_t frame_piece = aux >> offset & 0xFF; //recorro el byte mas sigfinicativo al inicio y aplica 
+							    //una mascara para solo tomar los datos de ese byte
+							    //mascara AND con FF asegura que los 1 pasen y los 0 
+							    //se mantengan en 0
+
+		//ahora ya tengo el el byte 
+		
+		//entonces ahora tengo que aplicar la formula, para aplicar con el bit7bit7' el segundo lo recorr 1 a la derecha 
+		
+		
+		uint8_t frame_cod_MSB = (frame_piece & 0xAA) | (~(frame_piece >> 1) & 0x55);
+
+		uint8_t frame_cod_LSB = ((frmae_piece << 1) & 0xAA) | ~(frame_piece & 0x55);
+
+
+
+		offset -=8; //quitamos 8 que sera de 1 byte, en la segunda vulta es 16 por lo que quedaria el 2do byte al inicio y asi
+
+		
+	
+	}
+
+
+
+
+
+}
