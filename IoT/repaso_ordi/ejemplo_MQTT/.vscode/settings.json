@@ -1,5 +1,6 @@
 {
   "C_Cpp.intelliSenseEngine": "default",
+  "idf.extensionActivationMode": "always",
   "idf.openOcdConfigs": [
     "board/esp32-wrover-kit-3.3v.cfg"
   ],
@@ -7,10 +8,10 @@
   "idf.customExtraVars": {
     "IDF_TARGET": "esp32"
   },
-  "clangd.path": "C:\\Espressif\\tools\\esp-clang\\esp-19.1.2_20250312\\esp-clang\\bin\\clangd.exe",
+  "clangd.path": "C:\\Espressif\\tools\\esp-clang\\esp-20.1.1_20250829\\esp-clang\\bin\\clangd.exe",
   "clangd.arguments": [
     "--background-index",
     "--query-driver=**",
-    "--compile-commands-dir=c:\\Users\\erikG\\OneDrive\\Documents\\ciclo2026-1\\IoT\\laboratorio\\UDP\\comunicacion_udp_V2\\build"
+    "--compile-commands-dir=c:\\Users\\dmrx\\Documents\\ciclo2026-1\\IoT\\repaso_ordi\\ejemplo_MQTT\\build"
   ]
 }
