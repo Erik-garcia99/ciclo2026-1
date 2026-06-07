@@ -1,0 +1,25 @@
+
+--> en este programa realizace el proceso desde 0 de la comunicacion por TCP y tendra la posibilidad de relziar la comunicacion por UDP igual con un servidor, que puede ser la PC o otro ESP que funga para TCP/UDP server 
+
+
+--> se realizara el poder cambiar o tener ambas comunicacion mediante comandos por UART 
+
+--> el proceso por defecto es mediante TCP, depsues se puede cambiar a UDP o tener ambos 
+
+--> implementacion de la ofuscacion de datos, un codigo hardcodeado entre de las esp32 o la pC que funge como server (esto no es lo mas recomendable para nada, pero nos da una idea) 
+
+--> la infromacion va con ofucacion 
+
+--> veremos si podemos implementar el codificador manchester en el usuario 
+
+--> relizar la comunicacion WIFI 
+
+--> el sisteme debe poder cambiar tanto la red wifi, ip host, host port, protocllo ambos o solo 1, cambiar la matricula del usuario 
+
+--> modificacion en el keep alive, de inicio el keep alive se mandara en automatico cada 10S, tengo varios escenarios 
+
+    --> parar el KEEP alive medinate un comando rapido <KD --> keep disable> para apagar el keep alive y usar UART 
+    --> desde el servidor puede desactivalor igual o modificar cada cunato queiere nviar el keep alive 
+    --> desde el TCP usuario igual lo puede hacer 
+
+

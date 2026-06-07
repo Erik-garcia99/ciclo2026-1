@@ -52,9 +52,6 @@
 #define LOGIN_FAIL    BIT3
 
 
-
-
-
 //estrucutra que contendra el puerto de UART esot sera ideal para cunado estemos menjando diferentes puerto de UART 
 
 typedef struct {
