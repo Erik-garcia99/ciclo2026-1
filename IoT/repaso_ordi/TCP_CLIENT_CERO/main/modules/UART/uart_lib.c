@@ -13,7 +13,7 @@
 
 
 #include"uart_lib.h"
-
+#include"global.h"
 
 void uart_init(){
 
@@ -51,126 +51,62 @@ void uart_task(void *params){
     uart_event_t event;
     uint8_t *buffer = (uint8_t *)malloc(BUFFER);
     uint8_t input[BUFFER];
-    uint8_t index_input = 0; 
+    int index_input = 0; 
 
 
     while(1){
-        if(xQueueReceive(uart_queue, (void *)&event, portMAX_DELAY)){
-
-
+        if(xQueueReceive(uart_queue, (void *)&event, portMAX_DELAY)){\
             switch(event.type){
-
                 case UART_DATA : {
                     int len = uart_read_bytes(UART_NUM_0, buffer, event.size, portMAX_DELAY);
-
                     // flag para salir del for cuando se procesa un fin de linea
-
                     int done = 0;
-
                     for(int i = 0; i < len && !done; i++){
-
                         char c = buffer[i];
-
                         // ignorar \n siempre: las terminales mandan \r\n al presionar enter,
-
                         // usamos solo \r como fin de linea para no disparar dos veces.
-
                         if(c == '\n'){
-
                             continue;
-
                         }
-
-                        if((c >= 'a' && c<='z') || (c >= 'A' && c<='Z') || (c>=32 && c<=63) || (c=='_') || (c == " ")){
-
+                        if((c >= 'a' && c<='z') || (c >= 'A' && c<='Z') || (c>=32 && c<=63) || (c=='_') || (c == ' ')){
                             uart_write_bytes(UART_NUM_0, (const char*)&c, sizeof(c));
-
                             if(index_input < BUFFER-1){
-
                                 input[index_input++] = c;
-
                             }
-
                         }
-
                         else if(c == '\r'){
                             input[index_input] = '\0';
                             uart_write_bytes(UART_NUM_0, "\r\n", 2);
-
                             if(index_input == 0){
-
                                 continue;
-
                             }
-
                             char *data_flow = (char*)malloc(strlen((char*)input) + 1);
                             strcpy(data_flow, (char*)input);
-
                             xQueueSend(flow_data_queue, &data_flow, portMAX_DELAY);
-
                             index_input = 0;
                             memset(input, 0, BUFFER);
                             done = 1;
-
                         }
                         else if(c == '\b'){
-
                             if(index_input > 0){
-
                                 index_input--;
-
                                 uart_write_bytes(UART_NUM_0, "\b \b", 3);
-
                             }
-
-
-
                         }
-
-
-
                     }
-
-
-
-
-
-
-
                 }break;
-
-
-
                 case UART_BUFFER_FULL :{
-
-
-
-                    xQueueReset(uart_event);
-
-                    uart_flush(current_port->NUM_PORT);
-
+                    xQueueReset(uart_queue);
+                    uart_flush(UART_NUM_0);
                 }break;
-
-
-
                 case UART_FIFO_OVF:{
-
-                    xQueueReset(uart_event);
-
-                    uart_flush(current_port->NUM_PORT);
-
+                    xQueueReset(uart_queue);
+                    uart_flush(UART_NUM_0);
                 }break;
-
-
-
-
-
                 default :{
                     ESP_LOGE("UART_LIB", "tipo de evento : %s", event.type);
                 }break;
-
             }
-
         }
     }
 }

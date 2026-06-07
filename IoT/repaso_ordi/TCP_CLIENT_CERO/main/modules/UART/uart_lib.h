@@ -19,6 +19,13 @@ void uart_init(); //usaremos parametros po defecto
 
 void uart_task(void *params);
 
+/**
+ * @brief tarea que recibe los datos desde UART y verifica que el formato de los comandos y los comandos se encuentren registrados 
+ * 
+ * 
+ */
+void uart_format_task(void *params); 
+
 
 
 #endif
