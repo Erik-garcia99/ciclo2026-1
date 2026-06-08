@@ -23,3 +23,8 @@
     --> desde el TCP usuario igual lo puede hacer 
 
 
+
+--> progreso 
+
+--> ya puedo ingresar datos, pero qun no pongo la opcion en el cual se reintenta otra vez la conexion de WIFI 
+--> aun estamos en TCP en el inicio 

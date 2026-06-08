@@ -282,7 +282,6 @@ void task_cmd_uart(void *params){
                     ESP_LOGE(TAG,"formato incorrecto. Usa: SSID:<nombre> PSWD:<password>");
                     goto cleanup;
                 }
-
                 //brincamos ":"
                 ssid++;
                 pswd++;

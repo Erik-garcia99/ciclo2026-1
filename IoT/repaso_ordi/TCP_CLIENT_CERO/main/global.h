@@ -30,6 +30,9 @@
 
 #define PWM_MAX     8191
 
+
+#define MAX_ARGS 5
+
 //aqui pondremos todos los bits para tenerlos organizados y no andar buscando por todos lados 
 //inicio de sesion con TCP <UDP no necesita establecer conexion>
 #define LOGIN_SUCCESS BIT1
@@ -37,6 +40,11 @@
 #define WIFI_CONNECTED_BIT BIT3
 #define WIFI_FAIL_BIT BIT4
 #define WIFI_UPDATE BIT5
+//bits para TCP 
+#define RETRY_SERVER BIT6 
+#define TCP_DISCONNECTED BIT7
+#define UPDATE_TCP BIT8
+
 
 
 

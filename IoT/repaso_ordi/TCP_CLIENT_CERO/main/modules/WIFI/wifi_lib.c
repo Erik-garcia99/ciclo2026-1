@@ -64,8 +64,8 @@ void wifi_init_sta(void){
             },
         };
 
-        strncpy((char*)wifi_config.sta.ssid,     esp_wifi.SSID, sizeof(wifi_config.sta.ssid)-1);
-        strncpy((char*)wifi_config.sta.password, esp_wifi.PSWD, sizeof(wifi_config.sta.password)-1);
+        strncpy((char*)wifi_config.sta.ssid,     esp_wifi.esp_ssid, sizeof(wifi_config.sta.ssid)-1);
+        strncpy((char*)wifi_config.sta.password, esp_wifi.esp_pswd, sizeof(wifi_config.sta.password)-1);
 
             // ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
 

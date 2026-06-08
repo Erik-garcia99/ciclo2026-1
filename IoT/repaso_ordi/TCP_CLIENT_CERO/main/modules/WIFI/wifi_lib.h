@@ -19,8 +19,8 @@ extern EventGroupHandle_t g_EVENT_WIFI;
  * 
  */
 typedef struct{
-    char *SSID;
-    char *PSWD;
+    char *esp_ssid;
+    char *esp_pswd;
     esp_ip4_addr_t *ip;
     //este connected servirea para verificar las conexones al inciio 
     int connected;
