@@ -77,10 +77,12 @@ void task_cmd_uart(void *params);
 
 void task_update_wifi(void *parms);
 
+void task_recv_proccess(void *params);
 
 void app_main(void)
 {
     flow_data_queue = xQueueCreate(10, sizeof(char *));
+    tcp_data_flow = xQueueCreate(10, sizeof(format_request_t *));
 
     //inicamos grupo de eventos 
 
@@ -96,6 +98,8 @@ void app_main(void)
     xTaskCreate(uart_task, "uart_task", 4098, NULL, 9, NULL);
     xTaskCreate(task_cmd_uart,"task_cmd_uart", 4098, NULL, 8, NULL);
     xTaskCreate(task_update_wifi,"task_update_wifi", 1024, NULL, 5, NULL);
+
+
 
     /**
      * iniciamos varibales globales 
@@ -316,6 +320,13 @@ void task_cmd_uart(void *params){
 
             }
 
+            else if(strcmp(type, "YES") == 0){
+                //en el caso qde reintentar relizar la conexion con las actuales credenciales 
+                xEventGroupSetBits(g_tcp_event_group, RETRY_SERVER);
+            }
+            else if(strcmp(type, "NO") == 0){
+                xEventGroupSetBits(g_tcp_event_group, NO_RETRY_SERVER);
+            }
 
             else{
                 len = snprintf(msg, sizeof(msg), "ERROR!\r\n Formato de CMD incorrecto");
@@ -436,6 +447,51 @@ char **pasrse_input(char *line){
 }
 
 
+
+void task_recv_proccess(void *params){
+
+    format_request_t *rx_request; 
+
+    char msg[100];
+    int len;
+
+    while(1){
+
+        if(xQueueReceive(tcp_data_flow, &rx_request, portMAX_DELAY)){
+
+
+            //verificamos si se inciio sesion, 
+
+            if(rx_request->header == ACK && rx_request->len == 0xFF){
+                //este es un NACK 
+                len = snprintf(msg, sizeof(msg), "no se pudo relizar login al servidor\r\n");
+                uart_write_bytes(UART_MAIN, UART_RED, sizeof(UART_RED));
+                uart_write_bytes(UART_MAIN, msg, len);
+                uart_write_bytes(UART_MAIN, UART_RESET, sizeof(UART_RESET));
+                xEventGroupSetBits(g_tcp_event_group, LOGIN_FAIL);
+            }
+            else if(rx_request->header == ACK && rx_request->len < 0xFF){
+                //es un ACK 
+
+            }
+
+            else{
+                //se pidop un recurso, header es 0xCAFE
+                //primero debemos de verificar que se haya inciado sesion, si no, el servidor no puede recibir nada 
+
+            }
+
+            
+
+
+        }
+
+
+    }
+
+}
+
+
 void setup_client(void){
 
     //ahora debemos debemos de ingresar el servidor TCP e IP a la cual nos debemos de conectar 
@@ -445,17 +501,24 @@ void setup_client(void){
     esp_err_t ret;
     char msg[100];
     int len;
+    EventBits_t bits;
+
+    static int retry_login =0; 
+
+
     //despues debemos de esperar a que se ingrese el usuarios --> antes de inciar 
     //lo ponemos aca arriba, porque si lo podmeos dentro del while, entonces el sistema estara esperando a que se actualice, esta actualizacion no es relevancia, solo en esta
     //parte porque es necesario definir a un usuario antes de enivar, pero depues se actualiza, pero no se cierra el sokcet ni se desactivia el WIFI, porque no afecta a esas partes 
     while(current_user == 0){
         //este se quedara en este ciclo  hasta que se acutlaice que hay un usuario ya establecido 
-        EventBits_t bits = xEventGroupWaitBits(g_user_def, UPDATE_USER, pdTRUE, pdTRUE, portMAX_DELAY);
+        bits = xEventGroupWaitBits(g_user_def, UPDATE_USER, pdTRUE, pdTRUE, portMAX_DELAY);
 
         if(bits & UPDATE_USER){
             break; //ya se deinfiio un uusaior, a la proxima si se raliza una llamada recursiva no entrara aqui porque ya se tendra en varibale global esto. 
         }
     }
+
+
 
     pseudo_recursion:
     while(1){
@@ -464,7 +527,7 @@ void setup_client(void){
             
         if(ret != ESP_OK){
             //em caso que no se pueda conectar entonces estara la opcion de volver a intentar reliazar la conexion con las mismas credenciales 
-            len = snprintf(msg, sizeof(msg), "quiere intentar conetsar con las mismas credeniclaes\r\n");
+            len = snprintf(msg, sizeof(msg), "ERROR!\r\nquiere intentar conetsar con las mismas credeniclaes\r\n");
             uart_write_bytes(UART_MAIN, UART_CYAN, sizeof(UART_CYAN));
             uart_write_bytes(UART_MAIN, msg, len);
             uart_write_bytes(UART_MAIN, UART_RESET, sizeof(UART_RESET));
@@ -481,12 +544,15 @@ void setup_client(void){
             
             //conn el objetivo de no volver a crear la instancia de la tarea y se esten creando y creando 
             xTaskCreate(task_recv_tcp, "task_recv_tcp", 2096, NULL, 8,&recv_handle);
+            xTaskCreate(task_recv_proccess, "task_recv_proccess", 4098, NULL, 8, NULL);
             first_instance =1;
         }
         
         //ahora lo que se intea hacer es relaizar el login al servidor 
         login:
         if(tcp_client.logged_in != 1){
+            //que intente conectarse al menos 5 veces al servidor. si en esas 5 veces no se puede conectar entonces pasamos 
+
             //no se ha inciado 
             send_info.type = OP_LOGIN; //quiero hace login al servidor 
             send_info.format_request.user = current_user;
@@ -494,7 +560,47 @@ void setup_client(void){
 
             //mas bien esperamos 2 bits, que inican que pudo inciar y que no pudo inciar, pero este se vera en la constantacion 
             //porque en este momento mi ESP esta conectado al servidor, esta tratando de estbalecer una conexion 
+        
+            //esperamos 
+            bits = xEventGroupWaitBits(g_tcp_event_group, LOGIN_FAIL| LOGIN_OK, pdTRUE, pdFALSE, portMAX_DELAY);
+
+            if(bits & LOGIN_FAIL){
+                
+                if(retry_login < 5){
+                    //quiere decir que aun no pasan las 5 veces 
+                    goto login;
+                }
+
+                //en otro caso ya se completaron las 5 veces 
+                retry_login = 0;
+
+                //entonces mencionamos que no pudo inicar inciar sesion por lo que puede nuevamente intentar inicar sesion o puede actualzar credenciales,
+                //credeicnlaes que puede actulaiar 
+                //WIFI - TCP - <UDP?> - user
+                //para WIFI -TCP se deberia de cerrar conexiones, en caso de actualair WIFI se cierr el socket, en caso de solo el TCP no cerramos WIFI 
+
+                len = snprintf(msg, sizeof(msg), "ERROR!\r\nquiere intentar conetsar con las mismas credeniclaes\r\n");
+                uart_write_bytes(UART_MAIN, UART_CYAN, sizeof(UART_CYAN));
+                uart_write_bytes(UART_MAIN, msg, len);
+                uart_write_bytes(UART_MAIN, UART_RESET, sizeof(UART_RESET));
+
+                len = snprintf(msg, sizeof(msg), "YES - NO \r\n");
+                uart_write_bytes(UART_MAIN, UART_CYAN, sizeof(UART_CYAN));
+                uart_write_bytes(UART_MAIN, msg, len);
+                uart_write_bytes(UART_MAIN, UART_RESET, sizeof(UART_RESET));
+            }
+            else{
+                //si se pudo conetar 
+                //entonces aqui creamos
+
+                tcp_client.logged_in =1;
+                //inidcamos que ya hizo login 
+
+                //cremaos tareas que queremos para enivar como el keeep, 
+
+            }
         }
+
 
         wait:
         //aui solo se espera actualizacion hacerca de TCP
@@ -514,6 +620,10 @@ void setup_client(void){
             tcp_client.host_port =0;
             tcp_client.logged_in = 0;
             //entonces en este momento lo espera es que se actualucen las credenuclaes de TCP 
+            len = snprintf(msg, sizeof(msg), "esperando nuevas credenuclaes\r\n");
+            uart_write_bytes(UART_MAIN, UART_CYAN, sizeof(UART_CYAN));
+            uart_write_bytes(UART_MAIN, msg, len);
+            uart_write_bytes(UART_MAIN, UART_RESET, sizeof(UART_RESET));
             goto wait;
         }
         else if(bits & UPDATE_TCP){
@@ -558,6 +668,9 @@ void task_update_wifi(void *parms){
             tcp_client.host_ip = NULL;
             tcp_client.host_port =0;
         }
+
+        //este tiene que hacer el proceso de volver a conectar 
+        wifi_init_sta();
 
         //volvemos a llamar para relizar el proceso de nuevo  
         if(first_instance != 0){

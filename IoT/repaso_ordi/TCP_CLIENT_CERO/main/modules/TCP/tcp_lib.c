@@ -137,9 +137,15 @@ void task_recv_tcp(void *params){
     char msg[100];
     int len;
 
-    char buffer[50];
+    uint8_t buffer[50];
+    uint8_t *msg_recv; //este es para mandar hacia la tarea 
 
     while(1){
+
+        // resetear buffer de impresion en cada iteracion
+        char hex_buf[128] = {0};
+        int pos = 0;
+
 
         int size_recv = recv(tcp_client.sockdf, buffer, sizeof(buffer)-1, 0);
 
@@ -162,7 +168,7 @@ void task_recv_tcp(void *params){
             tcp_client.logged_in =0;
 
             xEventGroupSetBits(g_tcp_event_group, TCP_DISCONNECTED);
-            //lo elimanosrmos desde la funcion en el main 
+            //lo elimanosrmos desde la funncion de setup_tcp, cerramos conexion y se vuelve a crear un nuevo sokcet y establecer una conexio  
         }
 
         else if(size_recv == 0){
@@ -179,13 +185,100 @@ void task_recv_tcp(void *params){
 
             xEventGroupSetBits(g_tcp_event_group, TCP_DISCONNECTED);
             //el servidor cerro la conexion
+            //de igual froma cerramos desde setup_tcp 
         }
         //en este caso se recibio mas de 0 por lo que se aun hay una conexion viva
 
         //por lo que ahora lo que toca es separar los BITS en sus diferntres componenes 
 
+         //+++++++++++++++++++++++++++imprimir lo que recibimos 
+
+        for(int i = 0; i < len; i++){
+            pos += snprintf(hex_buf + pos, sizeof(hex_buf) - pos, "%02X ", buffer[i]);
+        }
+        uart_write_bytes(UART_MAIN, UART_CYAN,  strlen(UART_CYAN));
+        uart_write_bytes(UART_MAIN, "\r\nRAW: ", 7);
+        uart_write_bytes(UART_MAIN, hex_buf, pos);
+        uart_write_bytes(UART_MAIN, "\r\n",   2);
+        uart_write_bytes(UART_MAIN, UART_RESET, strlen(UART_RESET));
+
+        //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+        format_request_t *rx_request = pvPortMalloc(sizeof(format_request_t));
+        int offset = 0; //me tendre que recorrer entre 
+        
+        
+        if(size_recv > 40){
+            //si supera los 40 bytes qyuere decir qu ehay sobre flujo 
+            len = snprintf(msg, sizeof(msg), "sobre flujo de datos recibidiso\r\n");
+            uart_write_bytes(UART_MAIN, UART_RED,  strlen(UART_RED));
+            uart_write_bytes(UART_MAIN, msg, len);
+            uart_write_bytes(UART_MAIN, UART_RESET, strlen(UART_RESET));
+            continue; //solo seguira esperando 
+        }
+
+        //lo primero es el HEADER, si es una peticion o un ACK o un NACK, 
+
+        memcpy(&rx_request->header, &buffer, 2); offset +=2;
+
+        //ahora comprobamos que trae el header 
+
+        if(rx_request->header != HEADER){
+            //diferente a HEADER quiere decir que es entonces es un ACK o un NACK, la forma de saber si es un ACK o un NACK es mediante el contenido de un len y value 
+            //pero eso no se define aqui si no en la tares que procesa lo que se sta pdineido  
+            
+            if(buffer[offset] > 32 || buffer[offset] <= 0){
+                //en este caso hubo un error en donde se delcararon ya sea el fromato o se enciaron de mas o no se nevio datos 
+                //en la parte de len del frame 
+                len = snprintf(msg, sizeof(msg), "ERROR!/r/nla ubicacion de LEN se enceuntra en overflow o daniada\r\n");
+                uart_write_bytes(UART_MAIN, UART_RED,  strlen(UART_RED));
+                uart_write_bytes(UART_MAIN, msg, len);
+                uart_write_bytes(UART_MAIN, UART_RESET, strlen(UART_RESET));
+                
+                //mandamos un NACK indicamos que no se enteindio 
+
+                continue; //se va a esperar que llegue el procimo frame 
+            }
+
+            memcpy(&rx_request->len, &buffer[offset], 1); offset++;
+            
+
+        }
+        else{
+            //quiere decir que es una operacion
+        }
+
+        //al final mandmos 
+
+        /**
+         * porque es diferne a true, es algo raro no, lo que pasa es cunado el sistem retorna true o pdPASS quiere decir que ya se cnolo entones 
+         * la tarea que recibe el dato en la cola se encarga de librerar este espcio de memoria 
+         * 
+         * pero en el caso que sea diferente, quiere decir que no se recibio por lo que nadie lo libereara, entonces en este caso si llega un pdFALSE quiere decir que no se 
+         * reciio por eso necesitoamos librerar el espacio manualmente. 
+         * 
+         */
+        if(xQueueSend(tcp_data_flow, &rx_request, 0) != pdTRUE){
+            vPortFree(rx_request);
+        }
+
+
+
+
+
+
+
+
+
+
     }
 }
+
+/***
+ * 
+ * debemos de verificar antes de enviar que el uaurio el esp se enceuntre loegead. para evitar fallos 
+ * 
+ */
 
 esp_err_t send_massage(){
 

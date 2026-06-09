@@ -51,7 +51,9 @@
 #define RST_SUCCESS BIT10
 //definicion de usuario 
 #define UPDATE_USER BIT11
-
+//login al server 
+#define LOGIN_OK BIT14
+#define NO_LOGIN BIT15
 
 
 
