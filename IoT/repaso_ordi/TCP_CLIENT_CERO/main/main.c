@@ -33,6 +33,8 @@ QueueHandle_t tcp_data_flow;
 //+++++++++++++++++grupos de eventos 
 EventGroupHandle_t g_EVENT_WIFI;
 EventGroupHandle_t g_tcp_event_group;
+EventGroupHandle_t g_user_def;
+
 //++++++++++++++++++ estrucutras 
 format_request_t format_request;
 send_info_t send_info;
@@ -49,6 +51,12 @@ instructions_t instructions;
 
 // ++++++++++++++++++=varibales globales
 
+uint32_t current_user;
+
+//manejadores para tareas 
+TaskHandle_t recv_handle;
+
+int first_instance = 0;
 
 
 //+++++++++++++++++++++ funciones 
@@ -57,12 +65,17 @@ char **pasrse_input(char *line);
 
 esp_err_t update_cred(char *token_1, char *token_2, int op);
 
+void setup_client(void);
+
+void screen_cmd();
 
 
 //++++++++++++++++++++++ tareas 
 
 void task_cmd_uart(void *params);
+//para WIFI al menos que haga una tarea especifica que espera que se actualice o se haga un update y realice el cierre de los sockets 
 
+void task_update_wifi(void *parms);
 
 
 void app_main(void)
@@ -72,6 +85,8 @@ void app_main(void)
     //inicamos grupo de eventos 
 
     g_EVENT_WIFI = xEventGroupCreate();
+    g_tcp_event_group = xEventGroupCreate();
+    g_user_def = xEventGroupCreate();
 
     //inicamos UART 
     uart_init();
@@ -80,6 +95,26 @@ void app_main(void)
 
     xTaskCreate(uart_task, "uart_task", 4098, NULL, 9, NULL);
     xTaskCreate(task_cmd_uart,"task_cmd_uart", 4098, NULL, 8, NULL);
+    xTaskCreate(task_update_wifi,"task_update_wifi", 1024, NULL, 5, NULL);
+
+    /**
+     * iniciamos varibales globales 
+     * 
+     */
+    //inciando en cero y nulos los valores para TCP 
+    //el caso especula del sokcet, porque un 0 incia que el servidor cerro la conexion, poor lo que un numero menor que cero indica que nose pudo asingar el descriptor al socket 
+    tcp_client.sockdf = -1;
+    tcp_client.host_ip = NULL;
+    tcp_client.host_port = 0;
+    tcp_client.logged_in = 0;
+    tcp_client.connected = 0;
+    //lo mismo en wifi
+    esp_wifi.connected =0;
+    esp_wifi.esp_pswd=NULL;
+    esp_wifi.esp_ssid = NULL;
+    esp_wifi.ip = 0;
+
+    current_user = 0;
 
 
     //**conexion a WIFI*/
@@ -96,11 +131,11 @@ void app_main(void)
     uart_write_bytes(UART_MAIN,msg, len);
     memset(msg, 0, sizeof(msg));
 
-    len = snprintf(msg, sizeof(msg), "credenucaes para TCP -> HST_IP:<IP> HST_PORT:<PORT>\r\n");
+    len = snprintf(msg, sizeof(msg), "credenucaes para TCP -> HOST_TPC_IP:<IP> HOST_TPC_PORT:<PORT>\r\n");
     uart_write_bytes(UART_MAIN,msg, len);
     memset(msg, 0, sizeof(msg));
 
-    len = snprintf(msg, sizeof(msg), "credenucaes para UDP -> HST_IP:<IP> HST_PORT:<PORT>\r\n");
+    len = snprintf(msg, sizeof(msg), "credenucaes para UDP -> HOST_UDP_IP:<IP> HOST_UDP_IP:<PORT>\r\n");
     uart_write_bytes(UART_MAIN,msg, len);
     memset(msg, 0, sizeof(msg));
 
@@ -108,8 +143,25 @@ void app_main(void)
     uart_write_bytes(UART_MAIN,msg, len);
     memset(msg, 0, sizeof(msg));
 
+    //lo primero que hara la primerita vez que se prenda cunado se inice todo el proceso sera introducir las credenciales WIFI 
+    //por lo que lo que haremos es primero verificar si no hay credecniales, si hay credenciles el sistema intentara conectarse con esas credenciales al no poder si ese su caso
+    //entonces pedira la actualizacion de las credencuales. 
 
 
+    //primero debemos inicar esta munda 
+    esp_err_t ret = nvs_flash_init();
+    if(ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND){
+        ESP_ERROR_CHECK(nvs_flash_erase());
+        ret = nvs_flash_init();
+    }
+    ESP_ERROR_CHECK(ret);
+
+    ESP_LOGI("MAIN", "WIFI_STA");
+    wifi_init_sta();
+    //inicamos 
+
+    //al igual que el codigo inicar tenemos una funcion que se encrga de orquestar todas la inciaidlizaciones y todo el espapaye entre TCP, pero ahoira le agregamos UDP 
+    setup_client();    
 
 }
 
@@ -175,7 +227,7 @@ void task_cmd_uart(void *params){
                 ret = update_cred(ssid, pswd, SSID);
 
                 if(ret != ESP_OK){
-                    len = snprintf(msg, sizeof(msg), "no se puedieron actualizar las credenclaes ");
+                    len = snprintf(msg, sizeof(msg), "no se puedieron actualizar las credenclaes\r\n");
                     uart_write_bytes(UART_MAIN, UART_RED, sizeof(UART_RED));
                     uart_write_bytes(UART_MAIN, msg, len);
                     uart_write_bytes(UART_MAIN, UART_RESET, sizeof(UART_RESET));
@@ -186,9 +238,90 @@ void task_cmd_uart(void *params){
                 //en otro caos si se asignanos y entonces procedemos a actcar el bit para actulaizar credeniclaes 
 
                 xEventGroupSetBits(g_EVENT_WIFI, WIFI_UPDATE);
+                xEventGroupSetBits(g_EVENT_WIFI, DELETE_TCP);
                 //en este caso habria otro eventos que indica que se actualizo el wifi por lo que se deberia de reicniar 
                 //la conexion entre el servidor y el esp. 
 
+            }
+            else if(strcmp(type,"HOST_TCP_IP") == 0 && tokens[1] != NULL){
+                //ambos parametros debemos de estar inicalizados 
+                char *host_ip = strchr(tokens[0], ':');
+                char *host_port = strchr(tokens[1], ':');
+
+                if(host_ip == NULL || host_port == NULL){
+                    len = snprintf(msg, sizeof(msg), "se necesitan los 2 parametros, IP y puerto\r\n");
+                    uart_write_bytes(UART_MAIN, UART_RED, sizeof(UART_RED));
+                    uart_write_bytes(UART_MAIN, msg, len);
+                    uart_write_bytes(UART_MAIN, UART_RESET, sizeof(UART_RESET));
+                    free(receive);
+                    free(tokens);
+                    continue;
+                }
+
+                host_ip++;
+                host_port++;
+                //en este momneto el puerto aun sigue sindo una cadena que viene de UART, por lo que en la actualizacion debemos de converitr ese string en un numero entero 
+                //de 16 bits 
+                ret = update_cred(host_ip, host_port, HOST_TCP);
+
+                if(ret != ESP_OK){
+                    len = snprintf(msg, sizeof(msg), "no se puedieron actualizar las credenclaes\r\n");
+                    uart_write_bytes(UART_MAIN, UART_RED, sizeof(UART_RED));
+                    uart_write_bytes(UART_MAIN, msg, len);
+                    uart_write_bytes(UART_MAIN, UART_RESET, sizeof(UART_RESET));
+                    free(tokens);
+                    //va a esperar a que se ingresen de nvo
+                    continue;
+                }
+
+
+                //si no es asi entonces debemos inciar auqe las credeniclaes se actualizadon 
+                xEventGroupSetBits(g_tcp_event_group, UPDATE_TCP);
+
+            }
+
+            else if(strcmp(type, "USER") == 0){
+                char *user = strchr(tokens[0], ':');
+
+                if(user == NULL){
+                    len = snprintf(msg, sizeof(msg), "no se ingreso el usuario\r\n");
+                    uart_write_bytes(UART_MAIN, UART_RED, sizeof(UART_RED));
+                    uart_write_bytes(UART_MAIN, msg, len);
+                    uart_write_bytes(UART_MAIN, UART_RESET, sizeof(UART_RESET));
+                    free(receive);
+                    free(tokens);
+                    continue;
+                }
+
+                ret = update_cred(user, NULL, USER);
+
+                if(ret != ESP_OK){
+                    len = snprintf(msg, sizeof(msg), "intente de nuevo: \r\n");
+                    uart_write_bytes(UART_MAIN, UART_CYAN, sizeof(UART_CYAN));
+                    uart_write_bytes(UART_MAIN, msg, len);
+                    uart_write_bytes(UART_MAIN, UART_RESET, sizeof(UART_RESET));
+                    free(receive);
+                    free(tokens);
+                    //se queda esperandoa  esperar el nuevo usuario
+                    continue;
+                    
+                }
+
+                //EN ESTE CASO SE ACTUALIZO EL USUARIO, puede tener un buen punto, 
+                //al final aqui solo actualizamos el usurio mas no se cierra la conexion a internet, el socket le da igual si es un usuario o otro, el socket sigue siendo el mimso
+                //por lo que tansolo ahora se manda con el nuevo usuario 
+
+                xEventGroupSetBits(g_user_def, UPDATE_USER);
+
+
+            }
+
+
+            else{
+                len = snprintf(msg, sizeof(msg), "ERROR!\r\n Formato de CMD incorrecto");
+                uart_write_bytes(UART_MAIN, UART_RED, sizeof(UART_RED));
+                uart_write_bytes(UART_MAIN, msg, len);
+                uart_write_bytes(UART_MAIN, UART_RESET, sizeof(UART_RESET));
             }
 
 
@@ -206,35 +339,67 @@ esp_err_t update_cred(char *token_1, char *token_2, int op){
     switch(op){
 
         case SSID :{
-            int len_ssid = strlen(token_1);
-            int len_pswd = strlen(token_2);
+            free(esp_wifi.esp_ssid);
+            free(esp_wifi.esp_pswd);
 
-            esp_wifi.esp_ssid = realloc(esp_wifi.esp_ssid,len_ssid+1);
-            esp_wifi.esp_pswd= realloc(esp_wifi.esp_pswd, len_pswd+1);
+            esp_wifi.esp_ssid = strdup(token_1);
+            esp_wifi.esp_pswd= strdup(token_2);
 
-            if(esp_wifi.esp_ssid != NULL && esp_wifi.esp_pswd != NULL){
+            if(esp_wifi.esp_ssid == NULL && esp_wifi.esp_pswd == NULL){
+                len = snprintf(msg, sizeof(msg), "Error al asignar memoria!\r\n");
+                uart_write_bytes(UART_MAIN, UART_RED, sizeof(UART_RED));
+                uart_write_bytes(UART_MAIN, msg, len);
+                uart_write_bytes(UART_MAIN, UART_RESET, sizeof(UART_RESET));
+                return ESP_FAIL;
+            }
+            return ESP_OK;
 
-                strcpy(esp_wifi.esp_ssid, token_1);
-                strcpy(esp_wifi.esp_pswd, token_2);
-                esp_wifi.connected = 0;
-                
-                return ESP_OK;
+
+        }break;
+        
+        case HOST_TCP:{
+            free(tcp_client.host_ip);
+            tcp_client.host_port =0;
+
+            tcp_client.host_ip = strdup(token_1);
+            //ahora convierto ese string es un valor de 16 bits 
+            uint16_t port = (uint16_t)atoi(token_2);
+            tcp_client.host_port = port;
+
+
+            if(tcp_client.host_ip == NULL || tcp_client.host_port == 0){
+
+                len = snprintf(msg, sizeof(msg), "Error al asignar memoria!\r\n");
+                uart_write_bytes(UART_MAIN, UART_RED, sizeof(UART_RED));
+                uart_write_bytes(UART_MAIN, msg, len);
+                uart_write_bytes(UART_MAIN, UART_RESET, sizeof(UART_RESET));
+                return ESP_FAIL;
             }
 
 
-        }break;
-        case HOST_TCP_IP:{
-
+            return ESP_OK;
         }break;
 
-        // case HOST_UDP_IP:{
+        // case HOST_UDP:{
 
 
         // }break;
 
-        // case USER:{
+        case USER:{
+            current_user = 0;
 
-        // }break;
+            uint32_t current_user = (uint32_t)aoit(token_1); //asignamos el dato 
+
+            if(current_user != 0){
+                len = snprintf(msg, sizeof(msg), "usuario declarado: %u\r\n", current_user);
+                uart_write_bytes(UART_MAIN, UART_GREEN, sizeof(UART_GREEN));
+                uart_write_bytes(UART_MAIN, msg, len);
+                uart_write_bytes(UART_MAIN, UART_RESET, sizeof(UART_RESET));
+                return ESP_OK;
+            }
+            //fallo al establecer el usuerio 
+            return ESP_FAIL;
+        }break;
 
 
         default :{
@@ -268,4 +433,138 @@ char **pasrse_input(char *line){
     }
     tokens[position] = NULL;
     return tokens;
+}
+
+
+void setup_client(void){
+
+    //ahora debemos debemos de ingresar el servidor TCP e IP a la cual nos debemos de conectar 
+    //entonces en este paso se intentara relizar hasta que conecte, 
+    
+    //perimo lo que hace es establecer la conexion 
+    esp_err_t ret;
+    char msg[100];
+    int len;
+    //despues debemos de esperar a que se ingrese el usuarios --> antes de inciar 
+    //lo ponemos aca arriba, porque si lo podmeos dentro del while, entonces el sistema estara esperando a que se actualice, esta actualizacion no es relevancia, solo en esta
+    //parte porque es necesario definir a un usuario antes de enivar, pero depues se actualiza, pero no se cierra el sokcet ni se desactivia el WIFI, porque no afecta a esas partes 
+    while(current_user == 0){
+        //este se quedara en este ciclo  hasta que se acutlaice que hay un usuario ya establecido 
+        EventBits_t bits = xEventGroupWaitBits(g_user_def, UPDATE_USER, pdTRUE, pdTRUE, portMAX_DELAY);
+
+        if(bits & UPDATE_USER){
+            break; //ya se deinfiio un uusaior, a la proxima si se raliza una llamada recursiva no entrara aqui porque ya se tendra en varibale global esto. 
+        }
+    }
+
+    pseudo_recursion:
+    while(1){
+
+        ret = tcp_cliente_init(); //esto es importante que sea nomas 1 vez porque es el mismo socket que se estara usando a lo largo de la operacion con TCP, y pues lo mismo para UDP
+            
+        if(ret != ESP_OK){
+            //em caso que no se pueda conectar entonces estara la opcion de volver a intentar reliazar la conexion con las mismas credenciales 
+            len = snprintf(msg, sizeof(msg), "quiere intentar conetsar con las mismas credeniclaes\r\n");
+            uart_write_bytes(UART_MAIN, UART_CYAN, sizeof(UART_CYAN));
+            uart_write_bytes(UART_MAIN, msg, len);
+            uart_write_bytes(UART_MAIN, UART_RESET, sizeof(UART_RESET));
+
+            len = snprintf(msg, sizeof(msg), "YES - NO \r\n");
+            uart_write_bytes(UART_MAIN, UART_CYAN, sizeof(UART_CYAN));
+            uart_write_bytes(UART_MAIN, msg, len);
+            uart_write_bytes(UART_MAIN, UART_RESET, sizeof(UART_RESET));
+            // xEventGroupSetBits(g_tcp_event_group, RETRY_SERVER);
+            goto wait;
+        }
+
+        if(first_instance != 1){
+            
+            //conn el objetivo de no volver a crear la instancia de la tarea y se esten creando y creando 
+            xTaskCreate(task_recv_tcp, "task_recv_tcp", 2096, NULL, 8,&recv_handle);
+            first_instance =1;
+        }
+        
+        //ahora lo que se intea hacer es relaizar el login al servidor 
+        login:
+        if(tcp_client.logged_in != 1){
+            //no se ha inciado 
+            send_info.type = OP_LOGIN; //quiero hace login al servidor 
+            send_info.format_request.user = current_user;
+            ret = send_massage();
+
+            //mas bien esperamos 2 bits, que inican que pudo inciar y que no pudo inciar, pero este se vera en la constantacion 
+            //porque en este momento mi ESP esta conectado al servidor, esta tratando de estbalecer una conexion 
+        }
+
+        wait:
+        //aui solo se espera actualizacion hacerca de TCP
+        EventBits_t bits = xEventGroupWaitBits(g_tcp_event_group, TCP_DISCONNECTED | UPDATE_TCP | RETRY_SERVER | NO_RETRY_SERVER, pdTRUE, pdFALSE, portMAX_DELAY);
+        if(bits & RETRY_SERVER){
+            //aqui relaizamos una llamada recursiva 
+            //en este caso esas tareas aun no han sido creadas 
+            continue;
+        }
+        else if( bits & NO_RETRY_SERVER){
+            // si no, entonces cerramos todo lo relaciado con socket, y reinciamos 
+            if(tcp_client.sockdf > 0){
+                close(tcp_client.sockdf);
+            }
+            tcp_client.connected = 0;
+            tcp_client.host_ip = NULL;
+            tcp_client.host_port =0;
+            tcp_client.logged_in = 0;
+            //entonces en este momento lo espera es que se actualucen las credenuclaes de TCP 
+            goto wait;
+        }
+        else if(bits & UPDATE_TCP){
+            //preimo verificamos si tenemos tareas de TCP como recv y keep alive activos
+
+            if(first_instance != 0){
+                //si es 1 entonces quiere decir que anteiromente ya se estaba trabajdno por lo que las cerramos 
+                vTaskDelete(recv_handle);
+                first_instance = 0; //lo reinciamos 
+            }
+            //volvemos a relziar el proceso para relziar la conexion con el servidor 
+            continue;
+
+        }
+
+        else if(bits & TCP_DISCONNECTED){
+
+        }
+    }
+
+
+
+}
+
+
+
+void task_update_wifi(void *parms){
+
+
+    while(1){
+
+        EventBits_t bits = xEventGroupWaitBits(g_EVENT_WIFI, DELETE_TCP, pdFALSE, pdTRUE, portMAX_DELAY);
+
+        if(tcp_client.connected !=0){
+
+            //al actualizar la red WIFI, el socket debe ser cerrado 
+
+            close(tcp_client.sockdf);
+            tcp_client.connected =0;
+            tcp_client.logged_in = 0;
+            tcp_client.sockdf = 1;
+            tcp_client.host_ip = NULL;
+            tcp_client.host_port =0;
+        }
+
+        //volvemos a llamar para relizar el proceso de nuevo  
+        if(first_instance != 0){
+            vTaskDelete(recv_handle);
+            first_instance =0;
+        }
+        setup_client();
+
+    }
 }

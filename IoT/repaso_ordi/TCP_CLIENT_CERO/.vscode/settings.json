@@ -5,7 +5,7 @@
     "board/esp32-wrover-kit-3.3v.cfg"
   ],
   "idf.port": "/dev/ttyUSB0",
-  "idf.currentSetup": "/home/dmrx/.espressif/v6.0.1/esp-idf",
+  "idf.currentSetup": "C:\\esp\\v6.0\\esp-idf",
   "idf.customExtraVars": {
     "IDF_TARGET": "esp32"
   },
@@ -15,5 +15,6 @@
     "--query-driver=**",
     "--compile-commands-dir=/home/dmrx/Documents/ciclo2026-1/IoT/repaso_ordi/TCP_CLIENT_CERO/build"
   ],
-  "idf.flashType": "UART"
+  "idf.flashType": "UART",
+  "idf.portWin": "COM3"
 }

@@ -36,6 +36,10 @@ typedef struct{
 
 extern tcp_client_t tcp_client;
 
+//manerjadore de tareas 
+
+extern TaskHandle_t recv_handle;
+
 
 
 //+++++++++++++++++++++funciones 
@@ -44,11 +48,11 @@ extern tcp_client_t tcp_client;
 
 esp_err_t tcp_cliente_init();
 
-
+esp_err_t send_massage();
 
 //+++++++++++++++++++++tareas 
 
-
+void task_recv_tcp(void *params);
 
 
 

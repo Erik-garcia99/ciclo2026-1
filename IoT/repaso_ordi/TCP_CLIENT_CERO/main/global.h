@@ -40,16 +40,27 @@
 #define WIFI_CONNECTED_BIT BIT3
 #define WIFI_FAIL_BIT BIT4
 #define WIFI_UPDATE BIT5
+#define DELETE_TCP BIT12
 //bits para TCP 
 #define RETRY_SERVER BIT6 
+#define NO_RETRY_SERVER BIT13
 #define TCP_DISCONNECTED BIT7
-#define UPDATE_TCP BIT8
+#define UPDATE_TCP BIT8 
+//reset
+#define RST_CANCEL BIT19
+#define RST_SUCCESS BIT10
+//definicion de usuario 
+#define UPDATE_USER BIT11
 
 
 
 
 // /++++++++++++++++++++++ colas
 extern QueueHandle_t flow_data_queue;
+
+//+++++++++++++++++++++++++++ grupo de eventos 
+
+extern EventGroupHandle_t g_user_def;
 
 
 //+++++++++++++++++++++++++ enums
@@ -69,6 +80,7 @@ typedef enum{
     action_none  = 0x00,
 	read_esp = 0x1,    
 	write_esp = 0x2,
+    cancel_resert_esp=0x03, //cancelar el reinciio del esp
 	access_esp = 0x4, //login
 	keep_alive = 0x5,
 }action_t;
@@ -76,9 +88,13 @@ typedef enum{
 extern action_t action;
 
 typedef enum{
+    resert_esp = 0x00,
 	led = 0x1,
 	adc=0x2,
 	pwm=0x3,
+    enable_tmp = 0x8, 
+	set_tmp = 0x9, 
+	down_tmp = 0xA,  
     server = 0xf,
 }resourse_t;
 
@@ -88,10 +104,8 @@ extern resourse_t resourse;
 typedef enum{
     SSID=0,
     PSWD,
-    HOST_TCP_IP,
-    HOST_TPC_PORT,
-    HOST_UDP_IP,
-    HOST_UDP_PORT,
+    HOST_TCP,
+    HOST_UDP,
     USER,
 }instructions_t;
 
@@ -107,10 +121,14 @@ extern instructions_t instructions;
 
 //el valor lo vamos a ofuscar, al final es lo mismo tan solo lo pasamos por un XOR 
 typedef struct{
-
-
-
-    uint8_t value[32]; //un valor de hasta 32 bytes 
+    uint16_t header; 
+    uint8_t len; //se establece la longitud de la trama
+    uint32_t user;//uusario, la matricula con la que se identifica en el servidor  
+    //accion
+    action_t action:4;
+    //recurso
+    resourse_t resourse:4;
+    uint8_t value[32]; //un valor de 0 a 32 bytes para el valor cunado es escritrua 
 }format_request_t;
 
 extern format_request_t format_request;
@@ -124,6 +142,8 @@ typedef struct
 
 extern send_info_t send_info;
 
+
+extern uint32_t current_user;
 
 
 #endif

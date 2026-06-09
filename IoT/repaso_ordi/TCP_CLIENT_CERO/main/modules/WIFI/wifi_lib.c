@@ -31,6 +31,9 @@ static const char *TAG="wifi_lib";
 
 
 void wifi_init_sta(void){
+
+
+
     ESP_ERROR_CHECK(esp_netif_init());
 
     ESP_ERROR_CHECK(esp_event_loop_create_default());
@@ -50,11 +53,37 @@ void wifi_init_sta(void){
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
     ESP_ERROR_CHECK(esp_wifi_start()); 
 
+    wifi_config_t wifi_config;
+    if (esp_wifi_get_config(WIFI_IF_STA, &wifi_config) == ESP_OK &&
+        strlen((char*)wifi_config.sta.ssid) > 0)
+    {
+        // Liberar memoria previa (por si acaso)
+        free(esp_wifi.esp_ssid);
+        free(esp_wifi.esp_pswd);
+        esp_wifi.esp_ssid = strdup((char*)wifi_config.sta.ssid);
+        esp_wifi.esp_pswd = strdup((char*)wifi_config.sta.password);
+        ESP_LOGI(TAG, "Credenciales cargadas desde NVS: %s", esp_wifi.esp_ssid);
+    }
+    else
+    {
+        ESP_LOGW(TAG, "No hay credenciales WiFi en NVS");
+        esp_wifi.esp_ssid = NULL;
+        esp_wifi.esp_pswd = NULL;
+    }
+    
+
     //ahora viene lo bueno. 
     EventBits_t bits;
     //indicamos que si la conexion es diferente a 1 (diferente a una conexion de emprea) entonces entra aqui
-    xEventGroupClearBits(g_EVENT_WIFI, WIFI_CONNECTED_BIT | WIFI_FAIL_BIT);
+    xEventGroupClearBits(g_EVENT_WIFI, WIFI_CONNECTED_BIT | WIFI_FAIL_BIT | WIFI_UPDATE);
     s_retry_num = 0; 
+    
+    //esperamos que se hayan ingresado datos a las vairbales de ssid y pswd
+    while (esp_wifi.esp_ssid == NULL || esp_wifi.esp_pswd == NULL ||
+        strlen(esp_wifi.esp_ssid) == 0 || strlen(esp_wifi.esp_pswd) == 0) {
+        ESP_LOGW(TAG, "No hay credenciales WiFi. Esperando comando...");
+        xEventGroupWaitBits(g_EVENT_WIFI, WIFI_UPDATE, pdTRUE, pdFALSE, portMAX_DELAY);
+    }
 
     //creo que seria con un DO-while que lo este intentando hasta se logre conectar con exito 
     do{
@@ -90,8 +119,9 @@ void wifi_init_sta(void){
             uart_write_bytes(UART_MAIN, UART_RED, strlen(UART_RED));
             uart_write_bytes(UART_MAIN, mssg_error, strlen(mssg_error));
             uart_write_bytes(UART_MAIN, UART_RESET, strlen(UART_RESET));
-                
+            //si fallo la conexion espera a que se introduza las nuevas credencilaes 
             xEventGroupWaitBits(g_EVENT_WIFI, WIFI_UPDATE, pdTRUE,pdTRUE, portMAX_DELAY);
+            s_retry_num = 0; 
 
 
         }
