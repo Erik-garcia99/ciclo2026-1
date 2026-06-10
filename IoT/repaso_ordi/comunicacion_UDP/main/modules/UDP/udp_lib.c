@@ -64,7 +64,6 @@ void udp_recv_task(void *params){
         struct sockaddr_storage source_addr;
         socklen_t socklen = sizeof(source_addr);
         int len = recvfrom(udp_client.sockfd,rx_buffer,sizeof(rx_buffer)-1, 0, (struct addrinfo*)&source_addr,&socklen);
-
         if(len < 0){
             ESP_LOGE(TAG, "erro al recbir mensaje -> errno: %d", errno);
             vTaskDelay(pdTICKS_TO_MS(50));
