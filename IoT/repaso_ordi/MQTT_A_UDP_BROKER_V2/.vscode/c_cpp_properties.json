@@ -1,0 +1,27 @@
+{
+    "configurations": [
+        {
+            "name": "ESP-IDF",
+            "compilerPath": "/home/dmrx/.espressif/tools/xtensa-esp-elf/esp-15.2.0_20251204/xtensa-esp-elf/bin/xtensa-esp32-elf-gcc",
+            "compileCommands": [
+                "${workspaceFolder}/build/compile_commands.json"
+            ],
+            "intelliSenseMode": "gcc-x64",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/home/dmrx/.espressif/v6.0.1/esp-idf/components/lwip/include",
+                "/home/dmrx/.espressif/v6.0.1/esp-idf/components/lwip/lwip/src/include",
+                "/home/dmrx/.espressif/v6.0.1/esp-idf/components/lwip/port/include",
+                "/home/dmrx/.espressif/v6.0.1/esp-idf/components/esp_common/include",
+                "/home/dmrx/.espressif/v6.0.1/esp-idf/components/log/include"
+            ],
+            "browse": {
+                "path": [
+                    "${workspaceFolder}"
+                ],
+                "limitSymbolsToIncludedHeaders": true
+            }
+        }
+    ],
+    "version": 4
+}

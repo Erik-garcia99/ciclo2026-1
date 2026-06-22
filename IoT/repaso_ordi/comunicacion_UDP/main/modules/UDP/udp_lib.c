@@ -51,8 +51,6 @@ esp_err_t udp_client_init(){
     inet_pton(udp_client.sockfd,udp_client.host_ip, &server_addr.sin_addr);
 
     udp_client.server_addr = server_addr; //esto para podrlo usar en las funciones para enviar y recibir 
-
-
 }
 
 

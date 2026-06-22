@@ -4,7 +4,7 @@
   "idf.openOcdConfigs": [
     "board/esp32-wrover-kit-3.3v.cfg"
   ],
-  "idf.port": "/dev/ttyUSB0",
+  "idf.port": "detect",
   "idf.currentSetup": "/home/dmrx/.espressif/v6.0.1/esp-idf",
   "idf.customExtraVars": {
     "IDF_TARGET": "esp32"
@@ -13,8 +13,6 @@
   "clangd.arguments": [
     "--background-index",
     "--query-driver=**",
-    "--compile-commands-dir=/home/dmrx/Documents/ciclo2026-1/IoT/repaso_ordi/TCP_CLIENT_CERO/build"
-  ],
-  "idf.flashType": "UART",
-  "idf.portWin": "COM3"
+    "--compile-commands-dir=/home/dmrx/Documents/ciclo2026-1/IoT/repaso_ordi/MQTT_A_UDP_BROKER_V2/build"
+  ]
 }

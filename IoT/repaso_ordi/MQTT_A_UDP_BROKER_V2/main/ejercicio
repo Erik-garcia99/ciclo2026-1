@@ -1,0 +1,76 @@
+
+
+el ejercicio que era del ordinario 
+
+
+era crear el proceso de MQTT con UDP, estabecer la logica de como no se perderan los datos 
+
+--la organizacion entre suscriptioes y publicadores
+
+--el crear la estrucutra, la trama binaria que trae la infromacion 
+
+//por lo que lo demas podemos como copiarlo de los otros archivos, no hay tanta falla 
+
+
+
+--> el keep alive- con loo que tengo como mejorarlo para serlo funcion y que no interfiera con los demas procesos.
+
+
+--> que mecanismos deberiamos de usar para verificar que el datagrama viene en orden. 
+
+--> podemos enumerar los paquetes que se enivan, y cunado ya no vayamos a enviar o el contenxt de un nuevo paquete es diferente a los demas podemos enivar en vez del numeor un <EOF> indicando que se termino ese contexto ahora este es otro 
+
+--> el ACK cunado se reciba el servidor, si el servidor no conetasta con un ACK es un tiempo se vuelve a enivar el paquete, 
+
+
+
+--> cundo un dispisitov reliza el CONNECT lo que sigue es que el broker verifica sus credenciales en este caso verificamos el user y la ip  del usurio 
+
+    despues si la conexion esta establece de devuelve un CONNACK con el numero 0 si todo sale bien indicando que se puede establecer la conexion 
+    --> si envia otro numero superior mejor a 5 infica algunos errores 
+
+    --> entonces despues de reliazar esa operacion, el broker registra ese usuario y es ip, en si al inciio todos pueden ser publicadores pero 
+        no trodos tienene suscripciones a todos los topicos. 
+
+
+
+--> como guardo que usuerio, que IP esta suscrito a que topico o publica, se me ocurrio una lista enlazada simple creo de esta manera 
+    se estara ucho mas organizado la lista tiene ip, usuario, arreglo de maximo 16 topicos, para publicas y suscritos son 2 arreglos y pues obivamente
+    el auntador al sigueinte nodo
+
+--> la lista enlazada estara organizado desde el main, udp se encarga de reciir serparar los datos en los diferentes 
+
+--> ya se en que me estoy equivocando, sigo pensado en que este archivo es cliente cunado no es asi, es broker es servidor 
+
+--> entonces lo que hare es tener 2 estructuras tenermos la estrucutra que le envia a un usuario que es lo que yo servidor quiero 
+--> otra estrucutra en donde guardare lo que contesto el usuario 
+
+
+--> pero es tener esa estrucutra puede que al momento de realizar la publicacion a los suscriptores no sea lo mas eficinete
+    --por lo que se me ocurre crear un arrelgo de puteros, en donde guardaremos las direcciones de los nodos que estan suscritos 
+
+
+
+
+
+
+-- ahora debemos de enviar hacia la funcion que encola para enivar los datos, por lo que, si es un ACK los ACK son solo hacia 1 dispositivos 
+-- entonces 
+
+-- lo que podemos hacer, sisis, es con la cola, pero que rebina el tipo de un usuario, no la lista conpleta o algo asi, si no, el apuntador del usuario 
+cunaod se haan publicaciones con un cico for mandamos 1 a 1. 
+
+--la cola debe de mandar datos de tipo node_user
+
+
+--> oka
+
+
+//creo que hay cosas que debo hacer funcion, porque se repiten mucho como el agregar el mensaj a ala cola, croe que dbede ser una funcion 
+
+
+// nop, aqui paso algo fello, 
+
+lo que pasa es que la cola debe de ser del tipo de mensaje, esto porque si mando el ndoo del suario, drentira que buscar o sacar rl primer mensje o hacer algo ah para decdir si 
+el mensajes no ha sio enviado, por lo que mejor sera traigo el nodo ceado y regreso el nodo creado del mensaje que es el que voy a mandar 
+
