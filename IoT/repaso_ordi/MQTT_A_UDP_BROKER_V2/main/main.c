@@ -153,6 +153,42 @@ node_subs_t *create_subs_node(uint8_t num_topic);
 pending_msg_t *create_node_msg_pendentig(op_type_t type_msg, format_request_t *msg);
 
 
+
+
+// funciones de busqueda 
+node_user_t *find_node_user(node_user_t *linked_list, char *ip);
+
+
+node_subs_t *find_node_subs_topic(node_subs_t *topic_linked_list, uint8_t topic);
+
+
+
+/***
+ * @brief  funcion que busca un nodo en particular 
+ * 
+ * @param head la cabeza de la cola 
+ * @param topic indica que buscamos un topico 
+ * @param pckid indica el enumerate del frame enviad 
+ * @param flag una bandea que me indica si el nodo que esoyt buscando es el mas reciente agregado por lo que ira hasta el final,
+ * para este se envia la macro EOF  
+ * 
+ * 
+ * @return NULL en caso de no encoentrar nada 
+ * @return regresa un apuntador al nodo que se esta buscando 
+ */
+pending_msg_t *find_node_msg_snd(pending_msg_t *head,uint8_t topic,int pckid, uint8_t flag);
+
+//metodos de agregar nuevos nodos 
+
+/**
+ * @brief agrega con push un nuevo nodo a la lista enlazada 
+ * 
+ * 
+*/
+
+node_subs_t *push_node_subs_topic(node_subs_t *heap, uint8_t topic);
+
+
 /*
  * funcion que se encarga de crear el nuevo nodo, busca si el usuario y la ip ya estan registrados en un mismo nodo
  * si no es asi crea el nuevo
@@ -160,19 +196,6 @@ pending_msg_t *create_node_msg_pendentig(op_type_t type_msg, format_request_t *m
 
 node_user_t *push_node_user(node_user_t *head,char *ip,uint16_t port);
 
-node_user_t *find_node_user(node_user_t *linked_list, char *ip);
-
-
-
-
-node_subs_t *find_node_subs_topic(node_subs_t *topic_linked_list, uint8_t topic);
-
-/**
- * @brief agrega con push un nuevo nodo a la lista enlazada 
- * 
- * 
-*/
-node_subs_t *push_node_subs_topic(node_subs_t *heap, uint8_t topic);
 
 
 //metodos de agregar un nuevo nodo a la cola enlazada 
@@ -196,7 +219,7 @@ void app_main(void)
 
     flow_data_queue = xQueueCreate(10, sizeof(char *));
     udp_data_flow = xQueueCreate(10, sizeof(format_request_t *));
-    send_msg_queue = xQueueCreate(10, sizeof(node_user_t *));
+    send_msg_queue = xQueueCreate(10, sizeof(node_msg_pub_t*));
     //inicamos grupo de eventos 
 
     g_EVENT_WIFI = xEventGroupCreate();
@@ -259,8 +282,6 @@ void app_main(void)
     ESP_LOGI("MAIN", "WIFI_STA");
     wifi_init_sta();
     //inicamos 
-
-
 
     setup_server_udp();
 
@@ -624,14 +645,14 @@ void task_recv_proccess(void *params){
 
                 node_user_t *aux;
                 pending_msg_t *aux_msg;
+		
+		node_msg_pub_t *msg_pub_send; // esta vribale trae relamente el mensaje a enviar hacia la funcion que funciona para enivar 
+
                 if(linked_list_user == NULL){
                     // no hay usuarios registrados por lo que de una mandamos hacia atras porque ni el que publico lo esta 
                     //en este caso no me importa si llega o no llega, pero si mostrar aqui en el broker que no esta registrado
 
                     ESP_LOGE("PUB-ERR", "error!, no hay usuarios registrados, tampoco %s", rx_frame->ip);
-                    aux->ip = strdup(rx_frame->ip);
-                    aux->port = rx_frame->port;
-                    aux->pending_msg->type = OP_NACK;
                     vPortFree(rx_frame);
                     continue;
 
@@ -644,9 +665,6 @@ void task_recv_proccess(void *params){
                 if(aux == NULL){
                     //no lo cnetoro por lo que no esta registrado
                     ESP_LOGE("PUB-ERR", "error!, usuario %s no reigstrado.", rx_frame->ip);
-                    aux->ip = strdup(rx_frame->ip);
-                    aux->port = rx_frame->port;
-                    aux->pending_msg->type = OP_NACK;
                     vPortFree(rx_frame);
                     continue;
                 }
@@ -663,6 +681,7 @@ void task_recv_proccess(void *params){
                     linked_list_topic_subs = create_subs_node(rx_frame->format_request.topic);
                     //creo o iniceo la lista enlazada. 
                     topico[count_tipic++] = rx_frame->format_request.topic; // en este caso no hay falla porque es el primero, por lo que no deberia de dar errores 
+                    vPortFree(rx_frame);
                     continue;
                 }
                 
@@ -677,7 +696,7 @@ void task_recv_proccess(void *params){
                     //le regresamoa al USUARIO un NACK, que en este caso ya se conoce cual es 
 
                     
-                    aux_msg->type = OP_NACK;
+                    msg_pub_snd->pending_msg->type = OP_NACK;
                     xQueueSend(send_msg_queue, &aux,0);
                     continue;
                 }
@@ -690,32 +709,49 @@ void task_recv_proccess(void *params){
                         
                         //nadie esta suscrito or lo que iual lo desechamos 
                         topico[count_tipic++] = rx_frame->format_request.topic;
+                        vPortFree(rx_frame);
                         continue;
                     }
                     else{
                         //encontro el topico que puede tener suscriptores 
                         // int i = aux_sub->count; //le pasamos a I el numero total de suscrtroes que tiene actualemnte el arreglo 
 
-
+                        pending_msg_t *new_msg_create = NULL; 
+                        node_user_t *suscribed= NULL;
                         for( int i =0; i< aux_sub->count; i++){
-                            node_user_t *suscribed = aux_sub->suscribed[i];
+                            suscribed = aux_sub->suscribed[i];
+
+                            //este contendra el nodo, el nuvo mensje creado listo para encolar 
                             //para el usuario, debemos de hacer otra funcion para crear la lista de los nodos pendientes que se tienen 
                             // verificar, - crear - agregar - buscar  - eliminar 
 
                             //una funcion que realice estas operaciones y que llame para relizar estas mismas puede ser? 
 
-                            //aqui podemos verificar primero
-
                             /**
-                             * el nodo del usuario es el que trae la cola de los mensajes pendtines 
                              * 
-                             * aux_sub solo trae el nodo en donde esta el arreglo de los usuarios suscritos 
-                             *
-                             * entonces de que tipo son los datos que tenemos que implementar.  
+                             * esta parte del codigo de que es lo que se encarga?, se encarga de mnadar a la cola el mensje que se tiene que enviar 
+                             * pero se debe de mandar el nodo exacto, no puedo mandar toda la lista, por lo que 
                              * 
-                            */
+                             * pero esto pasara a usuario a usuario, por lo que creo que esto podemos transformalo en una funcion que hara esto mas facil 
+                             * 
+                             * que es lo que hara la funcion 
+                             * 
+                             * - verifica que la cola del los mensajes pendientes del usuario este inciailizada
+                             * - si no lo esta entonces la crea y regresa la cadebza de la cola ya que es el unico nodo en este momento 
+                             * - si ya esta inicalizada entonces crea el nodo y la agrega al final, no nos improta si es mensaje repetido o no, este broker solo 
+                             * reetrasmite los datos  
+                             * - se tiene que regresar el nodo pero tambien se tiene que modificar la cola, porque se tiene que agregar
+                             * 
+                             * 
+                             * bueno al final tendre que relizar una funcion de busqueda para buscar los nodos, el pop para la cola, lo ideal es que la cola es la primera que sale. s
+                             * 
+                             * 
+                             * 
+                             * noooo, ijodela verga, no, no puede ser 
+                             * 
+                             * 
+                             * */
 
-                            //verficamos si la lista de mensajes est creada, si no la creamos 
 
                             if(suscribed->pending_msg == NULL){
                                 //este susciptor no tiene mensajes pendeintes por lo que debemos de inciarlizar la cola 
@@ -730,8 +766,17 @@ void task_recv_proccess(void *params){
                                 aux_msg = add_new_node_msg(suscribed->pending_msg, OP_PUB, &(rx_frame->format_request));
                                 suscribed->pending_enumerate++;
 
-                                ESP_LOGI("debbug pub", "enumerate :%d, puntero %p", aux_msg->msg_info->enumerate, &(aux_msg));
+                                new_msg_create = find_node_msg_snd(suscribed->pending_msg, 0, 0, EOF);
 
+                                /***
+                                 * !!!!NOOO, porque en el otro archivo necesito la ip y el rueto a enviar, entonces si debe de ser suario 
+                                 * 
+                                 * 
+                                 */
+
+                                if(xQueueSend(send_msg_queue, &new_msg_create, 0) != pdTRUE){
+                                    vPortFree(new_msg_create);
+                                }
                             }
 
                            // no el mensaje que debemos de mandar es el mensaje nuevo creado porque pues alla tenre que buscar que mensajes ya han sido enviados.  
@@ -745,14 +790,6 @@ void task_recv_proccess(void *params){
                     }
 
                 }
-
-
-
-
-                
-
-
-
             
             }
 
@@ -1126,6 +1163,16 @@ pending_msg_t *create_node_msg_pendentig(op_type_t type_msg, format_request_t *m
 }
 
 
+/**
+ * 
+ * mi idea es que con esta misma funcion retornar 2 valores, al parecer si es posible mediante apuntadores dobels 
+ * 
+ * 
+ * con esto actualizo el puntero, la cola desde donde lo llamo y regreso en nuevo nodo creado. 
+ * 
+ * 
+ * */
+
 pending_msg_t *add_new_node_msg(pending_msg_t *head,op_type_t type_msg, format_request_t *new_frame){
 
     pending_msg_t *aux = head; 
@@ -1136,12 +1183,45 @@ pending_msg_t *add_new_node_msg(pending_msg_t *head,op_type_t type_msg, format_r
         aux = aux->nxt;
     }
     aux->nxt = new;
-    head = aux;
 
     ESP_LOGI("PUSH MSG", "head cola - pckid: %d, memory: %p", new->msg_info->enumerate, &(aux));
 
     //regresamos el incio de la cola poerque ajora aux esta en e penuntimo nodo de la cola. 
-    return new;
+    return head;
+}
+
+
+
+
+pending_msg_t *find_node_msg_snd(pending_msg_t *head,uint8_t topic,int pckid, uint8_t flag){
+
+    pending_msg_t *aux = head;
+
+
+    if(flag == EOF){
+        //nos vamos al final 
+        //quireor el ultimo nodo 
+        while(aux->nxt != NULL){
+            aux = aux->nxt;
+        }
+    }
+
+    else{
+        //esta en busqueda de un nodo en especial 
+        while(aux != NULL){
+
+            if(aux->msg_info->topic = topic){
+                if(aux->msg_info->enumerate = pckid){
+                    return aux;
+                }
+            }
+
+            aux = aux->nxt;
+        }
+
+    }
+
+    return NULL;
 }
 
 

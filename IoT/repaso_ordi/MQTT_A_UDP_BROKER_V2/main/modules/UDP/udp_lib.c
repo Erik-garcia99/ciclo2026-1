@@ -383,8 +383,12 @@ void task_recvfrom_udp(void *params){
 
 void send_messange(){
 
-    pending_msg_t *msg;
+    //este de pednign esta mal, no, porque esa estrucutrua no tiene el contecto hacia donde va air 
+    //pending_msg_t *msg;
+    node_msg_pub_t *msg;
     
+    //de algo estoy seguro, el emsanje a enviar sera el final pero necesito algo para saber que en efecto 
+    //ese el emsanje final que es que debo d enviar. 
 
     if(xQueueReceive(send_msg_queue, &msg, portMAX_DELAY)){
 

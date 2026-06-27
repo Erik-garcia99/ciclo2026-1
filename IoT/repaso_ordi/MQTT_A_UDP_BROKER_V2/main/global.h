@@ -227,7 +227,22 @@ typedef struct node_subs{
 
 
 
+/**
+ *muy bien al parecer tengo aqui una introcijada, en donde necesito enviar un mensaje por UDP, exacto pero la estrucutra de user 
+ * trae toda la cola pero no me interesa y pueden haber errores, para una mayor velocidad necesoot de una manera enivar tanto el nodo con el mensake 
+ * a enviar y que tambien se enive la IP y el puerto a enviar la unica que se me ocurrio ue otra estructrua 
+ *
+ * esta estrucutra lo que traria seria la IP, el puerto y el nodo a enivar solamente 
+ *
+ *
+ * **/
 
+
+typedef struct{
+	char *ip;
+	uint16_t port;	
+	pending_msg_t *pending_msg; 
+}node_msg_pub_t;
 
 
 
